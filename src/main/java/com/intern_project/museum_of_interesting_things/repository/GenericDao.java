@@ -107,35 +107,6 @@ public class GenericDao {
 
 
 
-    /**
-     * Increment search number counter.
-     *
-     * @param id the id
-     */
-    public void incrementSearchNumberCounter(int id) {
-        final Session session = sessionFactory.getCurrentSession();
-        Query updateHits = session.createQuery(
-                "UPDATE Search SET number = number + 1 WHERE id = :searchId" );
-        updateHits.setInteger( "searchId", id );
-        updateHits.executeUpdate();
-    }
-
-
-
-    /**
-     * Gets count for each review source.
-     *
-     * @return the count for each review source
-     */
-    public List<Object[]> getCountForEachReviewSource() {
-        final Session session = sessionFactory.getCurrentSession();
-        List<Object[]> rows =session.createNativeQuery
-                ("select review_source_name, count(review_source_name) as rev_count " +
-                        "from user_review_source_lookup " +
-                        "group by review_source_name order by rev_count desc limit 10;").list();
-        return rows;
-    }
-
 
     /**
      * Gets first entry based on another table column property.
