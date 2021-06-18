@@ -11,6 +11,12 @@ Tasks Completed:
 Tasks Completed:
 * database and needed tables are created
 
-6/16/2021 ~ 2 hours
+6/16/2021 ~ 3 hours
 Tasks Completed:
 * Fixing bug with no displaying EL(Expression Language) 
+
+6/18/2021 ~ 1.30 hours
+Tasks Completed:
+* working relationship between entities item - lost_item added(oneToOne)
+* working relationship between entities item - location added(manyToMany)
+
