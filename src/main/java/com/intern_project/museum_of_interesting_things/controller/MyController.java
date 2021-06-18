@@ -1,6 +1,7 @@
 package com.intern_project.museum_of_interesting_things.controller;
 
 import com.intern_project.museum_of_interesting_things.entity.Item;
+import com.intern_project.museum_of_interesting_things.entity.LostItem;
 import com.intern_project.museum_of_interesting_things.repository.GenericDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -41,8 +42,13 @@ public class MyController {
     @RequestMapping("/test")
     public String test(Model model) throws IOException, URISyntaxException {
         Item item = new Item("name", "desc", new Date(),1,1);
+        LostItem lostItem = new LostItem(item.getId(), "desc", new Date(), item);
+        item.setLostItem(lostItem);
+        genericDao.save(item);
         model.addAttribute("item", item);
         System.out.println(item);
+
+
         return "test";
     }
 

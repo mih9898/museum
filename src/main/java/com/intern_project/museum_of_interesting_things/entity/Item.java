@@ -1,13 +1,12 @@
 package com.intern_project.museum_of_interesting_things.entity;
 
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.NotFound;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Table(name = "items")
 @Entity(name = "Item")
@@ -36,6 +35,11 @@ public class Item {
     @Column(name = "is_museum_item")
     private int isMuseumItem;
 
+    @OneToOne(mappedBy = "item", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private LostItem lostItem;
+
+
     public Item(String name, String description, Date dateAcquired, int isLost, int isMuseumItem) {
         this.name = name;
         this.description = description;
@@ -43,4 +47,6 @@ public class Item {
         this.isLost = isLost;
         this.isMuseumItem = isMuseumItem;
     }
+
+
 }
