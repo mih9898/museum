@@ -2,6 +2,7 @@ package com.intern_project.museum_of_interesting_things.entity;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -39,6 +40,21 @@ public class Item {
     @PrimaryKeyJoinColumn
     private LostItem lostItem;
 
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
+
+    @JoinTable(
+            name = "item_location",
+            joinColumns = @JoinColumn(name = "item_id"), //write how bridge table get connected with this source table/entity
+            inverseJoinColumns = @JoinColumn(name = "location_id") //write how bridge table get connected with other target table/entity
+    )
+    private Set<Location> locations;
+
+    public void addLocationToItem(Location location) {
+        if (locations == null) {
+            locations = new HashSet<>();
+        }
+        locations.add(location);
+    }
 
     public Item(String name, String description, Date dateAcquired, int isLost, int isMuseumItem) {
         this.name = name;
