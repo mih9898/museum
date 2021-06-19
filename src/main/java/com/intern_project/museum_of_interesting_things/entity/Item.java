@@ -41,7 +41,6 @@ public class Item {
     private LostItem lostItem;
 
     @ManyToMany(cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
-
     @JoinTable(
             name = "item_location",
             joinColumns = @JoinColumn(name = "item_id"), //write how bridge table get connected with this source table/entity

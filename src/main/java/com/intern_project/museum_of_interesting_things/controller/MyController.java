@@ -1,8 +1,6 @@
 package com.intern_project.museum_of_interesting_things.controller;
 
-import com.intern_project.museum_of_interesting_things.entity.Item;
-import com.intern_project.museum_of_interesting_things.entity.Location;
-import com.intern_project.museum_of_interesting_things.entity.LostItem;
+import com.intern_project.museum_of_interesting_things.entity.*;
 import com.intern_project.museum_of_interesting_things.repository.GenericDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -46,14 +44,17 @@ public class MyController {
         //LostItem lostItem = new LostItem(item.getId(), "desc", new Date(), item);
         //item.setLostItem(lostItem);
 
-        Item item = genericDao.get(Item.class, 2);
-        Location location = new Location("room 5A", "left top shelf B7", new Date());
-        item.addLocationToItem(location);
-        genericDao.merge(item);
-        model.addAttribute("item", item);
-        System.out.println(item);
-
-
+        //Item item = genericDao.get(Item.class, 2);
+        //Location location = new Location("room 5A", "left top shelf B7", new Date());
+        //item.addLocationToItem(location);
+        //Employee employee = new Employee("manager", "Myke", "Turchanov", 333.33, "address", "city", "WI", "1233", 1);
+        Employee employee = genericDao.get(Employee.class, 2);
+        PhoneNumber phoneNumber = new PhoneNumber(12321312);
+        phoneNumber.setEmployee(employee);
+        employee.addPhoneNumberToEmployee(phoneNumber);
+        genericDao.merge(employee);
+        System.out.println(employee);
+        model.addAttribute("employee", employee);
         return "test";
     }
 

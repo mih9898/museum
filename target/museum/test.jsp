@@ -14,5 +14,7 @@
 <body>
     <h2>Testing time</h2>
     Item: ${item}
+    Employee: ${employee}
+
 </body>
 </html>
