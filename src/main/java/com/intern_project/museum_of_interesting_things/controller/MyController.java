@@ -40,7 +40,7 @@ public class MyController {
     //Testing time
     @RequestMapping("/test")
     public String test(Model model) throws IOException, URISyntaxException {
-        //Item item = new Item("name", "desc", new Date(),1,1);
+        Item item = new Item("name2", "desc2", new Date(),0,1);
         //LostItem lostItem = new LostItem(item.getId(), "desc", new Date(), item);
         //item.setLostItem(lostItem);
 
@@ -49,12 +49,14 @@ public class MyController {
         //item.addLocationToItem(location);
         //Employee employee = new Employee("manager", "Myke", "Turchanov", 333.33, "address", "city", "WI", "1233", 1);
         Employee employee = genericDao.get(Employee.class, 2);
-        PhoneNumber phoneNumber = new PhoneNumber(12321312);
-        phoneNumber.setEmployee(employee);
-        employee.addPhoneNumberToEmployee(phoneNumber);
-        genericDao.merge(employee);
-        System.out.println(employee);
-        model.addAttribute("employee", employee);
+        //PhoneNumber phoneNumber = new PhoneNumber(12321312);
+        //phoneNumber.setEmployee(employee);
+        //employee.addPhoneNumberToEmployee(phoneNumber);
+        EmployeeItem employeeItem = new EmployeeItem(employee,item, 99.12);
+
+        genericDao.saveOrUpdate(employeeItem);
+        //System.out.println(employee);
+        //model.addAttribute("employee", employee);
         return "test";
     }
 

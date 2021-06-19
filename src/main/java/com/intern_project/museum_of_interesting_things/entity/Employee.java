@@ -56,6 +56,9 @@ public class Employee {
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<PhoneNumber> phoneNumbers = new HashSet<>();
 
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<EmployeeItem> employeeItems = new HashSet<>();
+
     public void addPhoneNumberToEmployee(PhoneNumber phoneNumber) {
         if (phoneNumbers == null) {
             phoneNumbers = new HashSet<>();

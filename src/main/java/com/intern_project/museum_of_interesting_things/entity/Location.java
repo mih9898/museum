@@ -1,6 +1,7 @@
 package com.intern_project.museum_of_interesting_things.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
@@ -15,6 +16,7 @@ import java.util.Set;
 @Entity(name = "Location")
 @NoArgsConstructor
 @Data
+@EqualsAndHashCode(exclude = "items")
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")

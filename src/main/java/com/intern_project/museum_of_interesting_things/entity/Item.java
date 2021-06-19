@@ -48,11 +48,21 @@ public class Item {
     )
     private Set<Location> locations;
 
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<EmployeeItem> employeeItems = new HashSet<>();
+
     public void addLocationToItem(Location location) {
         if (locations == null) {
             locations = new HashSet<>();
         }
         locations.add(location);
+    }
+
+    public void addEmployeeAprToItem(EmployeeItem employeeItem) {
+        if (employeeItems == null) {
+            employeeItems = new HashSet<>();
+        }
+        employeeItems.add(employeeItem);
     }
 
     public Item(String name, String description, Date dateAcquired, int isLost, int isMuseumItem) {
