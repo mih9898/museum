@@ -17,6 +17,11 @@ Tasks Completed:
 
 6/18/2021 ~ 1.30 hours
 Tasks Completed:
-* working relationship between entities item - lost_item added(oneToOne)
-* working relationship between entities item - location added(manyToMany)
+* working DAO relationship between entities items- lost_items added(oneToOne)
+* working DAO relationship between entities items - locations added(manyToMany)
+
+6/19/2021 ~ 1 hours
+Tasks Completed:
+* working DAO relationship between entities items- employees added(manyToMany); merge only
+* working DAO relationship between entities employees - phoneNumbers added(oneToMany)
 
