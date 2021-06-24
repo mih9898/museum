@@ -51,6 +51,8 @@ public class Item {
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<EmployeeItem> employeeItems = new HashSet<>();
 
+
+
     public void addLocationToItem(Location location) {
         if (locations == null) {
             locations = new HashSet<>();
@@ -73,5 +75,12 @@ public class Item {
         this.isMuseumItem = isMuseumItem;
     }
 
-
+    public Item(int id, String name, String description, Date dateAcquired, int isLost, int isMuseumItem) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.dateAcquired = dateAcquired;
+        this.isLost = isLost;
+        this.isMuseumItem = isMuseumItem;
+    }
 }
