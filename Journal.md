@@ -25,3 +25,9 @@ Tasks Completed:
 * working DAO relationship between entities items- employees added(manyToMany); merge only
 * working DAO relationship between entities employees - phoneNumbers added(oneToMany)
 
+
+6/23/2021 ~ 1 hours
+Tasks Completed:
+* working DAO relationship between entities items- employees added(manyToMany); merge only
+* working DAO relationship between entities employees - phoneNumbers added(oneToMany)
+
