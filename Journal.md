@@ -31,3 +31,12 @@ Tasks Completed:
 * working DAO relationship between entities items- employees added(manyToMany); merge only
 * working DAO relationship between entities employees - phoneNumbers added(oneToMany)
 
+6/28/2021 ~ 1 hours
+Tasks Completed:
+* form for newItem form added
+
+6/29/2021 ~ 1 hours
+Tasks Completed:
+* form for newItem updated(css/js)
+* form for location information added
+
