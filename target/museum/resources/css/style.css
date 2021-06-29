@@ -1,9 +1,15 @@
-#lostItemFormLabels {
+fieldset {
     border: solid #eee;
 }
 
 .active {
     display: block !important;
+}
+
+fieldset legend {
+    width: 100%;
+    text-align: center;
+    /*font-weight: bold;*/
 }
 
 #lostItemFormLabels {

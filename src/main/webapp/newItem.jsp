@@ -46,7 +46,7 @@
                 </div>
 
                 <fieldset class="row mb-1 ms-3 p-3"  id="lostItemFormLabels">
-                    <legend class="col-form-label col-sm-2 pt-0">Lost item info</legend>
+                    <legend>Lost item info</legend>
                 <div class="row mb-3">
                     <label for="itemLostDesc" class="col-sm-2 col-form-label">Description (how item was lost/found)</label>
                     <div class="col-sm-10">
@@ -71,6 +71,28 @@
                     <input class="form-check-input" type="checkbox" id="isMuseumItem">
                 </div>
             </div>
+
+            <fieldset class="row ms-3 p-3">
+                <legend>Item location info</legend>
+                <div class="row mb-3">
+                    <label for="storageType" class="col-sm-2 col-form-label">Storage type:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="storageType" id="storageType">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="locDescription" class="col-sm-2 col-form-label">Location description:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="locDescription" id="locDescription">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="dateWhenPut" class="col-sm-2 col-form-label">Date when put:</label>
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" name="dateWhenPut" id="dateWhenPut">
+                    </div>
+                </div>
+            </fieldset>
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
