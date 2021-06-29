@@ -1,3 +1,16 @@
-html {
-    background:lightblue;
+#lostItemFormLabels {
+    border: solid #eee;
+}
+
+.active {
+    display: block !important;
+}
+
+#lostItemFormLabels {
+    display: none;
+}
+
+
+.nonActive {
+    display: none;
 }
