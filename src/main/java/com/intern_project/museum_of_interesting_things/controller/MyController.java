@@ -37,10 +37,22 @@ public class MyController {
         this.genericDao = genericDao;
     }
 
+
+
+    @RequestMapping("/addItem")
+    public String addItem(Model model) {
+        return "newItem";
+    }
+
+    @RequestMapping("/home")
+    public String home(Model model) {
+        return "index";
+    }
+
     //Testing time
     @RequestMapping("/test")
     public String test(Model model) throws IOException, URISyntaxException {
-        Item item = new Item("name2", "desc2", new Date(),0,1);
+        //Item item = new Item("name2", "desc2", new Date(),0,1);
         //LostItem lostItem = new LostItem(item.getId(), "desc", new Date(), item);
         //item.setLostItem(lostItem);
 
@@ -48,13 +60,13 @@ public class MyController {
         //Location location = new Location("room 5A", "left top shelf B7", new Date());
         //item.addLocationToItem(location);
         //Employee employee = new Employee("manager", "Myke", "Turchanov", 333.33, "address", "city", "WI", "1233", 1);
-        Employee employee = genericDao.get(Employee.class, 2);
+        //Employee employee = genericDao.get(Employee.class, 2);
         //PhoneNumber phoneNumber = new PhoneNumber(12321312);
         //phoneNumber.setEmployee(employee);
         //employee.addPhoneNumberToEmployee(phoneNumber);
-        EmployeeItem employeeItem = new EmployeeItem(employee,item, 99.12);
+        //EmployeeItem employeeItem = new EmployeeItem(employee,item, 99.12);
 
-        genericDao.saveOrUpdate(employeeItem);
+        //genericDao.saveOrUpdate(employeeItem);
         //System.out.println(employee);
         //model.addAttribute("employee", employee);
         return "test";
