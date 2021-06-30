@@ -43,36 +43,40 @@ public class MyController {
     @RequestMapping(value = "/addItem", method = RequestMethod.POST)
     public String addItem(@RequestParam(name = "itemName", required = false) String itemName,
                           @RequestParam(name = "itemDescription", required = false) String itemDescription,
-                          @RequestParam(name = "itemHowAcquired", required = false) String itemHowAcquired,
-                          @RequestParam(name = "dateAcquired") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateAcquired,
+                          @RequestParam(name = "dateAcquired", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateAcquired,
                           @RequestParam(value = "isMuseumItem", required = false) String isMuseumItem,
                           @RequestParam(name = "itemLostDesc", required = false) String itemLostDesc,
-                          @RequestParam(name = "dateLost") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateLost,
+                          @RequestParam(name = "dateLost", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateLost,
                           @RequestParam(name = "storageType", required = false) String storageType,
                           @RequestParam(name = "locDescription", required = false) String locDescription,
-                          @RequestParam(name = "dateWhenPut") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateWhenPut,
+                          @RequestParam(name = "dateWhenPut", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateWhenPut,
 
                           final Model model) {
-//        System.out.println("item name: " + itemName + ", itemDesc:" + itemDescription);
-//        System.out.println("dateAcquired: " + dateAcquired.toString());
-//
-//        System.out.println("itemHowAcquired: " + itemHowAcquired + ", itemLostDesc:" + itemLostDesc);
-//        System.out.println("dateLost: " + dateLost.toString());
-//
-//        System.out.println("storageType: " + storageType + ", locDescription:" + locDescription);
-//        System.out.println("dateLost: " + dateWhenPut.toString());
-//
-//        if(isMuseumItem != null)
-//        {
-//            System.out.println("checkbox is checked");
-//        }
-//        else
-//        {
-//            System.out.println("checkbox is not checked");
-//        }
 
+        int isMuseum = isMuseumItem.isEmpty() ? 0 : 1;
+        int isLost = itemLostDesc.isEmpty() ? 0 : 1;
+        Item newItem = new Item(itemName, itemDescription, dateAcquired, isMuseum);
+        newItem.setIsLost(isLost);
+
+        if (!itemLostDesc.isEmpty()) {
+            LostItem lostItem = new LostItem(locDescription, dateLost, newItem);
+            newItem.setLostItem(lostItem);
+        }
+
+        if (!storageType.isEmpty()) {
+            Location location = new Location(storageType, locDescription, dateWhenPut);
+            newItem.addLocationToItem(location);
+        }
+
+        genericDao.save(newItem);
+
+        model.addAttribute("title", "New item was successfully saved");
 
         return "newItem";
+    }
+
+    private void initItemBools() {
+
     }
 
     @RequestMapping(value = "/addItem", method = RequestMethod.GET)

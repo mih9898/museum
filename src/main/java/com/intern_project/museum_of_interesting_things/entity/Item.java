@@ -53,6 +53,7 @@ public class Item {
 
 
 
+
     public void addLocationToItem(Location location) {
         if (locations == null) {
             locations = new HashSet<>();
@@ -67,13 +68,14 @@ public class Item {
         employeeItems.add(employeeItem);
     }
 
-    public Item(String name, String description, Date dateAcquired, int isLost, int isMuseumItem) {
+    public Item(String name, String description, Date dateAcquired, int isMuseumItem) {
         this.name = name;
         this.description = description;
         this.dateAcquired = dateAcquired;
-        this.isLost = isLost;
         this.isMuseumItem = isMuseumItem;
     }
+
+
 
     public Item(int id, String name, String description, Date dateAcquired, int isLost, int isMuseumItem) {
         this.id = id;
@@ -82,5 +84,13 @@ public class Item {
         this.dateAcquired = dateAcquired;
         this.isLost = isLost;
         this.isMuseumItem = isMuseumItem;
+    }
+
+    public Item(String name, String desc, Date date, int isLost, int isMuseum) {
+        this.name = name;
+        this.description = desc;
+        this.dateAcquired = date;
+        this.isLost = isLost;
+        this.isMuseumItem = isMuseum;
     }
 }

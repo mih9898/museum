@@ -36,4 +36,10 @@ public class LostItem {
         this.dateLost = dateLost;
         this.item = item;
     }
+
+    public LostItem(String locDescription, Date dateLost, Item newItem) {
+        this.description = locDescription;
+        this.dateLost = dateLost;
+        this.item = newItem;
+    }
 }

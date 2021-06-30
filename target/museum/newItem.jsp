@@ -13,6 +13,16 @@
 
     <div class="container" id="content">
         <h1>Add new Item</h1>
+
+<c:if test="${not empty title}">
+
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>ddd </strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+</c:if>
+
+
         <form action="${pageContext.request.contextPath}/addItem" method="post">
             <div class="row mb-3">
                 <label for="itemName" class="col-sm-2 col-form-label">Name</label>
@@ -26,12 +36,7 @@
                     <textarea class="form-control" name="itemDescription" id="itemDescription"></textarea>
                 </div>
             </div>
-            <div class="row mb-3">
-                <label for="itemHowAcquired" class="col-sm-2 col-form-label">How acquired</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="itemHowAcquired">
-                </div>
-            </div>
+
             <div class="row mb-3">
                 <label for="dateAcquired" class="col-sm-2 col-form-label">Date acquired</label>
                 <div class="col-sm-10">
