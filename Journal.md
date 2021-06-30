@@ -40,3 +40,7 @@ Tasks Completed:
 * form for newItem updated(css/js)
 * form for location information added
 
+6/29/2021 ~ 1.5 hours
+Tasks Completed:
+* new item, including info on lost and location, can be added via view(view connected to model+controller)
+
