@@ -33,7 +33,7 @@ Tasks Completed:
 
 6/28/2021 ~ 1 hours
 Tasks Completed:
-* form for newItem form added
+* form for newItem added
 
 6/29/2021 ~ 1 hours
 Tasks Completed:

@@ -3,6 +3,7 @@ package com.intern_project.museum_of_interesting_things.controller;
 import com.intern_project.museum_of_interesting_things.entity.*;
 import com.intern_project.museum_of_interesting_things.repository.GenericDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -39,8 +40,43 @@ public class MyController {
 
 
 
-    @RequestMapping("/addItem")
-    public String addItem(Model model) {
+    @RequestMapping(value = "/addItem", method = RequestMethod.POST)
+    public String addItem(@RequestParam(name = "itemName", required = false) String itemName,
+                          @RequestParam(name = "itemDescription", required = false) String itemDescription,
+                          @RequestParam(name = "itemHowAcquired", required = false) String itemHowAcquired,
+                          @RequestParam(name = "dateAcquired") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateAcquired,
+                          @RequestParam(value = "isMuseumItem", required = false) String isMuseumItem,
+                          @RequestParam(name = "itemLostDesc", required = false) String itemLostDesc,
+                          @RequestParam(name = "dateLost") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateLost,
+                          @RequestParam(name = "storageType", required = false) String storageType,
+                          @RequestParam(name = "locDescription", required = false) String locDescription,
+                          @RequestParam(name = "dateWhenPut") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateWhenPut,
+
+                          final Model model) {
+//        System.out.println("item name: " + itemName + ", itemDesc:" + itemDescription);
+//        System.out.println("dateAcquired: " + dateAcquired.toString());
+//
+//        System.out.println("itemHowAcquired: " + itemHowAcquired + ", itemLostDesc:" + itemLostDesc);
+//        System.out.println("dateLost: " + dateLost.toString());
+//
+//        System.out.println("storageType: " + storageType + ", locDescription:" + locDescription);
+//        System.out.println("dateLost: " + dateWhenPut.toString());
+//
+//        if(isMuseumItem != null)
+//        {
+//            System.out.println("checkbox is checked");
+//        }
+//        else
+//        {
+//            System.out.println("checkbox is not checked");
+//        }
+
+
+        return "newItem";
+    }
+
+    @RequestMapping(value = "/addItem", method = RequestMethod.GET)
+    public String addItemToDB(Model model) {
         return "newItem";
     }
 

@@ -13,7 +13,7 @@
 
     <div class="container" id="content">
         <h1>Add new Item</h1>
-        <form>
+        <form action="${pageContext.request.contextPath}/addItem" method="post">
             <div class="row mb-3">
                 <label for="itemName" class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
@@ -35,9 +35,10 @@
             <div class="row mb-3">
                 <label for="dateAcquired" class="col-sm-2 col-form-label">Date acquired</label>
                 <div class="col-sm-10">
-                    <input type="date" class="form-control" id="dateAcquired">
+                    <input type="date" name="dateAcquired" class="form-control" id="dateAcquired">
                 </div>
             </div>
+
 
             <div class="row mb-3">
                 <label for="isLost"  class="col-sm-2 col-form-label">Is lost?</label>
@@ -57,7 +58,7 @@
                 <div class="row mb-3">
                     <label for="dateLost" class="col-sm-2 col-form-label">Date lost</label>
                     <div class="col-sm-10">
-                        <input type="date" class="form-control" id="dateLost">
+                        <input type="date" class="form-control" name="dateLost" id="dateLost">
                     </div>
                 </div>
                 </fieldset>
@@ -68,10 +69,11 @@
             <div class="row mb-3">
                 <label for="isMuseumItem" class="col-sm-2 col-form-label">Is museum item?</label>
                 <div class="col-sm-10">
-                    <input class="form-check-input" type="checkbox" id="isMuseumItem">
+                    <input class="form-check-input" name="isMuseumItem" type="checkbox" id="isMuseumItem" checked>
                 </div>
             </div>
 
+<%--            TODO: if 1 col has info then other col has to have info as well (required will not help, because loc-block is optional)--%>
             <fieldset class="row ms-3 p-3">
                 <legend>Item location info</legend>
                 <div class="row mb-3">
