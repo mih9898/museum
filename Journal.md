@@ -44,3 +44,7 @@ Tasks Completed:
 Tasks Completed:
 * new item, including info on lost and location, can be added via view(view connected to model+controller)
 
+7/1/2021 ~ 1.5 hours
+Tasks Completed:
+* view for all items added
+
