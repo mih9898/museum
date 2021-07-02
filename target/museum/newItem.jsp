@@ -14,14 +14,6 @@
     <div class="container" id="content">
         <h1>Add new Item</h1>
 
-<c:if test="${not empty title}">
-
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>ddd </strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-</c:if>
-
 
         <form action="${pageContext.request.contextPath}/addItem" method="post">
             <div class="row mb-3">

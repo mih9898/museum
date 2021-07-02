@@ -40,6 +40,13 @@ public class MyController {
 
 
 
+    @RequestMapping(value = "/items", method = RequestMethod.GET)
+    public String items(Model model) {
+        List<Item> items = genericDao.getAll(Item.class);
+        model.addAttribute("items", items);
+        return "items";
+    }
+
     @RequestMapping(value = "/addItem", method = RequestMethod.POST)
     public String addItem(@RequestParam(name = "itemName", required = false) String itemName,
                           @RequestParam(name = "itemDescription", required = false) String itemDescription,
@@ -75,9 +82,7 @@ public class MyController {
         return "newItem";
     }
 
-    private void initItemBools() {
 
-    }
 
     @RequestMapping(value = "/addItem", method = RequestMethod.GET)
     public String addItemToDB(Model model) {
