@@ -47,6 +47,13 @@ public class MyController {
         return "items";
     }
 
+    @RequestMapping(value = "/item", method = RequestMethod.GET)
+    public String item(Model model, @RequestParam int id) {
+        Item item = genericDao.get(Item.class, id);
+        model.addAttribute("item", item);
+        return "item";
+    }
+
     @RequestMapping(value = "/addItem", method = RequestMethod.POST)
     public String addItem(@RequestParam(name = "itemName", required = false) String itemName,
                           @RequestParam(name = "itemDescription", required = false) String itemDescription,

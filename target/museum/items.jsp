@@ -16,30 +16,18 @@
         <h2>Items</h2>
 
 
-
-
-        <div class="container">
-            <div class="row row-cols-3 row-cols-lg-5 g-6 g-lg-4">
-                <c:forEach items="${items}" var="item">
-                        <div class="col">
-                            <div class="p-3 border bg-light test-item card-img-top" >Item-image</div>
-                            <h5 class="card-title">${item.name}</h5>
-
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                </c:forEach>
-            </div>
-
-            <hr>
-
             <div class="container">
                 <div class="row gx-5">
                     <c:forEach items="${items}" var="item">
-                        <div class="col border">
-                            <div class="p-3 border bg-light test-item card-img-top" >Item-image</div>
-                            <h5 class="card-title">${item.name}</h5>
+                        <div class="col border p-3">
+                            <div class="p-3 bg-light test-item card-img-top" >Item-image</div>
+                            <h5 class="bold">${item.name}</h5>
 
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <a href="${pageContext.request.contextPath}/item?id=${item.id}">
+                                <button type="button" class="btn btn-outline-primary">More Info</button>
+                            </a>
+<%--                            TODO: update btn + related controller--%>
+<%--                            TODO; delete btn + related controller--%>
                         </div>
                     </c:forEach>
                 </div>
