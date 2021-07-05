@@ -2,12 +2,11 @@ package com.intern_project.museum_of_interesting_things.entity;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Table(name = "items")
 @Entity(name = "Item")
@@ -27,11 +26,13 @@ public class Item {
     @Column(name = "description")
     private String description;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "date_acquired")
     private Date dateAcquired;
 
     @Column(name = "is_lost")
     private int isLost;
+
 
     @Column(name = "is_museum_item")
     private int isMuseumItem;
@@ -46,7 +47,7 @@ public class Item {
             joinColumns = @JoinColumn(name = "item_id"), //write how bridge table get connected with this source table/entity
             inverseJoinColumns = @JoinColumn(name = "location_id") //write how bridge table get connected with other target table/entity
     )
-    private Set<Location> locations;
+    private List<Location> locations;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<EmployeeItem> employeeItems = new HashSet<>();
@@ -56,7 +57,8 @@ public class Item {
 
     public void addLocationToItem(Location location) {
         if (locations == null) {
-            locations = new HashSet<>();
+//            locations = new HashSet<>();
+            locations = new ArrayList<>();
         }
         locations.add(location);
     }

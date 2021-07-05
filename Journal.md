@@ -48,3 +48,10 @@ Tasks Completed:
 Tasks Completed:
 * view for all items added
 
+
+7/1/2021
+Tasks Completed:
+* add view for individual item includes lostInfo,appraiseInfo,locationInfo (item.jsp)
+
+
+
