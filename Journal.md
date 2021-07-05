@@ -54,4 +54,12 @@ Tasks Completed:
 * add view for individual item includes lostInfo,appraiseInfo,locationInfo (item.jsp)
 
 
+7/2/2021 - 7/4/2021
+Tasks Completed:
+* working on updating item entity from view
+    * handling gen info
+    * handling lost info
+    * handling locations list info
+    
+
 
