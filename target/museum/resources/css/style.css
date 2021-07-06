@@ -33,4 +33,14 @@ fieldset legend {
 
 .icon {
     width: 16px;
+    cursor: pointer;
+}
+
+.icon:hover {
+    width: 20px;
+    cursor: pointer;
+}
+
+.form-control {
+    max-width: 50%;
 }

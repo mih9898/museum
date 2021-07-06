@@ -51,39 +51,10 @@ public class Item {
     private List<Location> locations;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<EmployeeItem> employeeItems = new HashSet<>();
+    private Set<EmployeeItem> employeeItems;
 
 
-    /**
-     * Fill current object fields with new object values, ignoring new NULLs. Old values are overwritten.
-     *
-     * @param newObject Same type object with new values.
-     */
-    public void merge(Object newObject) {
 
-        assert this.getClass().getName().equals(newObject.getClass().getName());
-
-        for (Field field : this.getClass().getDeclaredFields()) {
-
-            for (Field newField : newObject.getClass().getDeclaredFields()) {
-
-                if (field.getName().equals(newField.getName())) {
-
-                    try {
-
-                        field.set(
-                                this,
-                                newField.get(newObject) == null
-                                        ? field.get(this)
-                                        : newField.get(newObject));
-
-                    } catch (IllegalAccessException ignore) {
-                        // Field update exception on final modifier and other cases.
-                    }
-                }
-            }
-        }
-    }
 
     public void addLocationToItem(Location location) {
         if (locations == null) {

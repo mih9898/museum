@@ -40,3 +40,7 @@ fieldset legend {
     width: 20px;
     cursor: pointer;
 }
+
+.form-control {
+    max-width: 50%;
+}

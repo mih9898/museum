@@ -1,6 +1,7 @@
 package com.intern_project.museum_of_interesting_things.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
@@ -29,6 +30,7 @@ public class LostItem {
     @OneToOne
     @MapsId
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @JoinColumn(name = "item_id")
     private Item item;
 

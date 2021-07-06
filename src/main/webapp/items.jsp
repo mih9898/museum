@@ -19,7 +19,7 @@
             <div class="container">
                 <div class="row gx-5">
                     <c:forEach items="${items}" var="item">
-                        <div class="col border p-3">
+                        <div class="col-3 border p-3">
                             <div class="p-3 bg-light test-item card-img-top" >Item-image</div>
                             <h5 class="bold">${item.name}</h5>
 

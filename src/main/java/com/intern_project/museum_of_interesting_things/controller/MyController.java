@@ -25,6 +25,8 @@ import java.net.http.HttpRequest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
@@ -52,7 +54,11 @@ public class MyController {
     @RequestMapping(value = "/items", method = RequestMethod.GET)
     public String items(Model model) {
         List<Item> items = genericDao.getAll(Item.class);
+        items = items.stream()
+                .distinct()
+                .collect(Collectors.toList());
         model.addAttribute("items", items);
+
         return "items";
     }
 
