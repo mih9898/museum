@@ -2,6 +2,8 @@ package com.intern_project.museum_of_interesting_things.controller;
 
 import com.intern_project.museum_of_interesting_things.entity.*;
 import com.intern_project.museum_of_interesting_things.repository.GenericDao;
+import com.intern_project.museum_of_interesting_things.utils.EntityUtility;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -61,25 +63,20 @@ public class MyController {
         model.addAttribute("item", item);
         return "item";
     }
-//    @InitBinder
-//    public void initBinder(WebDataBinder binder) {
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-//        dateFormat.setLenient(false);
-//        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-//    }
+
     @RequestMapping(value = "/updateItem", method = RequestMethod.POST)
-    public String updateItem(@ModelAttribute("updatedItem") Item updatedItem, HttpServletRequest request) throws IOException {
+    public String updateItem(@ModelAttribute("updatedItem") Item updatedItem,
+                             HttpServletRequest request,
+                             Model model,
+                             @RequestParam int id
+    ) {
         System.out.println("updatedItem" + updatedItem);
         String referer = request.getHeader("Referer");
-        for (Location l : updatedItem.getLocations()) {
-            System.out.println(l);
-        }
-        for (EmployeeItem ei : updatedItem.getEmployeeItems()) {
-            System.out.println(ei.getWorthValue());
-        }
-
-        return "item";
-//        return "redirect:" + referer;
+        Item original = genericDao.get(Item.class, id);
+        EntityUtility.merge(original, updatedItem);
+        genericDao.saveOrUpdate(original);
+        model.addAttribute("item", original);
+        return "redirect:" + referer;
     }
 
 

@@ -30,3 +30,7 @@ fieldset legend {
 .inactive {
     display: none;
 }
+
+.icon {
+    width: 16px;
+}

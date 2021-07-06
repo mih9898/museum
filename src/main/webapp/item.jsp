@@ -10,6 +10,7 @@
 <c:import url="includes/head.jsp"/>
 
 <c:import url="includes/header.jsp"/>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <main id="main">
 
@@ -27,7 +28,7 @@
                                 <form:input class="inactive" type="text" path="name" value="${item.name}"/>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-outline-info" onclick="updateField(this)">Update</button>
+                                <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg" class="icon" onclick="updateField(this)" />
                             </td>
 
                         </tr>
@@ -38,17 +39,19 @@
                                 <form:input path="description" type="text" class="inactive" value="${item.description}"/>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-outline-info" onclick="updateField(this)">Update</button>
+                                <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg" class="icon" onclick="updateField(this)" />
                             </td>
                         </tr>
                         <tr>
                             <th>Date acquired</th>
                             <td>
-                                <span class="active">${item.dateAcquired}</span>
+                                <span class="active">
+                                    <fmt:formatDate pattern="MM/dd/yyyy" value="${item.dateAcquired}" />
+                                </span>
                                 <form:input path="dateAcquired" class="inactive" type="date" />
                             </td>
                             <td>
-                                <button type="button" class="btn btn-outline-info" onclick="updateField(this)">Update</button>
+                                <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg" class="icon" onclick="updateField(this)" />
                             </td>
                         </tr>
 
@@ -60,7 +63,7 @@
                                             value="${item.isMuseumItem}" placeholder="0 for nonmuseum and 1 for museum item" />
                             </td>
                             <td>
-                                <button type="button" class="btn btn-outline-info" onclick="updateField(this)">Update</button>
+                                <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg" class="icon" onclick="updateField(this)" />
                             </td>
                         </tr>
                     </table>
@@ -79,22 +82,24 @@
                                 <form:input path="lostItem.description" type="text" class="inactive" value="${item.lostItem.description}"/>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-outline-info" onclick="updateField(this)">Update</button>
+                                <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg" class="icon" onclick="updateField(this)" />
                             </td>
                         </tr>
                         <tr>
                             <th>Date when lost</th>
                             <td>
-                                <span class="active">${item.lostItem.dateLost}</span>
+                                <span class="active">
+                                        <fmt:formatDate pattern="MM/dd/yyyy" value="${item.lostItem.dateLost}" />
+                                </span>
                                 <form:input path="lostItem.dateLost" type="date" class="inactive" />
                             </td>
                             <td>
-                                <button type="button" class="btn btn-outline-info" onclick="updateField(this)">Update</button>
+                                <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg" class="icon" onclick="updateField(this)" />
                             </td>
                         </tr>
 
 <%--                        <form:input path="dateAcquired" class="inactive" type="date" />--%>
-
+                        <form:input path="lostItem.id" type="hidden" class="inactive" value="${item.id}" />
                     </table>
                 </div>
             </div>
@@ -117,30 +122,38 @@
                             </thdead>
                             <tbody>
                             <c:forEach items="${item.locations}" varStatus="lc" var="location">
+                                <b>${location.dateWhenPut}</b>
                                 <tr>
                                     <td>
-                                        <span class="active"> ${location.storageType}</span>
-                                        <form:input type="text" class="inactive1" path="locations[${lc.index}].storageType" value="${location.storageType}"/>
+                                        <span class="active loc-info"> ${location.storageType}</span>
+                                        <form:input type="text" class="inactive loc-input" path="locations[${lc.index}].storageType" value="${location.storageType}"/>
                                     </td>
                                     <td>
-                                        <span class="active"> ${location.description}</span>
-                                        <form:input type="text" class="inactive1" path="locations[${lc.index}].description" value="${location.description}"/>
+                                        <span class="active loc-info"> ${location.description}</span>
+                                        <form:input type="text" class="inactive loc-input" path="locations[${lc.index}].description" value="${location.description}"/>
                                     </td>
                                     <td>
-                                        <span class="active"> ${location.dateWhenPut}</span>
-                                        <form:input type="date" class="inactive1" path="locations[${lc.index}].dateWhenPut" value="${location.dateWhenPut}"/>
+                                        <span class="active loc-info">
+                                                <fmt:formatDate pattern="MM/dd/yyyy" value="${location.dateWhenPut}" />
+                                        </span>
+                                        <form:input type="date" class="inactive loc-input" path="locations[${lc.index}].dateWhenPut" value="${location.dateWhenPut}"/>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-outline-info" onclick="updateRow(this)">Update</button>
+                                        <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg" class="icon" onclick="updateRow(this)" />
+<%--                                        <button type="button" class="btn btn-outline-info" onclick="updateRow(this)">Update</button>--%>
                                     </td>
                                 </tr>
+                                <form:input type="hidden" path="locations[${lc.index}].id" value="${location.id}"/>
+
                             </c:forEach>
+
+
                             </tbody>
                         </table>
                     </div>
                 </c:if>
                 <c:if test="${not empty item.employeeItems}">
-                    <div class="col-lg-6 col-sm-12">
+                    <div class="col-lg-12 col-sm-12">
                         <table class="table table-bordered table-striped">
                             <legend>Employee(s) appraise information</legend>
                             <thdead>
@@ -156,7 +169,6 @@
                                     <td>${item.name}</td>
                                     <td>${employeeItem.employee.firstName} ${employeeItem.employee.lastName}</td>
 <%--                                    <form:input type="number" class="inactive1" path="employeeItems[${emp.index}].worthValue" value="${employeeItem.worthValue}"/>--%>
-
                                     <td>${employeeItem.worthValue} $</td>
                                 </tr>
                             </c:forEach>
@@ -167,6 +179,7 @@
             </div>
         </div>
         <td><input type="submit" value="Submit"/></td>
+        <form:input type="hidden" path="id" value="${item.id}"/>
 
     </form:form>
 </main>
@@ -189,7 +202,15 @@
     }
 
     function updateRow(updateBtn) {
-       //TODO
+        let tableRawDOM = updateBtn.parentNode.parentNode;
+        updateBtn.parentNode.classList.add("inactive");
+        [...tableRawDOM.querySelectorAll(".loc-info")].forEach(el => {
+                el.classList.remove("active");
+                el.classList.add("inactive");
+            }
+        );
+
+        [...tableRawDOM.querySelectorAll(".loc-input")].forEach(el => el.classList.remove("inactive"));
     }
 </script>
 

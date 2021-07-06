@@ -56,7 +56,7 @@ Tasks Completed:
 
 7/2/2021 - 7/4/2021
 Tasks Completed:
-* working on updating item entity from view
+* working on updating item entity from view (setup for merging item objects for update operation)
     * handling gen info
     * handling lost info
     * handling locations list info

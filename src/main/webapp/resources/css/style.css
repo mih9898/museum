@@ -30,3 +30,13 @@ fieldset legend {
 .inactive {
     display: none;
 }
+
+.icon {
+    width: 16px;
+    cursor: pointer;
+}
+
+.icon:hover {
+    width: 20px;
+    cursor: pointer;
+}
