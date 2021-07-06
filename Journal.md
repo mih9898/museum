@@ -60,6 +60,12 @@ Tasks Completed:
     * handling gen info
     * handling lost info
     * handling locations list info
+  
+7/5/2021
+Tasks Completed:
+* update item via view is working well 
+    * fixed bug with losing dates + empItem set when item updated
+
     
 
 
