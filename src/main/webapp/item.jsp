@@ -167,18 +167,6 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-lg-6 col-sm-12">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-header lead">
-                        Generate new location
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">An item</li>
-                        <li class="list-group-item">A second item</li>
-                        <li class="list-group-item">A third item</li>
-                    </ul>
-                </div>
-            </div>
             </div>
         </c:if>
         <c:if test="${not empty item.employeeItems}">
@@ -218,7 +206,10 @@
     <hr>
 
     <h3>Generate new location</h3>
-    <form action="" class="row ms-3 p-3">
+    <form action="${pageContext.request.contextPath}/addNewLocation"
+          class="row ms-3 p-3"
+          method="post"
+    >
         <div class="row mb-3">
             <label for="storageType" class="col-sm-2 col-form-label">Storage type:</label>
             <div class="col-sm-10">
@@ -237,6 +228,12 @@
                 <input type="date" class="form-control" name="dateWhenPut" id="dateWhenPut">
             </div>
         </div>
+        <div class="row center">
+            <div class="col text-center center">
+                <button type="submit" class="btn btn-success mx-auto">Update</button>
+            </div>
+        </div>
+        <input type="hidden" name="id" value="${item.id}">
     </form>
 </main>
 

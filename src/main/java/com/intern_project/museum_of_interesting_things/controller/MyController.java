@@ -66,6 +66,7 @@ public class MyController {
     public String item(Model model, @RequestParam int id) throws IOException {
         Item item = genericDao.get(Item.class, id);
         model.addAttribute("updatedItem", new Item());
+        model.addAttribute("newLocation", new Location());
         model.addAttribute("item", item);
         return "item";
     }
@@ -84,6 +85,27 @@ public class MyController {
         model.addAttribute("item", original);
         return "redirect:" + referer;
     }
+
+    @RequestMapping(value = "/addNewLocation", method = RequestMethod.POST)
+    public String addNewLocation(@RequestParam(name = "storageType", required = false) String storageType,
+                                 @RequestParam(name = "locDescription", required = false) String locDescription,
+                                 @RequestParam(name = "dateWhenPut", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateWhenPut,
+                             HttpServletRequest request,
+                             Model model,
+                             @RequestParam int id
+    ) {
+        Item item = genericDao.get(Item.class, id);
+        if (!storageType.isEmpty()) {
+            Location location = new Location(storageType, locDescription, dateWhenPut);
+            item.addLocationToItem(location);
+        }
+        String referer = request.getHeader("Referer");
+        genericDao.saveOrUpdate(item);
+        model.addAttribute("item", item);
+        return "redirect:" + referer;
+    }
+
+
 
 
 
