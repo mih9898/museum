@@ -22,7 +22,7 @@
 
     <div class="container" id="content">
         <h1>${item.name} information</h1>
-        <div class="row mb-2" id="movieTableInfo">
+        <div class="row mb-2">
             <div class="col-lg-6 col-sm-12">
                 <table class="table table-bordered table-striped">
                     <legend>${employee.firstName} ${employee.lastName}'s information</legend>
@@ -145,10 +145,26 @@
                                  onclick="updateField(this)"/>
                         </td>
                     </tr>
-<%--                    <form:hidden path="employeeItems" value="${employee.employeeItems}" />--%>
-<%--                    <form:hidden path="phoneNumbers" value="${employee.phoneNumbers}" />--%>
                     <form:hidden path="id" value="${employee.id}" />
                 </table>
+            </div>
+
+
+            <hr>
+
+            <div class="row mb-2" id="movieTableInfo">
+                <div class="col-lg-6 col-sm-12">
+            <table class="table table-bordered table-striped">
+                <tr>
+                <th>Phone number(s)</th>
+                </tr>
+                <c:forEach items="${employee.phoneNumbers}" var="phone">
+                    <tr>
+                        <td>${phone.phoneNumber}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+                </div>
             </div>
 
 
