@@ -167,18 +167,6 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-lg-6 col-sm-12">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-header lead">
-                        Generate new location
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">An item</li>
-                        <li class="list-group-item">A second item</li>
-                        <li class="list-group-item">A third item</li>
-                    </ul>
-                </div>
-            </div>
             </div>
         </c:if>
         <c:if test="${not empty item.employeeItems}">
@@ -216,7 +204,8 @@
 
 
     <hr>
-
+<%--    //TODO: put to the location block -> --%>
+<%--            inputs as inactive tds + btn with js to make them visible--%>
     <h3>Generate new location</h3>
     <form action="${pageContext.request.contextPath}/addNewLocation"
           class="row ms-3 p-3"
@@ -247,7 +236,7 @@
         </div>
         <input type="hidden" name="id" value="${item.id}">
     </form>
-</main>
+    </main>
 
 
 <script>

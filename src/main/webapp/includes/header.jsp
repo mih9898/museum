@@ -25,6 +25,10 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active lead" aria-current="page"
+                           href="${pageContext.request.contextPath}/addEmployee">New Employee</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active lead" aria-current="page"
                            href="${pageContext.request.contextPath}/test">Test</a>
                     </li>
 <%--                    <sec:authorize access="!isAuthenticated()">--%>

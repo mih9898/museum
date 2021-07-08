@@ -51,7 +51,7 @@ public class Employee {
     private String zipAddress;
 
     @Column(name = "with_us")
-    private int withUs;
+    private Boolean withUs;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<PhoneNumber> phoneNumbers = new HashSet<>();
@@ -67,7 +67,7 @@ public class Employee {
     }
 
     public Employee(String position, String firstName, String lastName,
-                    double salary, String address, String city, String state, String zipAddress, int withUs) {
+                    double salary, String address, String city, String state, String zipAddress, boolean withUs) {
         this.position = position;
         this.firstName = firstName;
         this.lastName = lastName;

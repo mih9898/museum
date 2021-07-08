@@ -204,7 +204,8 @@
 
 
     <hr>
-
+<%--    //TODO: put to the location block -> --%>
+<%--            inputs as inactive tds + btn with js to make them visible--%>
     <h3>Generate new location</h3>
     <form action="${pageContext.request.contextPath}/addNewLocation"
           class="row ms-3 p-3"
@@ -235,7 +236,7 @@
         </div>
         <input type="hidden" name="id" value="${item.id}">
     </form>
-</main>
+    </main>
 
 
 <script>

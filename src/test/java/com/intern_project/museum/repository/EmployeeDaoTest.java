@@ -81,7 +81,7 @@ public class EmployeeDaoTest extends AbstractTest {
 
     @Test
     void saveSuccess() {
-        Employee employee = new Employee("programmer", "Rojer", "Smith", 111.22, "address", "city", "WI", "1233", 1);
+        Employee employee = new Employee("programmer", "Rojer", "Smith", 111.22, "address", "city", "WI", "1233", true);
         dao.save(employee);
         Employee inserted = dao.get(Employee.class, 2);
         assertNotNull(inserted);

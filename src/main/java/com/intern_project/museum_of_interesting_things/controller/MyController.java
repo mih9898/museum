@@ -145,10 +145,33 @@ public class MyController {
     }
 
 
-
     @RequestMapping(value = "/addItem", method = RequestMethod.GET)
     public String addItemToDB(Model model) {
         return "newItem";
+    }
+
+    @RequestMapping(value = "/addEmployee", method = RequestMethod.GET)
+    public String addEmployee(Model model) {
+//        List<PhoneNumber> phones = new ArrayList<>();
+        model.addAttribute("newEmployee", new Employee());
+        model.addAttribute("phoneNumber", new PhoneNumber());
+        return "newEmployee";
+    }
+
+    @RequestMapping(value = "/addEmployee", method = RequestMethod.POST)
+    public String addEmployee(Model model,
+                              @ModelAttribute("newEmployee") Employee newEmployee,
+                              @RequestParam("phoneNumber") int phoneNumber
+    ) {
+        PhoneNumber number = new PhoneNumber(phoneNumber);
+        number.setEmployee(newEmployee);
+        newEmployee.addPhoneNumberToEmployee(number);
+        genericDao.save(newEmployee);
+        model.addAttribute("title", "New item was successfully saved");
+
+
+//        model.addAttribute("newEmployee", new Employee());
+        return "newEmployee";
     }
 
     @RequestMapping("/home")
