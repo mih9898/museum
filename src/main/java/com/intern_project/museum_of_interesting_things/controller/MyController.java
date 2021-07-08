@@ -108,7 +108,7 @@ public class MyController {
 
 
 
-
+    //TODO: replace requestParams with modelAttribute -> change on view as well
     @RequestMapping(value = "/addItem", method = RequestMethod.POST)
     public String addItem(@RequestParam(name = "itemName", required = false) String itemName,
                           @RequestParam(name = "itemDescription", required = false) String itemDescription,
@@ -155,7 +155,6 @@ public class MyController {
 //        List<PhoneNumber> phones = new ArrayList<>();
         model.addAttribute("newEmployee", new Employee());
         model.addAttribute("phoneNumber", new PhoneNumber());
-        model.addAttribute("title", "");
 
         return "newEmployee";
     }
@@ -163,14 +162,25 @@ public class MyController {
     @RequestMapping(value = "/addEmployee", method = RequestMethod.POST)
     public String addEmployee(Model model,
                               @ModelAttribute("newEmployee") Employee newEmployee,
-                              @RequestParam("phoneNumber") int phoneNumber
+                              @RequestParam(value = "phoneNumber", required = false) int phoneNumber,
+                              HttpServletRequest request
     ) {
-        PhoneNumber number = new PhoneNumber(phoneNumber);
-        number.setEmployee(newEmployee);
-        newEmployee.addPhoneNumberToEmployee(number);
+        System.out.println(phoneNumber);
+
+        //TODO: decide what to do with input number optionality(if not entered then err bcause num cannot be null)
+        //      or leave like this (0 instead null)
+        if (phoneNumber != 0) {
+            PhoneNumber number = new PhoneNumber(phoneNumber);
+            number.setEmployee(newEmployee);
+            newEmployee.addPhoneNumberToEmployee(number);
+        }
+
         genericDao.save(newEmployee);
-        model.addAttribute("title", "New item was successfully saved");
-        return "newEmployee";
+        HttpSession session = request.getSession();
+        session.setAttribute("title", "New item was successfully saved");
+        String referer = request.getHeader("Referer");
+
+        return "redirect:" + referer;
     }
 
     @RequestMapping(value = "/employees", method = RequestMethod.GET)

@@ -14,11 +14,8 @@
     <div class="container" id="content">
         <h1>Add new Employee</h1>
         <aside>
-            <c:if test="${not empty title}" >
-                <p class="lead text-success">
-                        ${title}
-                </p>
-            </c:if>
+                <h3>${title}</h3>
+            <c:remove var="title" scope="session"/>
 
         </aside>
         <fieldset class="row mb-1 ms-3 p-3">
@@ -98,7 +95,7 @@
                 <div class="row mb-3">
                     <label for="phoneNumber" class="col-sm-2 col-form-label">Phone number</label>
                     <div class="col-sm-10">
-                            <input id="phoneNumber" name="phoneNumber" type="number" class="form-control"/>
+                            <input id="phoneNumber" name="phoneNumber" type="number" value="0" class="form-control"/>
                     </div>
                 </div>
 
@@ -115,6 +112,9 @@
 
     </div>
 
+    <%
+        session.removeAttribute("title");
+    %>
 
 </main>
 

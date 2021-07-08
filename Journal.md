@@ -66,6 +66,14 @@ Tasks Completed:
 * update item via view is working well 
     * fixed bug with losing dates + empItem set when item updated
 
+
+7/6/2021 - 7/7/2021
+Tasks Completed:
+* bugfix(bruforced) with duplicate entities when displaying all
+* added functionality: adding new location to already existing item via update
+* added functionality: adding new employee including phone number
+* added functionality: displaying all employees
+
     
 
 
