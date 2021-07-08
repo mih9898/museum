@@ -1,9 +1,6 @@
 package com.intern_project.museum_of_interesting_things.utils;
 
-import com.intern_project.museum_of_interesting_things.entity.EmployeeItem;
-import com.intern_project.museum_of_interesting_things.entity.Item;
-import com.intern_project.museum_of_interesting_things.entity.Location;
-import com.intern_project.museum_of_interesting_things.entity.LostItem;
+import com.intern_project.museum_of_interesting_things.entity.*;
 import org.springframework.beans.BeanUtils;
 
 import java.lang.reflect.InvocationTargetException;
@@ -36,7 +33,8 @@ public class EntityUtility {
         }
     }
 
-
+    //TODO: displace employeeItems, lostItem by adding form:hidden on general form
+    //TODO: put all logic from here to servicer package + add needed dao stuff
     public static void merge(Item orig, Item updated) {
         List<Location> copy = new ArrayList<>(orig.getLocations());
         LostItem lostCopy = orig.getLostItem();
@@ -60,6 +58,21 @@ public class EntityUtility {
             orig.setEmployeeItems(employeeItemsCopy);
         }
 
+    }
+
+
+    public static void mergeEmployees(Employee orig, Employee updated) {
+        Set<PhoneNumber> phoneNumbersCopy = orig.getPhoneNumbers();
+        Set<EmployeeItem>employeeItemsCopy = orig.getEmployeeItems();
+        mergeObjectsSimple(orig, updated);
+
+        if (!phoneNumbersCopy.isEmpty() && orig.getPhoneNumbers().isEmpty()) {
+            orig.setPhoneNumbers(phoneNumbersCopy);
+        }
+
+        if (!employeeItemsCopy.isEmpty() && orig.getEmployeeItems().isEmpty()) {
+            orig.setEmployeeItems(employeeItemsCopy);
+        }
     }
 
 

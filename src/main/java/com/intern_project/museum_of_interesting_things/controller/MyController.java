@@ -40,7 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class MyController {
 
-    private GenericDao genericDao;
+    private final GenericDao genericDao;
 
     private final Logger logger = LogManager.getLogger(this.getClass());
 
@@ -193,6 +193,40 @@ public class MyController {
 
         return "employees";
     }
+
+    @RequestMapping(value = "/employee", method = RequestMethod.GET)
+    public String employee(Model model, @RequestParam int id) throws IOException {
+        Employee employee = genericDao.get(Employee.class, id);
+        model.addAttribute("updatedEmp", new Employee());
+        model.addAttribute("employee", employee);
+        return "employee";
+    }
+
+    @RequestMapping(value = "/updatedEmp", method = RequestMethod.POST)
+    public String updatedEmp(@ModelAttribute("updatedEmp") Employee updatedEmp,
+                             HttpServletRequest request,
+                             Model model,
+                             @RequestParam int id
+    ) {
+
+        Employee orig = genericDao.get(Employee.class, id);
+        System.out.println("orig: " + orig);
+        System.out.println("updatedEmp: " + updatedEmp);
+
+        EntityUtility.mergeEmployees(orig, updatedEmp);
+        System.out.println("orig after merge: " + orig);
+        genericDao.saveOrUpdate(orig);
+
+
+
+        String referer = request.getHeader("Referer");
+//        Employee original = genericDao.get(Employee.class, id);
+//        EntityUtility.merge(original, updatedEmp);
+//        genericDao.saveOrUpdate(original);
+//        model.addAttribute("item", original);
+        return "redirect:" + referer;
+    }
+
 
     @RequestMapping("/home")
     public String home(Model model) {
