@@ -21,6 +21,10 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active lead" aria-current="page"
+                           href="${pageContext.request.contextPath}/employees">Employees</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active lead" aria-current="page"
                            href="${pageContext.request.contextPath}/addItem">New Item</a>
                     </li>
                     <li class="nav-item">

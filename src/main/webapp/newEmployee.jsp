@@ -13,7 +13,14 @@
 
     <div class="container" id="content">
         <h1>Add new Employee</h1>
+        <aside>
+            <c:if test="${not empty title}" >
+                <p class="lead text-success">
+                        ${title}
+                </p>
+            </c:if>
 
+        </aside>
         <fieldset class="row mb-1 ms-3 p-3">
 
             <form:form action="${pageContext.request.contextPath}/addEmployee" method="POST"

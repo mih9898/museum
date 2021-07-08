@@ -13,7 +13,14 @@
 
     <div class="container" id="content">
         <h1>Add new Employee</h1>
+        <aside>
+            <c:if test="${not empty title}" >
+                <p class="lead text-success">
+                        ${title}
+                </p>
+            </c:if>
 
+        </aside>
         <fieldset class="row mb-1 ms-3 p-3">
 
             <form:form action="${pageContext.request.contextPath}/addEmployee" method="POST"
@@ -36,6 +43,13 @@
                     <form:label path="lastName" class="col-sm-2 col-form-label">Last name</form:label>
                     <div class="col-sm-10">
                         <form:input path="lastName" type="text" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <form:label path="position" class="col-sm-2 col-form-label">Position</form:label>
+                    <div class="col-sm-10">
+                        <form:input path="position" type="text" class="form-control"/>
                     </div>
                 </div>
 
@@ -74,13 +88,6 @@
                     </div>
                 </div>
 
-<%--                <div class="row mb-3">--%>
-<%--                    <label for="checkboxWithUs" class="col-sm-2 col-form-label">With us</label>--%>
-<%--                    <div class="col-sm-10">--%>
-<%--                        <input id="checkboxWithUs" name="withUs" class="form-check-input" type="checkbox"  />--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-
                 <div class="row mb-3">
                     <form:label path="withUs" class="col-sm-2 col-form-label">With us</form:label>
                     <div class="col-sm-10">
@@ -95,12 +102,6 @@
                     </div>
                 </div>
 
-
-
-
-
-
-
                 <div class="row center">
                     <div class="col text-center center">
                         <button type="submit" class="btn btn-success mx-auto">Add Employee</button>
@@ -111,8 +112,6 @@
         </fieldset>
 
         <hr>
-
-
 
     </div>
 

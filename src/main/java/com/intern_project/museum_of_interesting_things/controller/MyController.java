@@ -155,6 +155,8 @@ public class MyController {
 //        List<PhoneNumber> phones = new ArrayList<>();
         model.addAttribute("newEmployee", new Employee());
         model.addAttribute("phoneNumber", new PhoneNumber());
+        model.addAttribute("title", "");
+
         return "newEmployee";
     }
 
@@ -168,10 +170,18 @@ public class MyController {
         newEmployee.addPhoneNumberToEmployee(number);
         genericDao.save(newEmployee);
         model.addAttribute("title", "New item was successfully saved");
-
-
-//        model.addAttribute("newEmployee", new Employee());
         return "newEmployee";
+    }
+
+    @RequestMapping(value = "/employees", method = RequestMethod.GET)
+    public String employees(Model model) {
+        List<Employee> employees = genericDao.getAll(Employee.class);
+        employees = employees.stream()
+                .distinct()
+                .collect(Collectors.toList());
+        model.addAttribute("employees", employees);
+
+        return "employees";
     }
 
     @RequestMapping("/home")
