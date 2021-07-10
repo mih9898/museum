@@ -2,6 +2,8 @@ package com.intern_project.museum_of_interesting_things.entity;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,8 +52,9 @@ public class Item {
     )
     private List<Location> locations;
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<EmployeeItem> employeeItems;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true) //fetch eafer was here
+    private List<EmployeeItem> employeeItems;
 
 
 
@@ -66,7 +69,7 @@ public class Item {
 
     public void addEmployeeAprToItem(EmployeeItem employeeItem) {
         if (employeeItems == null) {
-            employeeItems = new HashSet<>();
+            employeeItems = new ArrayList<>();
         }
         employeeItems.add(employeeItem);
     }

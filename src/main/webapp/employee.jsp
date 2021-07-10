@@ -229,9 +229,6 @@
             firstPreviousTdChild.nextElementSibling.classList.remove("inactive");
         }
 
-
-
-
         firstPreviousTdChild.classList.add("inactive");
         firstPreviousTdChild.classList.remove("active");
         lastPreviousTdChild.classList.remove("inactive");

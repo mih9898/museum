@@ -181,12 +181,22 @@
                     </tr>
                 </thdead>
                 <tbody>
-                <c:forEach items="${item.employeeItems}" varStatus="emp" var="employeeItem">
+                <c:forEach items="${item.employeeItems}" varStatus="empItem" var="employeeItem">
                     <tr>
                         <td>${item.name}</td>
                         <td>${employeeItem.employee.firstName} ${employeeItem.employee.lastName}</td>
                             <%--                                    <form:input type="number" class="inactive1" path="employeeItems" value="${employeeItem.worthValue}"/>--%>
-                        <td>${employeeItem.worthValue} $</td>
+
+                        <td>
+                            <span class="active ei-info"> ${employeeItem.worthValue} $</span>
+                            <form:input type="text" class="ei-input inactive"
+                                        path="employeeItems[${empItem.index}].worthValue" value="${employeeItem.worthValue}"/>
+                            <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg"
+                                 class="icon" onclick="updateWorthVal(this)"/>
+                        </td>
+                        <form:input type="hidden" path="employeeItems[${empItem.index}].id" value="${employeeItem.id}"/>
+                        <form:input type="hidden" path="employeeItems[${empItem.index}].employee.id" value="${employeeItem.employee.id}"/>
+                        <form:input type="hidden" path="employeeItems[${empItem.index}].item.id" value="${employeeItem.item.id}"/>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -236,10 +246,33 @@
         </div>
         <input type="hidden" name="id" value="${item.id}">
     </form>
+
+
+    <hr>
+
+
     </main>
 
 
 <script>
+
+    function updateWorthVal(updateBtn) {
+        updateBtn.classList.add("inactive");
+        let td = updateBtn.parentNode;
+        let readVal = td.firstElementChild;
+        readVal.classList.remove("active");
+        readVal.classList.add("inactive");
+        let input = readVal.nextElementSibling;
+        input.classList.remove("inactive");
+
+        console.log(updateBtn);
+        console.log(td);
+        console.log(readVal);
+        console.log(input);
+
+
+    }
+
     function updateField(updateBtn) {
         updateBtn.parentNode.classList.add("inactive");
         let previousTd = updateBtn.parentNode.previousElementSibling;

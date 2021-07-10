@@ -56,6 +56,7 @@ public class Employee {
 
     @Column(name = "with_us")
     private Boolean withUs;
+
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true) //fetch eager was here
     private List<PhoneNumber> phoneNumbers;

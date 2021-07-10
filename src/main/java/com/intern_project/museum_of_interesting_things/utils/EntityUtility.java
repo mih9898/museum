@@ -38,7 +38,7 @@ public class EntityUtility {
     public static void merge(Item orig, Item updated) {
         List<Location> copy = new ArrayList<>(orig.getLocations());
         LostItem lostCopy = orig.getLostItem();
-        Set<EmployeeItem> employeeItemsCopy = new HashSet<>(orig.getEmployeeItems());
+        List<EmployeeItem> employeeItemsCopy = new ArrayList<>(orig.getEmployeeItems());
         mergeObjectsSimple(orig, updated);
         // bruteforce bug fix(dates are lost when item is updated) + employeeItem set is lost as well
         for (int i = 0; i < orig.getLocations().size(); i++) {
