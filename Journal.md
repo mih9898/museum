@@ -74,6 +74,16 @@ Tasks Completed:
 * added functionality: adding new employee including phone number
 * added functionality: displaying all employees
 
+
+7/10/2021 ~ 1.30 hours
+Tasks Completed:
+* added functionality: editing  phone number(s) for already existed employee
+* added functionality: adding new phone number for already existed employee
+* added functionality: editing worth value for already existed item
+
+
+
+
     
 
 
