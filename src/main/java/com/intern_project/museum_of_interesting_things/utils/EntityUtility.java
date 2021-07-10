@@ -39,9 +39,7 @@ public class EntityUtility {
         List<Location> copy = new ArrayList<>(orig.getLocations());
         LostItem lostCopy = orig.getLostItem();
         Set<EmployeeItem> employeeItemsCopy = new HashSet<>(orig.getEmployeeItems());
-
         mergeObjectsSimple(orig, updated);
-
         // bruteforce bug fix(dates are lost when item is updated) + employeeItem set is lost as well
         for (int i = 0; i < orig.getLocations().size(); i++) {
             Location uLoc = copy.get(i);
@@ -62,14 +60,16 @@ public class EntityUtility {
 
 
     public static void mergeEmployees(Employee orig, Employee updated) {
-        Set<PhoneNumber> phoneNumbersCopy = orig.getPhoneNumbers();
+        List<PhoneNumber> phoneNumbersCopy = new ArrayList<>(orig.getPhoneNumbers());
         Set<EmployeeItem>employeeItemsCopy = orig.getEmployeeItems();
-        mergeObjectsSimple(orig, updated);
 
+        mergeObjectsSimple(orig, updated);
         if (!phoneNumbersCopy.isEmpty() && orig.getPhoneNumbers().isEmpty()) {
             orig.setPhoneNumbers(phoneNumbersCopy);
         }
-
+        for (PhoneNumber p : orig.getPhoneNumbers()) {
+            p.setEmployee(orig);
+        }
         if (!employeeItemsCopy.isEmpty() && orig.getEmployeeItems().isEmpty()) {
             orig.setEmployeeItems(employeeItemsCopy);
         }

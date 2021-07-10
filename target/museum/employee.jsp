@@ -11,6 +11,7 @@
 
 <c:import url="includes/header.jsp"/>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
 
 <main id="main">
 
@@ -158,9 +159,19 @@
                 <tr>
                 <th>Phone number(s)</th>
                 </tr>
-                <c:forEach items="${employee.phoneNumbers}" var="phone">
+                <c:forEach items="${employee.phoneNumbers}" varStatus="ph" var="phone">
                     <tr>
-                        <td>${phone.phoneNumber}</td>
+
+                        <td>
+                            <span class="active">${phone.phoneNumber}</span>
+                            <form:input type="number" class="inactive"
+                                        path="phoneNumbers[${ph.index}].phoneNumber" value="${phone.phoneNumber}"/>
+                        </td>
+                        <td>
+                            <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg" class="icon"
+                                 onclick="updateField(this)"/>
+                        </td>
+                        <form:hidden path="phoneNumbers[${ph.index}].id" value="${phone.id}" />
                     </tr>
                 </c:forEach>
             </table>
@@ -169,32 +180,6 @@
 
 
             <hr>
-
-<%--            <div class="row">--%>
-<%--                <h3>Location information</h3>--%>
-
-<%--                <c:if test="${not empty item.locations}">--%>
-<%--                <div class="col-lg-12 col-sm-12">--%>
-<%--                    <table class="table table-bordered table-striped">--%>
-<%--                        <thdead>--%>
-<%--                            <tr>--%>
-<%--                                <th>Storage type</th>--%>
-<%--                                <th>Description</th>--%>
-<%--                                <th>Date when put</th>--%>
-<%--                            </tr>--%>
-<%--                        </thdead>--%>
-<%--                        <tbody>--%>
-<%--                        <c:forEach items="${item.locations}" varStatus="lc" var="location">--%>
-<%--                            <tr>--%>
-
-<%--                            </tr>--%>
-<%--                            <form:input type="hidden" path="locations[${lc.index}].id" value="${location.id}"/>--%>
-
-<%--                        </c:forEach>--%>
-<%--                        </tbody>--%>
-<%--                    </table>--%>
-<%--                </div>--%>
-<%--            </div>--%>
 
             <div class="row center">
                 <div class="col text-center center">
@@ -208,25 +193,24 @@
 
             <hr>
 
-            <h3>Generate new location</h3>
-            <form action="${pageContext.request.contextPath}/addNewLocation"
-                  class="row ms-3 p-3"
-                  method="post"
-            >
-                <div class="row mb-3">
-                    <label for="storageType" class="col-sm-2 col-form-label">Storage type:</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="storageType" id="storageType">
-                    </div>
+            <h3>Generate new phone number</h3>
+            <form:form action="${pageContext.request.contextPath}/addPhone" modelAttribute="newPhone" method="post">
+            <div class="row mb-3">
+                <form:label path="phoneNumber" class="col-sm-2 col-form-label">Phone number:</form:label>
+                <div class="col-sm-10">
+                    <form:input type="number" path="phoneNumber" class="form-control" />
                 </div>
+            </div>
 
-                <div class="row center">
-                    <div class="col text-center center">
-                        <button type="submit" class="btn btn-success mx-auto submit-btn">Update</button>
-                    </div>
+            <div class="row center">
+                <div class="col text-center center">
+                    <button type="submit" class="btn btn-success mx-auto">Add</button>
                 </div>
-                <input type="hidden" name="id" value="${item.id}">
-            </form>
+            </div>
+
+        <input:hidden path="employee.id" value="${employee.id}" />
+            </form:form>
+
 </main>
 
 

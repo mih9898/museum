@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -54,16 +56,16 @@ public class Employee {
 
     @Column(name = "with_us")
     private Boolean withUs;
-
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<PhoneNumber> phoneNumbers = new HashSet<>();
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true) //fetch eager was here
+    private List<PhoneNumber> phoneNumbers;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<EmployeeItem> employeeItems = new HashSet<>();
 
     public void addPhoneNumberToEmployee(PhoneNumber phoneNumber) {
         if (phoneNumbers == null) {
-            phoneNumbers = new HashSet<>();
+            phoneNumbers = new ArrayList<>();
         }
         phoneNumbers.add(phoneNumber);
     }

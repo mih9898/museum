@@ -198,6 +198,7 @@ public class MyController {
     public String employee(Model model, @RequestParam int id) throws IOException {
         Employee employee = genericDao.get(Employee.class, id);
         model.addAttribute("updatedEmp", new Employee());
+        model.addAttribute("newPhone", new PhoneNumber());
         model.addAttribute("employee", employee);
         return "employee";
     }
@@ -211,10 +212,24 @@ public class MyController {
 
         Employee orig = genericDao.get(Employee.class, id);
         System.out.println("orig: " + orig);
+        for (PhoneNumber p :  orig.getPhoneNumbers()) {
+            System.out.println(p.getEmployee());
+        }
+        System.out.println();
+
         System.out.println("updatedEmp: " + updatedEmp);
+        for (PhoneNumber p :  updatedEmp.getPhoneNumbers()) {
+            System.out.println(p.getEmployee());
+        }
+        System.out.println();
 
         EntityUtility.mergeEmployees(orig, updatedEmp);
         System.out.println("orig after merge: " + orig);
+        for (PhoneNumber p :  orig.getPhoneNumbers()) {
+            System.out.println(p.getEmployee());
+        }
+        System.out.println();
+
         genericDao.saveOrUpdate(orig);
 
 
@@ -227,6 +242,19 @@ public class MyController {
         return "redirect:" + referer;
     }
 
+    @RequestMapping(value = "/addPhone", method = RequestMethod.POST)
+    public String addPhone(Model model, @ModelAttribute("newPhone") PhoneNumber phoneNumber, HttpServletRequest request) {
+        System.out.println(phoneNumber);
+        System.out.println(phoneNumber.getEmployee());
+        String referer = request.getHeader("Referer");
+
+        Employee emp = genericDao.get(Employee.class, phoneNumber.getEmployee().getId());
+        emp.addPhoneNumberToEmployee(phoneNumber);
+        phoneNumber.setEmployee(emp);
+        genericDao.saveOrUpdate(emp);
+        return "redirect:" + referer;
+
+    }
 
     @RequestMapping("/home")
     public String home(Model model) {

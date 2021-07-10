@@ -23,8 +23,12 @@ public class PhoneNumber {
     @Column(name = "phone_number")
     private int phoneNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="employee_id")
+
+    @ManyToOne
+    @JoinColumn(name = "employee_id",
+            foreignKey = @ForeignKey(name = "phone_numbers_ibfk_1"))
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name="employee_id")
     @ToString.Exclude
     private Employee employee;
 
