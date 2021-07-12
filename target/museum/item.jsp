@@ -66,9 +66,12 @@
                 <tr>
                     <th>Is museum item</th>
                     <td>
-                        <span class="active">${item.isMuseumItem == 1 ? "Yes" : "No"}</span>
-                        <form:input path="isMuseumItem" type="text" class="inactive"
-                                    value="${item.isMuseumItem}" placeholder="0 for nonmuseum and 1 for museum item"/>
+<%--                        <span class="active">${item.isMuseumItem == 1 ? "Yes" : "No"}</span>--%>
+<%--                        <form:input path="isMuseumItem" type="text" class="inactive"--%>
+<%--                                    value="${item.isMuseumItem}" placeholder="0 for nonmuseum and 1 for museum item"/>--%>
+
+                      <span class="active">${item.isMuseumItem}</span>
+                        <form:checkbox class="inactive" path="isMuseumItem" value="${item.isMuseumItem}"/>
                     </td>
                     <td>
                         <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg" class="icon"
@@ -190,7 +193,7 @@
                         <td>
                             <span class="active ei-info"> ${employeeItem.worthValue} $</span>
                             <form:input type="text" class="ei-input inactive"
-                                        path="employeeItems[${empItem.index}].worthValue" value="${employeeItem.worthValue}"/>
+                                        path="employeeItems[${empItem.index}].worthValue" value="${employeeItem.worthValue}" step="0.01"/>
                             <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg"
                                  class="icon" onclick="updateWorthVal(this)"/>
                         </td>
@@ -247,8 +250,42 @@
         <input type="hidden" name="id" value="${item.id}">
     </form>
 
-
     <hr>
+
+    <h3>Generate new appraisal of item</h3>
+    <form:form action="${pageContext.request.contextPath}/addNewAppraisal"
+               method="post"
+               modelAttribute="employeeItem"
+               class="mb-3"
+    >
+
+        <div class="row mb-3">
+            <form:label path="employee.id" class="col-sm-2 col-form-label">Employee:</form:label>
+<%--            Employee--%>
+            <div class="col-sm-10">
+                <form:select path="employee.id" name="employeeId">
+                    <c:forEach items="${allEmps}" var="emp">
+                        <form:option value="${emp.id}">${emp.firstName} ${emp.lastName}</form:option>
+                    </c:forEach>
+                </form:select>
+            <%--                <form:input type="text" class="form-control" name="storageType" path="employee">--%>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <form:label path="worthValue" class="col-sm-2 col-form-label">Worth value:</form:label>
+            <div class="col-sm-10">
+                <form:input type="number" class="form-control" path="worthValue" step="0.01" />
+            </div>
+        </div>
+
+        <div class="row center">
+            <div class="col text-center center">
+                <button type="submit" class="btn btn-success mx-auto">Update</button>
+            </div>
+        </div>
+        <form:input type="hidden" path="item.id" value="${item.id}"/>
+    </form:form>
 
 
     </main>
@@ -264,13 +301,6 @@
         readVal.classList.add("inactive");
         let input = readVal.nextElementSibling;
         input.classList.remove("inactive");
-
-        console.log(updateBtn);
-        console.log(td);
-        console.log(readVal);
-        console.log(input);
-
-
     }
 
     function updateField(updateBtn) {
@@ -278,6 +308,11 @@
         let previousTd = updateBtn.parentNode.previousElementSibling;
         let firstPreviousTdChild = previousTd.firstElementChild;
         let lastPreviousTdChild = previousTd.lastElementChild;
+        let tdValue = firstPreviousTdChild.innerHTML;
+
+        if (tdValue === "true" || tdValue === "false") {
+            firstPreviousTdChild.nextElementSibling.classList.remove("inactive");
+        }
         firstPreviousTdChild.classList.add("inactive");
         firstPreviousTdChild.classList.remove("active");
         lastPreviousTdChild.classList.remove("inactive");

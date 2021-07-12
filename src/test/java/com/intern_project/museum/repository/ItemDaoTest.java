@@ -72,7 +72,7 @@ public class ItemDaoTest extends AbstractTest {
 
     @Test
     void saveSuccess() {
-        Item item = new Item("Ancient Dioniss Jug", "some new item de4sc", new Date(),0,1);
+        Item item = new Item("Ancient Dioniss Jug", "some new item de4sc", new Date(),0, true);
         dao.save(item);
         Item inserted = dao.get(Item.class, 3);
         assertNotNull(inserted);

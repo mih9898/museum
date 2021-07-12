@@ -222,9 +222,6 @@
         let lastPreviousTdChild = previousTd.lastElementChild;   // hidden input
         let tdValue = firstPreviousTdChild.innerHTML;
 
-
-
-
         if (tdValue === "true" || tdValue === "false") {
             firstPreviousTdChild.nextElementSibling.classList.remove("inactive");
         }

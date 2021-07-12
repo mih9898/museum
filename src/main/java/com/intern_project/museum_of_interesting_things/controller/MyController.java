@@ -64,7 +64,10 @@ public class MyController {
 
     @RequestMapping(value = "/item", method = RequestMethod.GET)
     public String item(Model model, @RequestParam int id) throws IOException {
+        List<Employee> allEmps = genericDao.getAll(Employee.class);
         Item item = genericDao.get(Item.class, id);
+        model.addAttribute("allEmps", allEmps);
+        model.addAttribute("employeeItem", new EmployeeItem());
         model.addAttribute("updatedItem", new Item());
         model.addAttribute("newLocation", new Location());
         model.addAttribute("item", item);
@@ -106,6 +109,28 @@ public class MyController {
     }
 
 
+    @RequestMapping(value = "/addNewAppraisal", method = RequestMethod.POST)
+    public String addNewAppraisal(@ModelAttribute("employeeItem") EmployeeItem employeeItem,
+                             HttpServletRequest request,
+                             Model model
+    ) {
+        System.out.println("addNewAppraisal" + employeeItem);
+        Employee emp = genericDao.get(Employee.class, employeeItem.getEmployee().getId());
+        Item item = genericDao.get(Item.class, employeeItem.getItem().getId());
+        employeeItem.setEmployee(emp);
+        employeeItem.setItem(item);
+        item.addEmployeeAprToItem(employeeItem);
+        genericDao.saveOrUpdate(item);
+
+        String referer = request.getHeader("Referer");
+//        Item original = genericDao.get(Item.class, id);
+//        EntityUtility.merge(original, updatedItem);
+//        genericDao.saveOrUpdate(original);
+//        model.addAttribute("item", original);
+        return "redirect:" + referer;
+    }
+
+
 
 
     //TODO: replace requestParams with modelAttribute -> change on view as well
@@ -113,7 +138,7 @@ public class MyController {
     public String addItem(@RequestParam(name = "itemName", required = false) String itemName,
                           @RequestParam(name = "itemDescription", required = false) String itemDescription,
                           @RequestParam(name = "dateAcquired", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateAcquired,
-                          @RequestParam(value = "isMuseumItem", required = false) String isMuseumItem,
+                          @RequestParam(value = "isMuseumItem", required = false) boolean isMuseumItem,
                           @RequestParam(name = "itemLostDesc", required = false) String itemLostDesc,
                           @RequestParam(name = "dateLost", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateLost,
                           @RequestParam(name = "storageType", required = false) String storageType,
@@ -122,9 +147,10 @@ public class MyController {
 
                           final Model model) {
 
-        int isMuseum = isMuseumItem.isEmpty() ? 0 : 1;
+//        int isMuseum = isMuseumItem.isEmpty() ? 0 : 1;
+
         int isLost = itemLostDesc.isEmpty() ? 0 : 1;
-        Item newItem = new Item(itemName, itemDescription, dateAcquired, isMuseum);
+        Item newItem = new Item(itemName, itemDescription, dateAcquired, isMuseumItem);
         newItem.setIsLost(isLost);
 
         if (!itemLostDesc.isEmpty()) {

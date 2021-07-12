@@ -33,12 +33,12 @@ public class Item {
     @Column(name = "date_acquired")
     private Date dateAcquired;
 
+//    TODO: get rid of this property; seems redundant. if leave then refactor to bool
     @Column(name = "is_lost")
     private int isLost;
 
-
     @Column(name = "is_museum_item")
-    private int isMuseumItem;
+    private Boolean isMuseumItem;
 
     @OneToOne(mappedBy = "item", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
@@ -74,7 +74,7 @@ public class Item {
         employeeItems.add(employeeItem);
     }
 
-    public Item(String name, String description, Date dateAcquired, int isMuseumItem) {
+    public Item(String name, String description, Date dateAcquired, boolean isMuseumItem) {
         this.name = name;
         this.description = description;
         this.dateAcquired = dateAcquired;
@@ -83,7 +83,7 @@ public class Item {
 
 
 
-    public Item(int id, String name, String description, Date dateAcquired, int isLost, int isMuseumItem) {
+    public Item(int id, String name, String description, Date dateAcquired, int isLost, boolean isMuseumItem) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -92,11 +92,13 @@ public class Item {
         this.isMuseumItem = isMuseumItem;
     }
 
-    public Item(String name, String desc, Date date, int isLost, int isMuseum) {
+    public Item(String name, String desc, Date date, int isLost, boolean isMuseum) {
         this.name = name;
         this.description = desc;
         this.dateAcquired = date;
         this.isLost = isLost;
         this.isMuseumItem = isMuseum;
     }
+
+
 }

@@ -69,7 +69,7 @@ Tasks Completed:
 
 7/6/2021 - 7/7/2021
 Tasks Completed:
-* bugfix(bruforced) with duplicate entities when displaying all
+* bugfix(bruteforced) with duplicate entities when displaying all
 * added functionality: adding new location to already existing item via update
 * added functionality: adding new employee including phone number
 * added functionality: displaying all employees
