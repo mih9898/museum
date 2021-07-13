@@ -44,7 +44,7 @@
 <%--                            <a href="${pageContext.request.contextPath}/item?id=${item.id}">--%>
 <%--                                <button type="button" class="btn btn-outline-primary">Delete</button>--%>
 <%--                            </a>--%>
-<%--                            TODO; delete btn + related controller--%>
+<%--                            TODO; delete btn + related controller?--%>
                         </div>
                     </c:forEach>
                 </div>

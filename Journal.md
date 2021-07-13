@@ -81,6 +81,13 @@ Tasks Completed:
 * added functionality: adding new phone number for already existed employee
 * added functionality: editing worth value for already existed item
 
+7/12/2021 ~ 2.30 hours
+Tasks Completed:
+* refactored item's property isMuseumItem int -> Boolean (db processes tinyint as bool) on view
+* added functionality: adding worth value to existed item (item.jsp)
+* added functionality: deleting item(items.jsp)
+* added functionality: deleting employee(employees.jsp)
+
 
 
 

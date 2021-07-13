@@ -70,7 +70,9 @@
                 </div>
             </div>
 
-<%--            TODO: if 1 col has info then other col has to have info as well (required will not help, because loc-block is optional)--%>
+<%--            TODO: if 1 col has info then other col has to have info as well (required will not help, because loc-block is optional)
+                    js -> queryPick of all locInputs -> if !oneInp.isEmpty && other.isEmp cancel subm otherwise fine
+--%>
             <fieldset class="row ms-3 p-3">
                 <legend>Item location info</legend>
                 <div class="row mb-3">

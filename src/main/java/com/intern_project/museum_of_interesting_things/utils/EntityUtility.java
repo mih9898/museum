@@ -7,6 +7,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
+
+//TODO: put all logic from here to service package + add needed dao stuff from controller
 public class EntityUtility {
 
     //working fine if fields are primitive. if collections or objects then can be lost (e.g dates)
@@ -34,7 +36,6 @@ public class EntityUtility {
     }
 
     //TODO: displace employeeItems, lostItem by adding form:hidden on general form
-    //TODO: put all logic from here to servicer package + add needed dao stuff
     public static void merge(Item orig, Item updated) {
         List<Location> copy = new ArrayList<>(orig.getLocations());
         LostItem lostCopy = orig.getLostItem();
