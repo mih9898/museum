@@ -248,36 +248,22 @@ public class MyController {
     ) {
 
         Employee orig = genericDao.get(Employee.class, id);
-        System.out.println("orig: " + orig);
-        for (PhoneNumber p :  orig.getPhoneNumbers()) {
-            System.out.println(p.getEmployee());
-        }
-        System.out.println();
-
-        System.out.println("updatedEmp: " + updatedEmp);
-        for (PhoneNumber p :  updatedEmp.getPhoneNumbers()) {
-            System.out.println(p.getEmployee());
-        }
-        System.out.println();
-
-        EntityUtility.mergeEmployees(orig, updatedEmp);
-        System.out.println("orig after merge: " + orig);
-        for (PhoneNumber p :  orig.getPhoneNumbers()) {
-            System.out.println(p.getEmployee());
-        }
-        System.out.println();
-
         genericDao.saveOrUpdate(orig);
-
-
-
         String referer = request.getHeader("Referer");
-//        Employee original = genericDao.get(Employee.class, id);
-//        EntityUtility.merge(original, updatedEmp);
-//        genericDao.saveOrUpdate(original);
-//        model.addAttribute("item", original);
         return "redirect:" + referer;
     }
+
+    @RequestMapping(value = "/deleteEmployee", method = RequestMethod.POST)
+    public String deleteEmployee(@RequestParam("empId") int id,
+                             HttpServletRequest request
+    ) {
+        Employee emp = genericDao.get(Employee.class, id);
+        genericDao.deleteObject(emp);
+        String referer = request.getHeader("Referer");
+        return "redirect:" + referer;
+    }
+
+
 
     @RequestMapping(value = "/addPhone", method = RequestMethod.POST)
     public String addPhone(Model model, @ModelAttribute("newPhone") PhoneNumber phoneNumber, HttpServletRequest request) {
