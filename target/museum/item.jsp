@@ -206,9 +206,10 @@
             </table>
             </div>
         </c:if>
+<%--        TODO: add js to display btn update only if edit-btn was clicked--%>
         <div class="row center">
             <div class="col text-center center">
-                <button type="submit" class="btn btn-success mx-auto">Update</button>
+                <button type="submit" class="btn btn-success mx-auto">Update item info</button>
             </div>
         </div>
         <form:input type="hidden" path="id" value="${item.id}"/>
@@ -217,8 +218,7 @@
 
 
     <hr>
-<%--    //TODO: put to the location block -> --%>
-<%--            inputs as inactive tds + btn with js to make them visible--%>
+<%--    TODO: refactor plain form to spring form + instead of request param work with modelattribute--%>
     <h3>Generate new location</h3>
     <form action="${pageContext.request.contextPath}/addNewLocation"
           class="row ms-3 p-3"
@@ -244,7 +244,7 @@
         </div>
         <div class="row center">
             <div class="col text-center center">
-                <button type="submit" class="btn btn-success mx-auto">Update</button>
+                <button type="submit" class="btn btn-success mx-auto">Add location</button>
             </div>
         </div>
         <input type="hidden" name="id" value="${item.id}">
@@ -281,7 +281,7 @@
 
         <div class="row center">
             <div class="col text-center center">
-                <button type="submit" class="btn btn-success mx-auto">Update</button>
+                <button type="submit" class="btn btn-success mx-auto">Add appraise</button>
             </div>
         </div>
         <form:input type="hidden" path="item.id" value="${item.id}"/>

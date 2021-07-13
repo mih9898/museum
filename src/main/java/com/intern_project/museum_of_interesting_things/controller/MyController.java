@@ -176,6 +176,17 @@ public class MyController {
         return "newItem";
     }
 
+
+    @RequestMapping(value = "/deleteItem", method = RequestMethod.POST)
+    public String deleteItem(@RequestParam("itemId") int id, HttpServletRequest request) {
+        genericDao.delete(Item.class, id);
+        String referer = request.getHeader("Referer");
+
+        return "redirect:" + referer;
+//        return "items";
+    }
+
+
     @RequestMapping(value = "/addEmployee", method = RequestMethod.GET)
     public String addEmployee(Model model) {
 //        List<PhoneNumber> phones = new ArrayList<>();
