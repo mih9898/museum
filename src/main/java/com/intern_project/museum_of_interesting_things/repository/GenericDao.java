@@ -1,5 +1,7 @@
 package com.intern_project.museum_of_interesting_things.repository;
 
+import com.intern_project.museum_of_interesting_things.entity.Authority;
+import com.intern_project.museum_of_interesting_things.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Criteria;
@@ -7,6 +9,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -143,5 +148,31 @@ public class GenericDao {
      */
     public <T> T merge(final T o)   {
         return (T) sessionFactory.getCurrentSession().merge(o);
+    }
+
+
+
+
+
+    public int saveUser(User user) {
+        User existedUserWithTheSameUsername = getFirstEntryBasedOnAnotherTableColumnProperty(
+                "username", user.getUsername(), User.class);
+        if (existedUserWithTheSameUsername != null) {
+            return 0;
+        }
+        user.setEnabled(1);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        String encodedPassword = encoder.encode(user.getPassword());
+
+        user.setPassword(encodedPassword);
+
+        Authority authority = new Authority();
+        authority.setUsername(user.getUsername());
+        authority.setAuthority("ROLE_USER");
+
+        user.addAuthorityToUser(authority);
+        saveOrUpdate(user);
+        return 1;
     }
 }

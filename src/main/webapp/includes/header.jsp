@@ -35,6 +35,15 @@
                         <a class="nav-link active lead" aria-current="page"
                            href="${pageContext.request.contextPath}/test">Test</a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active lead" aria-current="page"
+                           href="${pageContext.request.contextPath}/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active lead" aria-current="page"
+                           href="${pageContext.request.contextPath}/signup">Register</a>
+                    </li>
 <%--                    <sec:authorize access="!isAuthenticated()">--%>
 <%--                        <li class="nav-item">--%>
 <%--                            <a class="nav-link lead" href="${pageContext.request.contextPath}/registrationProcessing">Register</a>--%>

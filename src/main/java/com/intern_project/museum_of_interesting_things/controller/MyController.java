@@ -279,6 +279,43 @@ public class MyController {
 
     }
 
+
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public String registrationProcessing(final @Valid @ModelAttribute("user") User newUser,
+                                         final BindingResult bindingResult,
+                                         final Model model,
+                                         HttpServletRequest request) {
+        String referer = request.getHeader("Referer");
+
+        int isSaved = genericDao.saveUser(newUser);
+        if (isSaved == 0) { // if no saved then such username already exists
+            model.addAttribute("warning", "Such username already in use! Try again");
+            return "redirect:" + referer;
+//            return "redirect:/signup";
+        }
+        return "redirect:/login";
+    }
+
+    /**
+     * get-redirect for prg pattern
+     *
+     * @return default spring security login
+     */
+    @GetMapping("/login")
+    public String login() {
+        return "/login";
+    }
+
+
+    @GetMapping("/signup")
+    public String registrationProcessing(Model model, @ModelAttribute("warning") String warning) {
+        model.addAttribute("user", new User());
+        model.addAttribute("warning", warning);
+        return "/sign-up";
+    }
+
+
+
     @RequestMapping("/home")
     public String home(Model model) {
         return "index";
@@ -291,9 +328,9 @@ public class MyController {
         //LostItem lostItem = new LostItem(item.getId(), "desc", new Date(), item);
         //item.setLostItem(lostItem);
 
-        Item item = genericDao.get(Item.class, 3);
-        item.setName("updatedName");
-        genericDao.saveOrUpdate(item);
+//        Item item = genericDao.get(Item.class, 3);
+//        item.setName("updatedName");
+//        genericDao.saveOrUpdate(item);
         //Location location = new Location("room 5A", "left top shelf B7", new Date());
         //item.addLocationToItem(location);
         //Employee employee = new Employee("manager", "Myke", "Turchanov", 333.33, "address", "city", "WI", "1233", 1);

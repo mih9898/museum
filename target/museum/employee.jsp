@@ -190,7 +190,7 @@
 
             </form:form>
 
-
+<%--            TODO: Delete btn?--%>
             <hr>
 
             <h3>Generate new phone number</h3>

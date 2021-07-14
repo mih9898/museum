@@ -34,12 +34,6 @@
             <input type="password" id="confirm_password" name="confirm_password" class="form-control"
                    placeholder="Retype Password" required>
         </p>
-        <p>
-            <span class="lead text-center text-danger" id="message"></span>
-
-            <form:label for="password" path="password" class="sr-only">Password</form:label>
-            <form:input type="password" id="password" class="form-control" name="password" placeholder="Password" path="password"/>
-        </p>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     </form:form>
 

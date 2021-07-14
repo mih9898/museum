@@ -4,6 +4,7 @@ package com.intern_project.museum_of_interesting_things.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -63,6 +64,12 @@ public class Employee {
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<EmployeeItem> employeeItems = new HashSet<>();
+
+    @OneToOne
+    @MapsId
+    @EqualsAndHashCode.Exclude
+    @JoinColumn(name = "username")
+    private User user;
 
     public void addPhoneNumberToEmployee(PhoneNumber phoneNumber) {
         if (phoneNumbers == null) {
