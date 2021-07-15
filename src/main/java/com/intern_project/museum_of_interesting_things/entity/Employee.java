@@ -8,6 +8,7 @@ import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.data.jpa.repository.Temporal;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.Set;
 @Table(name = "employees")
 @Entity(name = "Employee")
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "phoneNumbers")
+//@EqualsAndHashCode(exclude = "phoneNumbers")
 @Data
 public class Employee {
 
@@ -59,17 +60,19 @@ public class Employee {
     private Boolean withUs;
 
     @LazyCollection(LazyCollectionOption.FALSE)
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true) //fetch eager was here
     private List<PhoneNumber> phoneNumbers;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<EmployeeItem> employeeItems = new HashSet<>();
 
-    @OneToOne
-    @MapsId
-    @EqualsAndHashCode.Exclude
-    @JoinColumn(name = "username")
-    private User user;
+//    @OneToOne
+//    @MapsId
+//    @EqualsAndHashCode.Exclude
+//    @JoinColumn(name = "username")
+    @Transient
+    private User user = new User();
 
     public void addPhoneNumberToEmployee(PhoneNumber phoneNumber) {
         if (phoneNumbers == null) {

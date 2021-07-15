@@ -36,13 +36,10 @@ public class User implements UserDetails {
     @Column(name = "enabled")
     private int enabled;
 
-    @Column
-    private Boolean isEmployee;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "username")
     private List<Authority> authorityList;
-
 
     /**
      * Add authority to user.

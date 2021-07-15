@@ -206,18 +206,21 @@ public class MyController {
 
         //TODO: decide what to do with input number optionality(if not entered then err bcause num cannot be null)
         //      or leave like this (0 instead null)
-        if (phoneNumber != 0) {
-            PhoneNumber number = new PhoneNumber(phoneNumber);
-            number.setEmployee(newEmployee);
-            newEmployee.addPhoneNumberToEmployee(number);
-        }
-
+        addPhoneNum(newEmployee, phoneNumber);
         genericDao.save(newEmployee);
         HttpSession session = request.getSession();
         session.setAttribute("title", "New item was successfully saved");
         String referer = request.getHeader("Referer");
 
         return "redirect:" + referer;
+    }
+
+    private void addPhoneNum(Employee newEmployee, int phoneNumber) {
+        if (phoneNumber != 0) {
+            PhoneNumber number = new PhoneNumber(phoneNumber);
+            number.setEmployee(newEmployee);
+            newEmployee.addPhoneNumberToEmployee(number);
+        }
     }
 
     @RequestMapping(value = "/employees", method = RequestMethod.GET)
@@ -281,20 +284,30 @@ public class MyController {
 
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String registrationProcessing(final @Valid @ModelAttribute("user") User newUser,
+    public String registrationProcessing(final @ModelAttribute("employee") Employee employee,
                                          final BindingResult bindingResult,
                                          final Model model,
+                                         @RequestParam(value = "phoneNumber", required = false) int phoneNumber,
                                          HttpServletRequest request) {
         String referer = request.getHeader("Referer");
+        System.out.println(employee);
+        User user = employee.getUser();
+        System.out.println(user);
+        if (!employee.getFirstName().isEmpty() && !employee.getLastName().isEmpty()) {
+            addPhoneNum(employee, phoneNumber);
+            genericDao.save(employee);
+        }
+        int isSaved = genericDao.saveUser(user);
+        System.out.println(user);
 
-        int isSaved = genericDao.saveUser(newUser);
         if (isSaved == 0) { // if no saved then such username already exists
             model.addAttribute("warning", "Such username already in use! Try again");
             return "redirect:" + referer;
-//            return "redirect:/signup";
         }
         return "redirect:/login";
     }
+
+
 
     /**
      * get-redirect for prg pattern
@@ -309,7 +322,8 @@ public class MyController {
 
     @GetMapping("/signup")
     public String registrationProcessing(Model model, @ModelAttribute("warning") String warning) {
-        model.addAttribute("user", new User());
+//        model.addAttribute("user", new User());
+        model.addAttribute("employee", new Employee());
         model.addAttribute("warning", warning);
         return "/sign-up";
     }
