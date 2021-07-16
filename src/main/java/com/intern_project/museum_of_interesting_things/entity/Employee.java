@@ -67,14 +67,6 @@ public class Employee {
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<EmployeeItem> employeeItems = new HashSet<>();
 
-//    @OneToOne
-//    @MapsId
-//    @EqualsAndHashCode.Exclude
-//    @JoinColumn(name = "username")
-//    @Transient
-//    private User user = new User();
-
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username")
     private User user;

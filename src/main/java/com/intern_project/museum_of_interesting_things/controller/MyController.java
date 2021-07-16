@@ -279,7 +279,6 @@ public class MyController {
                                          @RequestParam(value = "phoneNumber", required = false) int phoneNumber,
                                          HttpServletRequest request) {
         String referer = request.getHeader("Referer");
-        System.out.println(employee);
         User user = employee.getUser();
         int isSaved = genericDao.processUser(user);
         if (isSaved == 0) { // if no saved then such username already exists
@@ -288,7 +287,6 @@ public class MyController {
         }
         if (!employee.getFirstName().isEmpty() && !employee.getLastName().isEmpty()) {
             addPhoneNum(employee, phoneNumber);
-            System.out.println("koo");
             user.setEmployee(employee);
             employee.setUser(user);
             genericDao.saveObject(employee);

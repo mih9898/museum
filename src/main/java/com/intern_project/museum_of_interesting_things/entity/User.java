@@ -44,7 +44,6 @@ public class User implements UserDetails {
     @ToString.Exclude
     @OneToOne(mappedBy = "user",
             cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE})
-//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Employee employee;
 
     /**
