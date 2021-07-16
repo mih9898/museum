@@ -71,8 +71,13 @@ public class Employee {
 //    @MapsId
 //    @EqualsAndHashCode.Exclude
 //    @JoinColumn(name = "username")
-    @Transient
-    private User user = new User();
+//    @Transient
+//    private User user = new User();
+
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username")
+    private User user;
 
     public void addPhoneNumberToEmployee(PhoneNumber phoneNumber) {
         if (phoneNumbers == null) {

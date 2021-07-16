@@ -1,8 +1,6 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <header>
-
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -19,32 +17,49 @@
                         <a class="nav-link active lead" aria-current="page"
                            href="${pageContext.request.contextPath}/items">Items</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link active lead" aria-current="page"
                            href="${pageContext.request.contextPath}/employees">Employees</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active lead" aria-current="page"
-                           href="${pageContext.request.contextPath}/addItem">New Item</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active lead" aria-current="page"
-                           href="${pageContext.request.contextPath}/addEmployee">New Employee</a>
-                    </li>
+
+                    <sec:authorize access="hasRole('ADMIN')">
+                        <li class="nav-item">
+                            <a class="nav-link active lead" aria-current="page"
+                               href="${pageContext.request.contextPath}/addItem">New Item</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active lead" aria-current="page"
+                               href="${pageContext.request.contextPath}/addEmployee">New Employee</a>
+                        </li>
+                    </sec:authorize>
+
                     <li class="nav-item">
                         <a class="nav-link active lead" aria-current="page"
                            href="${pageContext.request.contextPath}/test">Test</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link active lead" aria-current="page"
-                           href="${pageContext.request.contextPath}/login">Login</a>
-                    </li>
+
+                    <sec:authorize access="!isAuthenticated()">
+
+                        <li class="nav-item">
+                            <a class="nav-link active lead" aria-current="page"
+                               href="${pageContext.request.contextPath}/login">Login</a>
+                        </li>
                     <li class="nav-item">
                         <a class="nav-link active lead" aria-current="page"
                            href="${pageContext.request.contextPath}/signup">Register</a>
                     </li>
-<%--                    <sec:authorize access="!isAuthenticated()">--%>
+                    </sec:authorize>
+                    <sec:authorize access="isAuthenticated()">
+                        <li class="nav-item">
+                            <a class="nav-link lead" href="${pageContext.request.contextPath}/logout">Logout</a>
+                        </li>
+                    </sec:authorize>
+
+
+
+                <%--                    <sec:authorize access="!isAuthenticated()">--%>
 <%--                        <li class="nav-item">--%>
 <%--                            <a class="nav-link lead" href="${pageContext.request.contextPath}/registrationProcessing">Register</a>--%>
 <%--                        </li>--%>

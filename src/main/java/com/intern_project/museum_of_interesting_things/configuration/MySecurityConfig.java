@@ -33,7 +33,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
 //                .antMatchers("/").hasAnyRole("ADMIN", "USER")  // main page('/') can see emp, hr, managers
 //                .antMatchers("/resultUserList/**").hasRole("USER")
-                .antMatchers("/test").hasRole("ADMIN")
+//                .antMatchers("/test").hasRole("ADMIN")
                 .and()
                 .formLogin()
                 .and()

@@ -154,7 +154,7 @@ public class GenericDao {
 
 
 
-    public int saveUser(User user) {
+    public int processUser(User user) {
         User existedUserWithTheSameUsername = getFirstEntryBasedOnAnotherTableColumnProperty(
                 "username", user.getUsername(), User.class);
         if (existedUserWithTheSameUsername != null) {
@@ -164,15 +164,14 @@ public class GenericDao {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         String encodedPassword = encoder.encode(user.getPassword());
-
         user.setPassword(encodedPassword);
-
         Authority authority = new Authority();
         authority.setUsername(user.getUsername());
         authority.setAuthority("ROLE_USER");
 
         user.addAuthorityToUser(authority);
-        saveOrUpdate(user);
+//        saveObject(user);
+//        saveOrUpdate(user);
         return 1;
     }
 }

@@ -41,6 +41,12 @@ public class User implements UserDetails {
     @JoinColumn(name = "username")
     private List<Authority> authorityList;
 
+    @ToString.Exclude
+    @OneToOne(mappedBy = "user",
+            cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE})
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Employee employee;
+
     /**
      * Add authority to user.
      *

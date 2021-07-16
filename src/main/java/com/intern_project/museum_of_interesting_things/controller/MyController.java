@@ -3,33 +3,22 @@ package com.intern_project.museum_of_interesting_things.controller;
 import com.intern_project.museum_of_interesting_things.entity.*;
 import com.intern_project.museum_of_interesting_things.repository.GenericDao;
 import com.intern_project.museum_of_interesting_things.utils.EntityUtility;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.http.HttpRequest;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Controller where
@@ -292,18 +281,20 @@ public class MyController {
         String referer = request.getHeader("Referer");
         System.out.println(employee);
         User user = employee.getUser();
-        System.out.println(user);
-        if (!employee.getFirstName().isEmpty() && !employee.getLastName().isEmpty()) {
-            addPhoneNum(employee, phoneNumber);
-            genericDao.save(employee);
-        }
-        int isSaved = genericDao.saveUser(user);
-        System.out.println(user);
-
+        int isSaved = genericDao.processUser(user);
         if (isSaved == 0) { // if no saved then such username already exists
             model.addAttribute("warning", "Such username already in use! Try again");
             return "redirect:" + referer;
         }
+        if (!employee.getFirstName().isEmpty() && !employee.getLastName().isEmpty()) {
+            addPhoneNum(employee, phoneNumber);
+            System.out.println("koo");
+            user.setEmployee(employee);
+            employee.setUser(user);
+            genericDao.saveObject(employee);
+            return "redirect:/login";
+        }
+        genericDao.saveObject(user);
         return "redirect:/login";
     }
 
@@ -347,7 +338,26 @@ public class MyController {
 //        genericDao.saveOrUpdate(item);
         //Location location = new Location("room 5A", "left top shelf B7", new Date());
         //item.addLocationToItem(location);
-        //Employee employee = new Employee("manager", "Myke", "Turchanov", 333.33, "address", "city", "WI", "1233", 1);
+        Employee employee = new Employee("manager", "Myke", "Turchanov", 333.33, "address", "city", "WI", "1233", true);
+        User user = new User();
+        user.setUsername("123");
+        user.setPassword("1");
+        user.setEnabled(1);
+
+        genericDao.processUser(user);
+        user.setEmployee(employee);
+        genericDao.saveObject(user);
+
+//        genericDao.merge(user);
+//        employee.setUser(user);
+//        System.out.println(employee);
+//
+//        genericDao.saveOrUpdate(user);
+//        user.setEmployee(employee);
+//        employee.setUser(user);
+//
+//        genericDao.saveOrUpdate(employee);
+
         //Employee employee = genericDao.get(Employee.class, 2);
         //PhoneNumber phoneNumber = new PhoneNumber(12321312);
         //phoneNumber.setEmployee(employee);
