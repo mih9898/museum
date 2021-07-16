@@ -2,6 +2,8 @@
 
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 
 <c:set var="title" value="Museum of Interesting Things - Home" scope="request"/>
@@ -29,10 +31,10 @@
                                     </a>
                                 </div>
                                 <div class="col">
-                                    <form action="deleteItem" method="post">
+                                    <form:form action="deleteItem" method="post">
                                         <button type="submit" class="btn btn-outline-primary">Delete</button>
                                         <input type="hidden" name="itemId" value="${item.id}">
-                                    </form>
+                                    </form:form>
 <%--                                    <a href="${pageContext.request.contextPath}/deleteItem?id=${item.id}">--%>
 
                                     </a>
