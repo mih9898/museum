@@ -22,6 +22,8 @@
                class="mb-3"
     >
 
+
+<%--    GENERAL EMP BLOCK--%>
     <div class="container" id="content">
         <h1>${item.name} information</h1>
         <div class="row mb-2">
@@ -185,6 +187,7 @@
 
             <hr>
 
+<%--            EMPLOYEE PHONE NUMBERS BLOCK--%>
             <c:if test="${not empty employee.phoneNumbers}">
             <div class="row mb-2" id="movieTableInfo">
                 <div class="col-lg-6 col-sm-12">
@@ -232,6 +235,8 @@
             <%--            TODO: Delete btn?--%>
             <hr>
 
+
+<%--            NEW PHONE FOR EMP BLOCK--%>
             <c:if test="${employee.user.username eq currentUsername || employee.hasAdminRights == true}">
             <h3>Generate new phone number</h3>
             <form:form action="${pageContext.request.contextPath}/addPhone" modelAttribute="newPhone" method="post">

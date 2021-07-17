@@ -24,7 +24,7 @@
                         <div class="col-3 border p-3">
                             <div class="p-3 bg-light test-item card-img-top" >Item-image</div>
                             <h5 class="bold">${item.name}</h5>
-                            <sec class="row">
+                            <div class="row">
                                 <div class="col">
                                     <a href="${pageContext.request.contextPath}/item?id=${item.id}">
                                         <button type="button" class="btn btn-outline-primary">More Info</button>
@@ -41,13 +41,6 @@
                                 </div>
                                 </sec:authorize>
                             </div>
-<%--                            <a href="${pageContext.request.contextPath}/item?id=${item.id}">--%>
-<%--                                <button type="button" class="btn btn-outline-primary">More Info</button>--%>
-<%--                            </a>--%>
-<%--                            <a href="${pageContext.request.contextPath}/item?id=${item.id}">--%>
-<%--                                <button type="button" class="btn btn-outline-primary">Delete</button>--%>
-<%--                            </a>--%>
-<%--                            TODO; delete btn + related controller?--%>
                         </div>
                     </c:forEach>
                 </div>
