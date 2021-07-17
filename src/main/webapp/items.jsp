@@ -24,21 +24,22 @@
                         <div class="col-3 border p-3">
                             <div class="p-3 bg-light test-item card-img-top" >Item-image</div>
                             <h5 class="bold">${item.name}</h5>
-                            <div class="row">
+                            <sec class="row">
                                 <div class="col">
                                     <a href="${pageContext.request.contextPath}/item?id=${item.id}">
                                         <button type="button" class="btn btn-outline-primary">More Info</button>
                                     </a>
                                 </div>
+                                <sec:authorize access="hasRole('ADMIN')">
                                 <div class="col">
                                     <form:form action="deleteItem" method="post">
                                         <button type="submit" class="btn btn-outline-primary">Delete</button>
                                         <input type="hidden" name="itemId" value="${item.id}">
                                     </form:form>
 <%--                                    <a href="${pageContext.request.contextPath}/deleteItem?id=${item.id}">--%>
-
                                     </a>
                                 </div>
+                                </sec:authorize>
                             </div>
 <%--                            <a href="${pageContext.request.contextPath}/item?id=${item.id}">--%>
 <%--                                <button type="button" class="btn btn-outline-primary">More Info</button>--%>

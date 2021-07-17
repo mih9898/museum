@@ -38,13 +38,14 @@
         <td>${emp.city}</td>
         <td>${emp.state}</td>
         <td>${emp.withUs}</td>
+        <sec:authorize access="hasRole('ADMIN')">
         <td>
             <form:form action="${pageContext.request.contextPath}/deleteEmployee" method="post">
                 <input type="hidden" name="empId" value="${emp.id}">
                 <input type="image" src="${pageContext.request.contextPath}/resources/images/delete-icon.png" class="image"  alt="delete image" />
             </form:form>
         </td>
-
+        </sec:authorize>
     </tr>
 </c:forEach>
                 </tbody>

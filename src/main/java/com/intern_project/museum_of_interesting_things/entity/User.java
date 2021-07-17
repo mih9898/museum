@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -36,7 +38,7 @@ public class User implements UserDetails {
     @Column(name = "enabled")
     private int enabled;
 
-
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "username")
     private List<Authority> authorityList;
@@ -45,6 +47,8 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user",
             cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE})
     private Employee employee;
+
+
 
     /**
      * Add authority to user.
@@ -56,6 +60,15 @@ public class User implements UserDetails {
             authorityList = new ArrayList<>();
         }
         authorityList.add(authority);
+    }
+
+    public boolean hasAdminRights() {
+        for (Authority authority : authorityList) {
+            if (authority.getAuthority().equals("ROLE_ADMIN")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

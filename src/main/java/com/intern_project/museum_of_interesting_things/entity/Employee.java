@@ -19,7 +19,6 @@ import java.util.Set;
 @Table(name = "employees")
 @Entity(name = "Employee")
 @NoArgsConstructor
-//@EqualsAndHashCode(exclude = "phoneNumbers")
 @Data
 public class Employee {
 
@@ -67,11 +66,13 @@ public class Employee {
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<EmployeeItem> employeeItems = new HashSet<>();
 
-//    @OneToOne(cascade = CascadeType.ALL)
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @EqualsAndHashCode.Exclude
     @JoinColumn(name = "username")
     private User user;
+
+    @Transient
+    private boolean hasAdminRights;
 
     public void addPhoneNumberToEmployee(PhoneNumber phoneNumber) {
         if (phoneNumbers == null) {

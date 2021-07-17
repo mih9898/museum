@@ -17,7 +17,7 @@
     <form:form action="${pageContext.request.contextPath}/updateItem"
                method="post"
                modelAttribute="updatedItem"
-                class="mb-3"
+               class="mb-3"
     >
 
         <div class="container" id="content">
@@ -32,10 +32,12 @@
                         <span class="active">${item.name}</span>
                         <form:input class="inactive" type="text" path="name" value="${item.name}"/>
                     </td>
-                    <td>
-                        <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg" class="icon"
-                             onclick="updateField(this)"/>
-                    </td>
+                    <sec:authorize access="hasRole('ADMIN')">
+                        <td>
+                            <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg" class="icon"
+                                 onclick="updateField(this)"/>
+                        </td>
+                    </sec:authorize>
 
                 </tr>
                 <tr>
@@ -44,10 +46,12 @@
                         <span class="active">${item.description}</span>
                         <form:input path="description" type="text" class="inactive" value="${item.description}"/>
                     </td>
-                    <td>
-                        <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg" class="icon"
-                             onclick="updateField(this)"/>
-                    </td>
+                    <sec:authorize access="hasRole('ADMIN')">
+                        <td>
+                            <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg" class="icon"
+                                 onclick="updateField(this)"/>
+                        </td>
+                    </sec:authorize>
                 </tr>
                 <tr>
                     <th>Date acquired</th>
@@ -57,26 +61,30 @@
                                 </span>
                         <form:input path="dateAcquired" class="inactive" type="date"/>
                     </td>
-                    <td>
-                        <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg" class="icon"
-                             onclick="updateField(this)"/>
-                    </td>
+                    <sec:authorize access="hasRole('ADMIN')">
+                        <td>
+                            <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg" class="icon"
+                                 onclick="updateField(this)"/>
+                        </td>
+                    </sec:authorize>
                 </tr>
 
                 <tr>
                     <th>Is museum item</th>
                     <td>
-<%--                        <span class="active">${item.isMuseumItem == 1 ? "Yes" : "No"}</span>--%>
-<%--                        <form:input path="isMuseumItem" type="text" class="inactive"--%>
-<%--                                    value="${item.isMuseumItem}" placeholder="0 for nonmuseum and 1 for museum item"/>--%>
+                            <%--                        <span class="active">${item.isMuseumItem == 1 ? "Yes" : "No"}</span>--%>
+                            <%--                        <form:input path="isMuseumItem" type="text" class="inactive"--%>
+                            <%--                                    value="${item.isMuseumItem}" placeholder="0 for nonmuseum and 1 for museum item"/>--%>
 
-                      <span class="active">${item.isMuseumItem}</span>
+                        <span class="active">${item.isMuseumItem}</span>
                         <form:checkbox class="inactive" path="isMuseumItem" value="${item.isMuseumItem}"/>
                     </td>
-                    <td>
-                        <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg" class="icon"
-                             onclick="updateField(this)"/>
-                    </td>
+                    <sec:authorize access="hasRole('ADMIN')">
+                        <td>
+                            <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg" class="icon"
+                                 onclick="updateField(this)"/>
+                        </td>
+                    </sec:authorize>
                 </tr>
             </table>
         </div>
@@ -94,10 +102,13 @@
                             <form:input path="lostItem.description" type="text" class="inactive"
                                         value="${item.lostItem.description}"/>
                         </td>
-                        <td>
-                            <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg" class="icon"
-                                 onclick="updateField(this)"/>
-                        </td>
+                        <sec:authorize access="hasRole('ADMIN')">
+                            <td>
+                                <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg"
+                                     class="icon"
+                                     onclick="updateField(this)"/>
+                            </td>
+                        </sec:authorize>
                     </tr>
                     <tr>
                         <th>Date when lost</th>
@@ -107,10 +118,14 @@
                                 </span>
                             <form:input path="lostItem.dateLost" type="date" class="inactive"/>
                         </td>
-                        <td>
-                            <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg" class="icon"
-                                 onclick="updateField(this)"/>
-                        </td>
+                        <sec:authorize access="hasRole('ADMIN')">
+                            <td>
+                                <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg"
+                                     class="icon"
+                                     onclick="updateField(this)"/>
+
+                            </td>
+                        </sec:authorize>
                     </tr>
 
                         <%--                        <form:input path="dateAcquired" class="inactive" type="date" />--%>
@@ -122,9 +137,10 @@
         <hr>
 
         <div class="row">
-        <h3>Location information</h3>
 
         <c:if test="${not empty item.locations}">
+            <h3>Location information</h3>
+
             <div class="col-lg-12 col-sm-12">
                     <%--                        <form:input type="text" path="locations[${lc.index}].storageType"/>--%>
 
@@ -156,11 +172,13 @@
                                 <form:input type="date" class="inactive loc-input"
                                             path="locations[${lc.index}].dateWhenPut" value="${location.dateWhenPut}"/>
                             </td>
-                            <td>
-                                <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg"
-                                     class="icon" onclick="updateRow(this)"/>
-                                    <%--                                        <button type="button" class="btn btn-outline-info" onclick="updateRow(this)">Update</button>--%>
-                            </td>
+                            <sec:authorize access="hasRole('ADMIN')">
+                                <td>
+                                    <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg"
+                                         class="icon" onclick="updateRow(this)"/>
+                                        <%--                                        <button type="button" class="btn btn-outline-info" onclick="updateRow(this)">Update</button>--%>
+                                </td>
+                            </sec:authorize>
                         </tr>
                         <form:input type="hidden" path="locations[${lc.index}].id" value="${location.id}"/>
 
@@ -193,20 +211,25 @@
                         <td>
                             <span class="active ei-info"> ${employeeItem.worthValue} $</span>
                             <form:input type="text" class="ei-input inactive"
-                                        path="employeeItems[${empItem.index}].worthValue" value="${employeeItem.worthValue}" step="0.01"/>
-                            <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg"
-                                 class="icon" onclick="updateWorthVal(this)"/>
+                                        path="employeeItems[${empItem.index}].worthValue"
+                                        value="${employeeItem.worthValue}" step="0.01"/>
+                            <sec:authorize access="hasRole('ADMIN')">
+                                <img src="${pageContext.request.contextPath}/resources/images/edit-icon.svg"
+                                     class="icon" onclick="updateWorthVal(this)"/>
+                            </sec:authorize>
                         </td>
                         <form:input type="hidden" path="employeeItems[${empItem.index}].id" value="${employeeItem.id}"/>
-                        <form:input type="hidden" path="employeeItems[${empItem.index}].employee.id" value="${employeeItem.employee.id}"/>
-                        <form:input type="hidden" path="employeeItems[${empItem.index}].item.id" value="${employeeItem.item.id}"/>
+                        <form:input type="hidden" path="employeeItems[${empItem.index}].employee.id"
+                                    value="${employeeItem.employee.id}"/>
+                        <form:input type="hidden" path="employeeItems[${empItem.index}].item.id"
+                                    value="${employeeItem.item.id}"/>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
             </div>
         </c:if>
-<%--        TODO: add js to display btn update only if edit-btn was clicked--%>
+        <%--        TODO: add js to display btn update only if edit-btn was clicked--%>
         <div class="row center">
             <div class="col text-center center">
                 <button type="submit" class="btn btn-success mx-auto">Update item info</button>
@@ -216,79 +239,79 @@
 
     </form:form>
 
-
-    <hr>
-<%--    TODO: refactor plain form to spring form + instead of request param work with modelattribute--%>
-    <h3>Generate new location</h3>
-    <form action="${pageContext.request.contextPath}/addNewLocation"
-          class="row ms-3 p-3"
-          method="post"
-    >
-        <div class="row mb-3">
-            <label for="storageType" class="col-sm-2 col-form-label">Storage type:</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="storageType" id="storageType">
+    <sec:authorize access="hasRole('ADMIN')">
+        <hr>
+        <%--    TODO: refactor plain form to spring form + instead of request param work with modelattribute--%>
+        <h3>Generate new location</h3>
+        <form action="${pageContext.request.contextPath}/addNewLocation"
+              class="row ms-3 p-3"
+              method="post"
+        >
+            <div class="row mb-3">
+                <label for="storageType" class="col-sm-2 col-form-label">Storage type:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="storageType" id="storageType">
+                </div>
             </div>
-        </div>
-        <div class="row mb-3">
-            <label for="locDescription" class="col-sm-2 col-form-label">Location description:</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="locDescription" id="locDescription">
+            <div class="row mb-3">
+                <label for="locDescription" class="col-sm-2 col-form-label">Location description:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="locDescription" id="locDescription">
+                </div>
             </div>
-        </div>
-        <div class="row mb-3">
-            <label for="dateWhenPut" class="col-sm-2 col-form-label">Date when put:</label>
-            <div class="col-sm-10">
-                <input type="date" class="form-control" name="dateWhenPut" id="dateWhenPut">
+            <div class="row mb-3">
+                <label for="dateWhenPut" class="col-sm-2 col-form-label">Date when put:</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" name="dateWhenPut" id="dateWhenPut">
+                </div>
             </div>
-        </div>
-        <div class="row center">
-            <div class="col text-center center">
-                <button type="submit" class="btn btn-success mx-auto">Add location</button>
+            <div class="row center">
+                <div class="col text-center center">
+                    <button type="submit" class="btn btn-success mx-auto">Add location</button>
+                </div>
             </div>
-        </div>
-        <input type="hidden" name="id" value="${item.id}">
-    </form>
+            <input type="hidden" name="id" value="${item.id}">
+        </form>
 
-    <hr>
+        <hr>
 
-    <h3>Generate new appraisal of item</h3>
-    <form:form action="${pageContext.request.contextPath}/addNewAppraisal"
-               method="post"
-               modelAttribute="employeeItem"
-               class="mb-3"
-    >
+        <h3>Generate new appraisal of item</h3>
+        <form:form action="${pageContext.request.contextPath}/addNewAppraisal"
+                   method="post"
+                   modelAttribute="employeeItem"
+                   class="mb-3"
+        >
 
-        <div class="row mb-3">
-            <form:label path="employee.id" class="col-sm-2 col-form-label">Employee:</form:label>
-<%--            Employee--%>
-            <div class="col-sm-10">
-                <form:select path="employee.id" name="employeeId">
-                    <c:forEach items="${allEmps}" var="emp">
-                        <form:option value="${emp.id}">${emp.firstName} ${emp.lastName}</form:option>
-                    </c:forEach>
-                </form:select>
-            <%--                <form:input type="text" class="form-control" name="storageType" path="employee">--%>
+            <div class="row mb-3">
+                <form:label path="employee.id" class="col-sm-2 col-form-label">Employee:</form:label>
+                    <%--            Employee--%>
+                <div class="col-sm-10">
+                    <form:select path="employee.id" name="employeeId">
+                        <c:forEach items="${allEmps}" var="emp">
+                            <form:option value="${emp.id}">${emp.firstName} ${emp.lastName}</form:option>
+                        </c:forEach>
+                    </form:select>
+                        <%--                <form:input type="text" class="form-control" name="storageType" path="employee">--%>
+                </div>
             </div>
-        </div>
 
-        <div class="row mb-3">
-            <form:label path="worthValue" class="col-sm-2 col-form-label">Worth value:</form:label>
-            <div class="col-sm-10">
-                <form:input type="number" class="form-control" path="worthValue" step="0.01" />
+            <div class="row mb-3">
+                <form:label path="worthValue" class="col-sm-2 col-form-label">Worth value:</form:label>
+                <div class="col-sm-10">
+                    <form:input type="number" class="form-control" path="worthValue" step="0.01"/>
+                </div>
             </div>
-        </div>
 
-        <div class="row center">
-            <div class="col text-center center">
-                <button type="submit" class="btn btn-success mx-auto">Add appraise</button>
+            <div class="row center">
+                <div class="col text-center center">
+                    <button type="submit" class="btn btn-success mx-auto">Add appraise</button>
+                </div>
             </div>
-        </div>
-        <form:input type="hidden" path="item.id" value="${item.id}"/>
-    </form:form>
+            <form:input type="hidden" path="item.id" value="${item.id}"/>
+        </form:form>
+    </sec:authorize>
 
-
-    </main>
+</main>
 
 
 <script>

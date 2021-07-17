@@ -5,6 +5,8 @@ import com.intern_project.museum_of_interesting_things.repository.GenericDao;
 import com.intern_project.museum_of_interesting_things.utils.EntityUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -225,10 +227,22 @@ public class MyController {
 
     @RequestMapping(value = "/employee", method = RequestMethod.GET)
     public String employee(Model model, @RequestParam int id) throws IOException {
+
         Employee employee = genericDao.get(Employee.class, id);
+        User currentUser = genericDao.getFirstEntryBasedOnAnotherTableColumnProperty("username", getCurrentUsername(), User.class);
+        List<Authority> currentUserAuthorityRights = currentUser.getAuthorityList();
+        System.out.println(currentUserAuthorityRights);
+        for (Authority authority : currentUserAuthorityRights) {
+            if (authority.getAuthority().equals("ROLE_ADMIN")) {
+                employee.setHasAdminRights(true);
+                break;
+            }
+        }
         model.addAttribute("updatedEmp", new Employee());
         model.addAttribute("newPhone", new PhoneNumber());
         model.addAttribute("employee", employee);
+        model.addAttribute("currentUsername", currentUser.getUsername());
+
         return "employee";
     }
 
@@ -368,4 +382,13 @@ public class MyController {
         return "test";
     }
 
+
+    private String getCurrentUsername() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = null;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        }
+        return username;
+    }
 }
