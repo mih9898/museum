@@ -295,6 +295,7 @@ public class MyController {
         String referer = request.getHeader("Referer");
         User user = employee.getUser();
         int isSaved = genericDao.processUser(user);
+        genericDao.saveObject(user);
         if (isSaved == 0) { // if no saved then such username already exists
             model.addAttribute("warning", "Such username already in use! Try again");
             return "redirect:" + referer;
