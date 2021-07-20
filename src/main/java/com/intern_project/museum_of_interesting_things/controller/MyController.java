@@ -9,11 +9,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Controller where
@@ -339,8 +342,41 @@ public class MyController {
         return "index";
     }
 
+
+    @RequestMapping(value = "/test", method = RequestMethod.POST, consumes = {"multipart/form-data"})
+    @ResponseBody
+
+    public String submit(@RequestParam("file") MultipartFile file, ModelMap modelMap, HttpServletRequest request) {
+
+
+        //set the saved location and create a directory location
+        String fileName  = file.getOriginalFilename();
+        System.out.println(fileName);
+        String location = "/home/student/IdeaProjects/museum/src/main/webapp/resources/images/";
+        //create the actual file
+        File pathFile = new File(location + fileName);
+        System.out.println(pathFile.exists());
+        if (pathFile.exists()) {
+            int counter = 0;
+            while (pathFile.exists()) {
+                pathFile = new File(location + fileName.replace(".", counter + "."));
+                System.out.println(pathFile);
+                counter++;
+            }
+        }
+
+        //save the actual file
+        try {
+            file.transferTo(pathFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "test";
+    }
+
+
     //Testing time
-    @RequestMapping("/test")
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String test(Model model) throws IOException, URISyntaxException {
         //Item item = new Item("name2", "desc2", new Date(),0,1);
         //LostItem lostItem = new LostItem(item.getId(), "desc", new Date(), item);
@@ -351,15 +387,15 @@ public class MyController {
 //        genericDao.saveOrUpdate(item);
         //Location location = new Location("room 5A", "left top shelf B7", new Date());
         //item.addLocationToItem(location);
-        Employee employee = new Employee("manager", "Myke", "Turchanov", 333.33, "address", "city", "WI", "1233", true);
-        User user = new User();
-        user.setUsername("123");
-        user.setPassword("1");
-        user.setEnabled(1);
-
-        genericDao.processUser(user);
-        user.setEmployee(employee);
-        genericDao.saveObject(user);
+//        Employee employee = new Employee("manager", "Myke", "Turchanov", 333.33, "address", "city", "WI", "1233", true);
+//        User user = new User();
+//        user.setUsername("123");
+//        user.setPassword("1");
+//        user.setEnabled(1);
+//
+//        genericDao.processUser(user);
+//        user.setEmployee(employee);
+//        genericDao.saveObject(user);
 
 //        genericDao.merge(user);
 //        employee.setUser(user);
@@ -380,6 +416,8 @@ public class MyController {
         //genericDao.saveOrUpdate(employeeItem);
         //System.out.println(employee);
         //model.addAttribute("employee", employee);
+
+
         return "test";
     }
 

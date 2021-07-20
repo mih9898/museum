@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page isELIgnored="false"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 
 <!doctype html>
 <html lang="en">
@@ -16,5 +18,34 @@
     Item: ${item}
     Employee: ${employee}
 
+    <br>
+    <hr>
+    <form:form method="POST" action="${pageContext.request.contextPath}/test" enctype="multipart/form-data">
+        <table>
+            <tr>
+                <td>Select a file to upload</td>
+                <td><input type="file" name="file" /></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Submit" /></td>
+            </tr>
+        </table>
+
+    </form:form>
+
+
+    <br>
+    <hr>
+    <h2>Submitted File</h2>
+    <table>
+        <tr>
+            <td>OriginalFileName:</td>
+            <td>${file.originalFilename}</td>
+        </tr>
+        <tr>
+            <td>Type:</td>
+            <td>${file.contentType}</td>
+        </tr>
+    </table>
 </body>
 </html>
