@@ -88,6 +88,23 @@ Tasks Completed:
 * added functionality: deleting item(items.jsp)
 * added functionality: deleting employee(employees.jsp)
 
+7/14/2021
+Tasks Completed:
+* spring security setup(test is working)  
+
+7/15/2021 
+Tasks Completed:
+* Employee - User relationship refactored. Employee.user changed from bruteforced @Transient to usual OneToOne rel
+* add functionality login/signup
+* updated signup. employee can add his/her work info on signup.
+* fixed bugs related to spring security (csrf field) on delete item/items  
+
+7/17/2021 
+Tasks Completed:
+* signup updated (fixed bug in controller)
+* fixed bug on items (sec->div)
+* devided functionality for users based on role(s) added  
+
 
 
 
