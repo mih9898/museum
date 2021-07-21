@@ -1,6 +1,7 @@
 package com.intern_project.museum_of_interesting_things.configuration;
 
 
+import com.intern_project.museum_of_interesting_things.utils.PropertiesLoader;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -27,7 +28,7 @@ import java.util.Properties;
 @EnableWebMvc
 @EnableTransactionManagement
 @RequestMapping("/")
-public class MyConfig implements WebMvcConfigurer {
+public class MyConfig implements WebMvcConfigurer, PropertiesLoader {
 
     /**
      * Data source data source.
@@ -120,8 +121,17 @@ public class MyConfig implements WebMvcConfigurer {
         return multipartResolver;
     }
 
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+//    }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        Properties properties = loadProperties("/paths.properties");
+        String uploadLocation = properties.getProperty("upload.location");
+        registry.addResourceHandler("/images/**")
+                .addResourceLocations("file:" + uploadLocation);
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 }

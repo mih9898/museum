@@ -1,4 +1,7 @@
 package com.intern_project.museum_of_interesting_things.utils;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.util.Properties;
 

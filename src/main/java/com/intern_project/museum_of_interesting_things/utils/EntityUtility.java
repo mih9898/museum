@@ -39,6 +39,7 @@ public class EntityUtility {
     public static void merge(Item orig, Item updated) {
         List<Location> copy = new ArrayList<>(orig.getLocations());
         LostItem lostCopy = orig.getLostItem();
+        System.out.println(lostCopy == null);
         List<EmployeeItem> employeeItemsCopy = new ArrayList<>(orig.getEmployeeItems());
         mergeObjectsSimple(orig, updated);
         // bruteforce bug fix(dates are lost when item is updated) + employeeItem set is lost as well
@@ -49,7 +50,8 @@ public class EntityUtility {
                 oLoc.setDateWhenPut(uLoc.getDateWhenPut());
             }
         }
-        if (lostCopy.getDateLost() != null && updated.getLostItem().getDateLost() == null) {
+        if (lostCopy != null && lostCopy.getDateLost() != null
+                && updated.getLostItem().getDateLost() == null) {
             orig.getLostItem().setDateLost(lostCopy.getDateLost());
         }
 

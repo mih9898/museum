@@ -44,3 +44,12 @@ fieldset legend {
 .form-control {
     max-width: 50%;
 }
+
+.image-upload input, input#image {
+    display: none;
+}
+
+.image-upload>image {
+    max-width: 300px;
+    max-height: 400px;
+}

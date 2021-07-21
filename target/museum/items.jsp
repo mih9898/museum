@@ -16,13 +16,13 @@
     <div class="container" id="content">
         <h1>Home</h1>
         <h2>Items</h2>
-
-
             <div class="container">
                 <div class="row gx-5">
                     <c:forEach items="${items}" var="item">
                         <div class="col-3 border p-3">
-                            <div class="p-3 bg-light test-item card-img-top" >Item-image</div>
+                            <img class="p-3 bg-light test-item card-img-top"
+                                 src="${pageContext.request.contextPath}/images/${item.image}" alt="${item.image}">
+
                             <h5 class="bold">${item.name}</h5>
                             <div class="row">
                                 <div class="col">

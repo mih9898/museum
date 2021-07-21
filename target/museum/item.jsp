@@ -18,12 +18,22 @@
                method="post"
                modelAttribute="updatedItem"
                class="mb-3"
+               enctype="multipart/form-data"
     >
 
         <div class="container" id="content">
         <h1>${item.name} information</h1>
         <div class="row mb-2" id="movieTableInfo">
+        <div class="row mb-2">
+            <div class="image-upload">
+                <label for="image">
+                    <img src="${pageContext.request.contextPath}/images/${item.image}" alt="${item.image}"/>
+                </label>
+                <input id="image" name="newImage" type="file" />
+            </div>
+        </div>
         <div class="col-lg-6 col-sm-12">
+
             <table class="table table-bordered table-striped">
                 <legend>General information</legend>
                 <tr>

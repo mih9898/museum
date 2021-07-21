@@ -3,6 +3,7 @@ package com.intern_project.museum_of_interesting_things.controller;
 import com.intern_project.museum_of_interesting_things.entity.*;
 import com.intern_project.museum_of_interesting_things.repository.GenericDao;
 import com.intern_project.museum_of_interesting_things.utils.EntityUtility;
+import com.intern_project.museum_of_interesting_things.utils.PropertiesLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,15 +33,19 @@ import org.springframework.web.multipart.MultipartFile;
  * @author mturchanov
  */
 @Controller
-public class MyController {
+public class MyController implements PropertiesLoader {
 
     private final GenericDao genericDao;
 
     private final Logger logger = LogManager.getLogger(this.getClass());
+    private final Properties properties;
+    private final String UPLOAD_LOCATION;
 
     @Autowired
     public MyController(GenericDao genericDao) {
         this.genericDao = genericDao;
+        properties = loadProperties("/paths.properties");
+        UPLOAD_LOCATION = properties.getProperty("upload.location");
     }
 
 
@@ -52,6 +57,7 @@ public class MyController {
                 .distinct()
                 .collect(Collectors.toList());
         model.addAttribute("items", items);
+        model.addAttribute("uploadLocation", UPLOAD_LOCATION);
 
         return "items";
     }
@@ -72,13 +78,21 @@ public class MyController {
     public String updateItem(@ModelAttribute("updatedItem") Item updatedItem,
                              HttpServletRequest request,
                              Model model,
+                             @RequestParam(value = "newImage", required = false) MultipartFile newImage,
                              @RequestParam int id
     ) {
         System.out.println("updatedItem" + updatedItem);
         String referer = request.getHeader("Referer");
         Item original = genericDao.get(Item.class, id);
+        if (newImage != null) {
+            String img = saveImage(newImage);
+            deleteItemImage(original);
+            updatedItem.setImage(img);
+        }
+
         EntityUtility.merge(original, updatedItem);
         genericDao.saveOrUpdate(original);
+
         model.addAttribute("item", original);
         return "redirect:" + referer;
     }
@@ -138,10 +152,9 @@ public class MyController {
                           @RequestParam(name = "storageType", required = false) String storageType,
                           @RequestParam(name = "locDescription", required = false) String locDescription,
                           @RequestParam(name = "dateWhenPut", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateWhenPut,
-
+                          @RequestParam(value = "itemImage", required = false) MultipartFile itemImage,
+                          HttpServletRequest request,
                           final Model model) {
-
-//        int isMuseum = isMuseumItem.isEmpty() ? 0 : 1;
 
         int isLost = itemLostDesc.isEmpty() ? 0 : 1;
         Item newItem = new Item(itemName, itemDescription, dateAcquired, isMuseumItem);
@@ -155,6 +168,11 @@ public class MyController {
         if (!storageType.isEmpty()) {
             Location location = new Location(storageType, locDescription, dateWhenPut);
             newItem.addLocationToItem(location);
+        }
+
+        if (!itemImage.isEmpty()) {
+            String imageName = saveImage(itemImage);
+            newItem.setImage(imageName);
         }
 
         genericDao.save(newItem);
@@ -173,17 +191,25 @@ public class MyController {
 
     @RequestMapping(value = "/deleteItem", method = RequestMethod.POST)
     public String deleteItem(@RequestParam("itemId") int id, HttpServletRequest request) {
-        genericDao.delete(Item.class, id);
+        Item item = genericDao.get(Item.class, id);
+        deleteItemImage(item);
+        genericDao.deleteObject(item);
         String referer = request.getHeader("Referer");
-
         return "redirect:" + referer;
 //        return "items";
+    }
+
+    private boolean deleteItemImage(Item item) {
+        if (!item.getImage().equals("noItemImage.png")){
+            File fileToDelete = new File(UPLOAD_LOCATION + item.getImage());
+            boolean isDeleted = fileToDelete.delete();
+        }
+        return true;
     }
 
 
     @RequestMapping(value = "/addEmployee", method = RequestMethod.GET)
     public String addEmployee(Model model) {
-//        List<PhoneNumber> phones = new ArrayList<>();
         model.addAttribute("newEmployee", new Employee());
         model.addAttribute("phoneNumber", new PhoneNumber());
 
@@ -347,31 +373,36 @@ public class MyController {
     @ResponseBody
 
     public String submit(@RequestParam("file") MultipartFile file, ModelMap modelMap, HttpServletRequest request) {
-
-
         //set the saved location and create a directory location
+//        saveImage(file);
+        return "test";
+    }
+
+    private String saveImage(MultipartFile file) {
         String fileName  = file.getOriginalFilename();
-        System.out.println(fileName);
-        String location = "/home/student/IdeaProjects/museum/src/main/webapp/resources/images/";
+//        properties = loadProperties("");
+//        String locationToLoad = properties.getProperty("upload.location");
+        System.out.println(UPLOAD_LOCATION);
+//        String location = "/home/student/IdeaProjects/museum/src/main/webapp/resources/images/";
+
         //create the actual file
-        File pathFile = new File(location + fileName);
+        File pathFile = new File(UPLOAD_LOCATION + fileName);
         System.out.println(pathFile.exists());
-        if (pathFile.exists()) {
+        //checks whether file with such name already exist
+        if (pathFile.exists() && fileName != null ) {
             int counter = 0;
             while (pathFile.exists()) {
-                pathFile = new File(location + fileName.replace(".", counter + "."));
-                System.out.println(pathFile);
+                pathFile = new File(UPLOAD_LOCATION + fileName.replace(".", counter + "."));
+                System.out.println("saveImage:pathFile:" + pathFile);
                 counter++;
             }
         }
-
-        //save the actual file
         try {
             file.transferTo(pathFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "test";
+        return fileName;
     }
 
 

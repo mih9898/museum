@@ -40,9 +40,13 @@ public class Item {
     @Column(name = "is_museum_item")
     private Boolean isMuseumItem;
 
+    @Column(name = "image")
+    private String image = "noItemImage.png";
+
     @OneToOne(mappedBy = "item", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private LostItem lostItem;
+
 
     @ManyToMany(cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
     @JoinTable(

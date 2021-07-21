@@ -3,6 +3,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:set var="title" value="New Item" scope="request"/>
 <c:import url="includes/head.jsp"/>
@@ -15,7 +16,7 @@
         <h1>Add new Item</h1>
 
 
-        <form action="${pageContext.request.contextPath}/addItem" method="post">
+        <form:form action="${pageContext.request.contextPath}/addItem" method="post" enctype="multipart/form-data">
             <div class="row mb-3">
                 <label for="itemName" class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
@@ -33,6 +34,13 @@
                 <label for="dateAcquired" class="col-sm-2 col-form-label">Date acquired</label>
                 <div class="col-sm-10">
                     <input type="date" name="dateAcquired" class="form-control" id="dateAcquired">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="itemImage" class="col-sm-2 col-form-label">Image</label>
+                <div class="col-sm-10">
+                    <input type="file" name="itemImage" class="form-control" id="itemImage">
                 </div>
             </div>
 
@@ -96,7 +104,7 @@
             </fieldset>
 
             <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+        </form:form>
     </div>
 
 
