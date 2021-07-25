@@ -84,9 +84,9 @@ public class MyController implements PropertiesLoader {
         System.out.println("updatedItem" + updatedItem);
         String referer = request.getHeader("Referer");
         Item original = genericDao.get(Item.class, id);
-        if (newImage != null) {
+        if (newImage != null && !newImage.isEmpty()) {
             String img = saveImage(newImage);
-            deleteItemImage(original);
+            deleteItemImage(original.getImage());
             updatedItem.setImage(img);
         }
 
@@ -192,17 +192,18 @@ public class MyController implements PropertiesLoader {
     @RequestMapping(value = "/deleteItem", method = RequestMethod.POST)
     public String deleteItem(@RequestParam("itemId") int id, HttpServletRequest request) {
         Item item = genericDao.get(Item.class, id);
-        deleteItemImage(item);
+        deleteItemImage(item.getImage());
         genericDao.deleteObject(item);
         String referer = request.getHeader("Referer");
         return "redirect:" + referer;
 //        return "items";
     }
 
-    private boolean deleteItemImage(Item item) {
-        if (!item.getImage().equals("noItemImage.png")){
-            File fileToDelete = new File(UPLOAD_LOCATION + item.getImage());
-            boolean isDeleted = fileToDelete.delete();
+    private boolean deleteItemImage(String image) {
+        if (!image.equals("noItemImage.png")){
+            File fileToDelete = new File(UPLOAD_LOCATION + image);
+            System.out.println("deletePath:" + UPLOAD_LOCATION + image);
+            return fileToDelete.delete();
         }
         return true;
     }
@@ -220,13 +221,20 @@ public class MyController implements PropertiesLoader {
     public String addEmployee(Model model,
                               @ModelAttribute("newEmployee") Employee newEmployee,
                               @RequestParam(value = "phoneNumber", required = false) int phoneNumber,
+                              @RequestParam(value = "employeeImage", required = false) MultipartFile employeeImage,
                               HttpServletRequest request
     ) {
         System.out.println(phoneNumber);
-
+        User user = genericDao.getFirstEntryBasedOnAnotherTableColumnProperty("username", getCurrentUsername(), User.class);
         //TODO: decide what to do with input number optionality(if not entered then err bcause num cannot be null)
         //      or leave like this (0 instead null)
+        if (!employeeImage.isEmpty()) {
+            String imageName = saveImage(employeeImage);
+            newEmployee.setImage(imageName);
+        }
         addPhoneNum(newEmployee, phoneNumber);
+        newEmployee.setUser(user);
+        user.setEmployee(newEmployee);
         genericDao.save(newEmployee);
         HttpSession session = request.getSession();
         session.setAttribute("title", "New item was successfully saved");
@@ -258,19 +266,24 @@ public class MyController implements PropertiesLoader {
     public String employee(Model model, @RequestParam int id) throws IOException {
 
         Employee employee = genericDao.get(Employee.class, id);
-        User currentUser = genericDao.getFirstEntryBasedOnAnotherTableColumnProperty("username", getCurrentUsername(), User.class);
-        List<Authority> currentUserAuthorityRights = currentUser.getAuthorityList();
-        System.out.println(currentUserAuthorityRights);
-        for (Authority authority : currentUserAuthorityRights) {
-            if (authority.getAuthority().equals("ROLE_ADMIN")) {
-                employee.setHasAdminRights(true);
-                break;
+        String username = getCurrentUsername();
+        System.out.println(username);
+        if (username != null) {
+            User currentUser = genericDao.getFirstEntryBasedOnAnotherTableColumnProperty("username", username, User.class);
+            List<Authority> currentUserAuthorityRights = currentUser.getAuthorityList();
+            System.out.println(currentUserAuthorityRights);
+            for (Authority authority : currentUserAuthorityRights) {
+                if (authority.getAuthority().equals("ROLE_ADMIN")) {
+                    employee.setHasAdminRights(true);
+                    break;
+                }
             }
+            model.addAttribute("currentUsername", currentUser.getUsername());
         }
+
         model.addAttribute("updatedEmp", new Employee());
         model.addAttribute("newPhone", new PhoneNumber());
         model.addAttribute("employee", employee);
-        model.addAttribute("currentUsername", currentUser.getUsername());
 
         return "employee";
     }
@@ -279,11 +292,23 @@ public class MyController implements PropertiesLoader {
     public String updatedEmp(@ModelAttribute("updatedEmp") Employee updatedEmp,
                              HttpServletRequest request,
                              Model model,
+                             @RequestParam(value = "newImage", required = false) MultipartFile newImage,
                              @RequestParam int id
     ) {
 
-        Employee orig = genericDao.get(Employee.class, id);
-        genericDao.saveOrUpdate(orig);
+        Employee original = genericDao.get(Employee.class, id);
+
+
+        if (newImage != null) {
+            String img = saveImage(newImage);
+            System.out.println("isDeleted:" + deleteItemImage(original.getImage()));
+            updatedEmp.setImage(img);
+        }
+        EntityUtility.mergeEmployees(original, updatedEmp);
+        System.out.println("originalImgAfterMerge:" + original.getImage());
+        System.out.println("updatedImgAfterMerge:" + updatedEmp.getImage());
+        System.out.println("updated ImgName:" + original.getImage());
+        genericDao.saveOrUpdate(original);
         String referer = request.getHeader("Referer");
         return "redirect:" + referer;
     }
@@ -293,6 +318,7 @@ public class MyController implements PropertiesLoader {
                              HttpServletRequest request
     ) {
         Employee emp = genericDao.get(Employee.class, id);
+        deleteItemImage(emp.getImage());
         genericDao.deleteObject(emp);
         String referer = request.getHeader("Referer");
         return "redirect:" + referer;
@@ -382,17 +408,21 @@ public class MyController implements PropertiesLoader {
         String fileName  = file.getOriginalFilename();
 //        properties = loadProperties("");
 //        String locationToLoad = properties.getProperty("upload.location");
-        System.out.println(UPLOAD_LOCATION);
 //        String location = "/home/student/IdeaProjects/museum/src/main/webapp/resources/images/";
 
         //create the actual file
         File pathFile = new File(UPLOAD_LOCATION + fileName);
-        System.out.println(pathFile.exists());
+        System.out.println("saveImage.pathFile.exists():"+pathFile.exists());
         //checks whether file with such name already exist
-        if (pathFile.exists() && fileName != null ) {
+        if (pathFile.exists() && fileName != null) {
             int counter = 0;
-            while (pathFile.exists()) {
-                pathFile = new File(UPLOAD_LOCATION + fileName.replace(".", counter + "."));
+            while (true) {
+                fileName = fileName.replaceAll("(\\d+)?\\.", counter + ".");
+                pathFile = new File(UPLOAD_LOCATION + fileName);
+                System.out.println("pathFile.exists():/" + fileName + pathFile.exists());
+                if(!pathFile.exists()) {
+                    break;
+                }
                 System.out.println("saveImage:pathFile:" + pathFile);
                 counter++;
             }

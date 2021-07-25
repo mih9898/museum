@@ -21,7 +21,7 @@
         <fieldset class="row mb-1 ms-3 p-3">
 
             <form:form action="${pageContext.request.contextPath}/addEmployee" method="POST"
-                       modelAttribute="newEmployee">
+                       modelAttribute="newEmployee" enctype="multipart/form-data">
                 <div class="row mb-3">
                     <form:label path="firstName" class="col-sm-2 col-form-label">First name</form:label>
                     <div class="col-sm-10">
@@ -89,6 +89,13 @@
                     <form:label path="withUs" class="col-sm-2 col-form-label">With us</form:label>
                     <div class="col-sm-10">
                         <form:checkbox path="withUs" class="form-check-input"  />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="employeeImage" class="col-sm-2 col-form-label">Image</label>
+                    <div class="col-sm-10">
+                        <input type="file" name="employeeImage" class="form-control" id="employeeImage">
                     </div>
                 </div>
 

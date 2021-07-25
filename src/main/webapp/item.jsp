@@ -200,7 +200,7 @@
             </div>
             </div>
         </c:if>
-        <c:if test="${not empty item.employeeItems}">
+        <c:if test="${not empty item.employeeItems && not empty item.employeeItems}">
 
             <table class="table table-bordered table-striped">
                 <legend>Employee(s) appraise information</legend>
@@ -253,7 +253,7 @@
         <hr>
         <%--    TODO: refactor plain form to spring form + instead of request param work with modelattribute--%>
         <h3>Generate new location</h3>
-        <form action="${pageContext.request.contextPath}/addNewLocation"
+        <form:form action="${pageContext.request.contextPath}/addNewLocation"
               class="row ms-3 p-3"
               method="post"
         >
@@ -281,7 +281,7 @@
                 </div>
             </div>
             <input type="hidden" name="id" value="${item.id}">
-        </form>
+        </form:form>
 
         <hr>
 

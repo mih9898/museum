@@ -58,6 +58,9 @@ public class Employee {
     @Column(name = "with_us")
     private Boolean withUs;
 
+    @Column(name = "image")
+    private String image = "noItemImage.png";
+
     @LazyCollection(LazyCollectionOption.FALSE)
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true) //fetch eager was here

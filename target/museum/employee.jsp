@@ -20,6 +20,7 @@
                method="post"
                modelAttribute="updatedEmp"
                class="mb-3"
+               enctype="multipart/form-data"
     >
 
 
@@ -28,6 +29,14 @@
         <h1>${item.name} information</h1>
         <div class="row mb-2">
             <div class="col-lg-6 col-sm-12">
+                <div class="row mb-2">
+                    <div class="image-upload">
+                        <label for="image">
+                            <img src="${pageContext.request.contextPath}/images/${employee.image}" alt="${employee.image}"/>
+                        </label>
+                        <input id="image" name="newImage" type="file" />
+                    </div>
+                </div>
                 <table class="table table-bordered table-striped">
                     <legend>${employee.firstName} ${employee.lastName}'s information</legend>
                     <tr>
@@ -219,16 +228,14 @@
             </div>
 
             <hr>
+            </c:if>
 
+                <form:input type="hidden" path="id" value="${item.id}"/>
             <div class="row center">
                 <div class="col text-center center">
                     <button type="submit" class="btn btn-success mx-auto">Update</button>
                 </div>
             </div>
-            </c:if>
-
-                <form:input type="hidden" path="id" value="${item.id}"/>
-
             </form:form>
 
 
