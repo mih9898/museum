@@ -242,7 +242,7 @@
         <%--        TODO: add js to display btn update only if edit-btn was clicked--%>
         <div class="row center">
             <div class="col text-center center">
-                <button type="submit" class="btn btn-success mx-auto">Update item info</button>
+                <button type="submit" class="btn btn-success mx-auto mainUpdateBtn inactive">Update item info</button>
             </div>
         </div>
         <form:input type="hidden" path="id" value="${item.id}"/>
@@ -326,7 +326,15 @@
 
 <script>
 
+    function showMainUpdateBtn() {
+        let mainUpdateBtn = document.querySelector(".mainUpdateBtn");
+        if (mainUpdateBtn.classList.contains("inactive")) {
+            mainUpdateBtn.classList.remove("inactive");
+        }
+    }
+
     function updateWorthVal(updateBtn) {
+        showMainUpdateBtn();
         updateBtn.classList.add("inactive");
         let td = updateBtn.parentNode;
         let readVal = td.firstElementChild;
@@ -337,6 +345,7 @@
     }
 
     function updateField(updateBtn) {
+        showMainUpdateBtn();
         updateBtn.parentNode.classList.add("inactive");
         let previousTd = updateBtn.parentNode.previousElementSibling;
         let firstPreviousTdChild = previousTd.firstElementChild;
@@ -357,6 +366,7 @@
     }
 
     function updateRow(updateBtn) {
+        showMainUpdateBtn();
         let tableRawDOM = updateBtn.parentNode.parentNode;
         updateBtn.parentNode.classList.add("inactive");
         [...tableRawDOM.querySelectorAll(".loc-info")].forEach(el => {

@@ -233,7 +233,7 @@
                 <form:input type="hidden" path="id" value="${item.id}"/>
             <div class="row center">
                 <div class="col text-center center">
-                    <button type="submit" class="btn btn-success mx-auto">Update</button>
+                    <button type="submit" class="btn btn-success mx-auto mainUpdateBtn inactive">Update Employee Info</button>
                 </div>
             </div>
             </form:form>
@@ -267,7 +267,15 @@
 
 
 <script>
+
+    function showMainUpdateBtn() {
+        let mainUpdateBtn = document.querySelector(".mainUpdateBtn");
+        if (mainUpdateBtn.classList.contains("inactive")) {
+            mainUpdateBtn.classList.remove("inactive");
+        }
+    }
     function updateField(updateBtn) {
+        showMainUpdateBtn();
         updateBtn.parentNode.classList.add("inactive");
         let previousTd = updateBtn.parentNode.previousElementSibling; //td where val in span + input are
         let firstPreviousTdChild = previousTd.firstElementChild; // emp td vaue in span(read-only)
@@ -289,6 +297,7 @@
     }
 
     function updateRow(updateBtn) {
+        showMainUpdateBtn();
         let tableRawDOM = updateBtn.parentNode.parentNode;
         updateBtn.parentNode.classList.add("inactive");
         [...tableRawDOM.querySelectorAll(".loc-info")].forEach(el => {
