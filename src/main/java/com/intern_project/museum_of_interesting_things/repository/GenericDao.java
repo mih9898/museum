@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.Formatter;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -27,8 +29,14 @@ import java.util.List;
 @Transactional
 public class GenericDao {
 
-    @Autowired
+//    @Autowired
     private SessionFactory sessionFactory;
+
+    @Autowired
+    public GenericDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     private final Logger logger = LogManager.getLogger(this.getClass());
 
 
@@ -153,7 +161,7 @@ public class GenericDao {
 
 
 
-
+    //service
     public int processUser(User user) {
         User existedUserWithTheSameUsername = getFirstEntryBasedOnAnotherTableColumnProperty(
                 "username", user.getUsername(), User.class);
@@ -174,4 +182,36 @@ public class GenericDao {
 //        saveOrUpdate(user);
         return 1;
     }
+
+    public String generatedReportBasedOnSQLQuery(String[] cols, String sql) {
+        final Session session = sessionFactory.getCurrentSession();
+        String s = "SELECT storage_type,Avg(worth_value) average_Value FROM employee_item " +
+                "INNER JOIN items ON employee_item.item_id = items.id " +
+                "INNER JOIN item_location ON items.id = item_location.item_id " +
+                "LEFT JOIN locations ON item_location.location_id = locations.id " +
+                "WHERE  storage_type LIKE '%Room%' " +
+                "GROUP  BY storage_type " +
+                "ORDER  BY storage_type;";
+
+
+        List<Object[]> rows = session.createNativeQuery
+                (s).list();
+        StringBuilder sb = new StringBuilder();
+        for (String col : cols) {
+            sb.append(col).append("\t\t");
+        }
+        sb.append(System.lineSeparator());
+
+        for (Object[] row: rows) {
+            for (Object col : row) {
+                sb.append(col).append("\t\t\t");
+            }
+            sb.append(System.lineSeparator());
+        }
+        System.out.println(sb);
+        return sb.toString();
+    }
+
+
+
 }

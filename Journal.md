@@ -105,6 +105,21 @@ Tasks Completed:
 * fixed bug on items (sec->div)
 * devided functionality for users based on role(s) added  
 
+7/19/2021
+Tasks Completed:
+* file upload test case is working + setup for prod version
+
+7/21/2021
+Tasks Completed:
+* item has an image(optional); it's set via update or initial setup(adding new item)
+* employee has an image(optional); it's set via update or initial setup
+
+7/21/2021 - 7/25/21
+Tasks Completed:
+* images upload/storing process is updated. previously, images were uploaded inside web-app that caused to redeploy app to see actual changes  
+     now images are stored outside of webapp; therefore, app can read them immediately after upload
+
+
 
 
 

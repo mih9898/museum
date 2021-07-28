@@ -477,7 +477,8 @@ public class MyController implements PropertiesLoader {
         //genericDao.saveOrUpdate(employeeItem);
         //System.out.println(employee);
         //model.addAttribute("employee", employee);
-
+        String[] cols = new String[]{"Storage Type", "Worth Value"};
+        genericDao.generatedReportBasedOnSQLQuery(cols, "");
 
         return "test";
     }
