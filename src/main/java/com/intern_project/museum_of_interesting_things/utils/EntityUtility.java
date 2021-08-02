@@ -3,8 +3,13 @@ package com.intern_project.museum_of_interesting_things.utils;
 import com.intern_project.museum_of_interesting_things.entity.*;
 import org.springframework.beans.BeanUtils;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 
@@ -76,6 +81,21 @@ public class EntityUtility {
         if (!employeeItemsCopy.isEmpty() && orig.getEmployeeItems().isEmpty()) {
             orig.setEmployeeItems(employeeItemsCopy);
         }
+    }
+
+    public static String getSQLReportQuery(String report) {
+        report = String.format("/%s.sql", report);
+        URL reportSQLQuery = EntityUtility.class.getResource("/avgValuesReport.sql");
+        String filePathForSparqlQuery = null;
+        String sqlQueryReport = null;
+
+        try {
+            filePathForSparqlQuery = Paths.get(reportSQLQuery.toURI()).toFile().getAbsolutePath();
+            sqlQueryReport = new String(Files.readAllBytes(Paths.get(filePathForSparqlQuery)));
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return sqlQueryReport;
     }
 
 

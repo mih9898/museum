@@ -32,20 +32,27 @@
         </table>
 
     </form:form>
-
+}
 
     <br>
     <hr>
-    <h2>Submitted File</h2>
+
     <table>
         <tr>
-            <td>OriginalFileName:</td>
-            <td>${file.originalFilename}</td>
+        <c:forEach items="${cols}" var="col">
+            <th>
+                <c:out value="${col}" />
+            </th>
+        </c:forEach>
         </tr>
+    <c:forEach items="${rows}" var="row">
         <tr>
-            <td>Type:</td>
-            <td>${file.contentType}</td>
+            <c:forEach items="${row}" var="col">
+                <td><c:out value="${col}" /></td>
+            </c:forEach>
         </tr>
-    </table>
+    </c:forEach>
+
+</table>
 </body>
 </html>

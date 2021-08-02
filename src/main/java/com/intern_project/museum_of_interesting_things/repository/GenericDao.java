@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.metamodel.spi.MetamodelImplementor;
+import org.hibernate.persister.entity.AbstractEntityPersister;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,9 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.util.Formatter;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * The type Generic dao.
@@ -183,9 +183,9 @@ public class GenericDao {
         return 1;
     }
 
-    public String generatedReportBasedOnSQLQuery(String[] cols, String sql) {
+    public List<List<String>> generatedReportBasedOnSQLQuery(String[] cols, String sql) {
         final Session session = sessionFactory.getCurrentSession();
-        String s = "SELECT storage_type,Avg(worth_value) average_Value FROM employee_item " +
+        String averageValPerEachRoomSqlQuery = "SELECT storage_type,Avg(worth_value) average_Value FROM employee_item " +
                 "INNER JOIN items ON employee_item.item_id = items.id " +
                 "INNER JOIN item_location ON items.id = item_location.item_id " +
                 "LEFT JOIN locations ON item_location.location_id = locations.id " +
@@ -193,23 +193,48 @@ public class GenericDao {
                 "GROUP  BY storage_type " +
                 "ORDER  BY storage_type;";
 
+        String s = "select name, locations.storage_type, round((CURRENT_DATE - locations.date_when_put)) Days " +
+                "from items " +
+                "inner join " +
+                "(select item_id, min(location_id) location_id " +
+                "from item_location group by item_id) item_location " +
+                "on items.id=item_location.item_id " +
+                "left join locations " +
+                "on item_location.location_id=locations.id " +
+                "where items.is_lost=0 " +
+                "union select name, locations.storage_type, round((lost_items.date_lost - locations.date_when_put)) Days " +
+                "from items inner join lost_items " +
+                "on items.id=lost_items.item_id " +
+                "inner join " +
+                "(select item_id, min(location_id) location_id " +
+                "from item_location " +
+                "group by item_id) item_location " +
+                "on items.id=item_location.item_id " +
+                "left join locations " +
+                "on item_location.location_id=locations.id " +
+                "where items.is_lost=1;";
 
-        List<Object[]> rows = session.createNativeQuery
-                (s).list();
+        List<List<String>> rows = new ArrayList<>();
+        List<Object[]> rowsObjs = session.createNativeQuery(s).list();
         StringBuilder sb = new StringBuilder();
-        for (String col : cols) {
-            sb.append(col).append("\t\t");
-        }
-        sb.append(System.lineSeparator());
+//        for (String col : cols) {
+//            sb.append(col).append("\t\t");
+//        }
+//        sb.append(System.lineSeparator());
 
-        for (Object[] row: rows) {
-            for (Object col : row) {
+        for (Object[] rawRow: rowsObjs) {
+            List<String> row = new ArrayList<>();
+            for (Object col : rawRow) {
+                row.add(col.toString());
                 sb.append(col).append("\t\t\t");
             }
+            rows.add(row);
             sb.append(System.lineSeparator());
         }
+
+        System.out.println(rows);
         System.out.println(sb);
-        return sb.toString();
+        return rows;
     }
 
 

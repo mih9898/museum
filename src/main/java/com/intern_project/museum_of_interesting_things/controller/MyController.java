@@ -16,9 +16,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.text.html.parser.Entity;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -477,12 +481,35 @@ public class MyController implements PropertiesLoader {
         //genericDao.saveOrUpdate(employeeItem);
         //System.out.println(employee);
         //model.addAttribute("employee", employee);
-        String[] cols = new String[]{"Storage Type", "Worth Value"};
-        genericDao.generatedReportBasedOnSQLQuery(cols, "");
+        String[] cols = new String[]{"Name", "Storage Type", "Days"};
+        List<List<String>> rowss = genericDao.generatedReportBasedOnSQLQuery(cols, "");
+        model.addAttribute("rows", rowss);
+        model.addAttribute("cols", cols);
 
         return "test";
     }
 
+    @RequestMapping(value = "/reports", method = RequestMethod.GET)
+    public String reports() {
+
+        return "reports";
+    }
+    @RequestMapping(value = "/generateReports", method = RequestMethod.GET)
+    public String generateReports(@RequestParam(name = "reports", required = true) List<String> reports, Model model) {
+        for (String rep : reports) {
+            System.out.println(rep);
+        }
+        System.out.println(EntityUtility.getSQLReportQuery("sad"));
+
+//        if (reports.size() > 0) {
+//            if (reports.contains("avgValues")) {
+//                String[] columns = new String[]{};
+//
+////                genericDao.generatedReportBasedOnSQLQuery();
+//            }
+//        }
+        return "reports";
+    }
 
     private String getCurrentUsername() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
