@@ -83,19 +83,41 @@ public class EntityUtility {
         }
     }
 
-    public static String getSQLReportQuery(String report) {
+    public static Map<List<String>, String> getSQLReportQuery(String report) {
+
+        List<String> columns;
+        switch (report) {
+            case "avgValuesReport":
+                columns = Arrays.asList("Storage Type", "Average Value");
+                break;
+            case "currentItemsOnDisplaysReport":
+                columns = Arrays.asList("Name", "Storage Type", "Days");
+                break;
+            case "overallItemDaysReport":
+                columns = Arrays.asList("Name", "Storage Type", "Location Description");
+                break;
+
+            default:
+                throw new IllegalStateException("Unexpected value. Following report sql file doesn't exist: " + report);
+        }
+
+        Map<List<String>, String> columnsAndReportQuery = new HashMap<>();
         report = String.format("/%s.sql", report);
-        URL reportSQLQuery = EntityUtility.class.getResource("/avgValuesReport.sql");
+        System.out.println("formattedSqlFileName:" + report);
+        URL reportSQLQuery = EntityUtility.class.getResource("/sqlReports" + report);
         String filePathForSparqlQuery = null;
-        String sqlQueryReport = null;
+        String sqlReport = null;
+
+
 
         try {
             filePathForSparqlQuery = Paths.get(reportSQLQuery.toURI()).toFile().getAbsolutePath();
-            sqlQueryReport = new String(Files.readAllBytes(Paths.get(filePathForSparqlQuery)));
+            sqlReport = new String(Files.readAllBytes(Paths.get(filePathForSparqlQuery)));
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
-        return sqlQueryReport;
+        columnsAndReportQuery.put(columns, sqlReport);
+        return  columnsAndReportQuery;
     }
 
 

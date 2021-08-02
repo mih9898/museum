@@ -32,6 +32,10 @@
                             <a class="nav-link active lead" aria-current="page"
                                href="${pageContext.request.contextPath}/addEmployee">New Employee</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link active lead" aria-current="page"
+                               href="${pageContext.request.contextPath}/reports">Reports</a>
+                        </li>
                     </sec:authorize>
 
                     <li class="nav-item">

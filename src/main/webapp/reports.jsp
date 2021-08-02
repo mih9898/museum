@@ -20,7 +20,7 @@
         >
         <div class="list-group">
             <label class="list-group-item">
-                <input class="form-check-input me-1" type="checkbox" name="reports" value="avgValues">
+                <input class="form-check-input me-1" type="checkbox" name="reports" value="avgValuesReport">
                 Average items' worth value on each room
                 <ul>
                     <li>
@@ -32,7 +32,7 @@
                 </ul>
             </label>
             <label class="list-group-item">
-                <input class="form-check-input me-1" name="reports" type="checkbox" value="overallItemDays">
+                <input class="form-check-input me-1" name="reports" type="checkbox" value="overallItemDaysReport">
                 Number of days artifact(s) have been on display in museum(overall)
                 <ul>
                     <li>
@@ -44,7 +44,7 @@
                 </ul>
             </label>
             <label class="list-group-item">
-                <input class="form-check-input me-1" name="reports" type="checkbox" value="CurrentItemsOnDisplays">
+                <input class="form-check-input me-1" name="reports" type="checkbox" value="currentItemsOnDisplaysReport">
                 Current items on display
                 <ul>
                     <li>
@@ -61,5 +61,66 @@
             <input type="submit" value="Generate reports">
         </div>
         </form:form>
+
+        <hr>
+
+        <div class="row" id="movieTableInfo">
+            <div class="col-lg-4 col-sm-12">
+                <table class="table table-bordered table-striped">
+                    <legend>Item's average value per room</legend>
+                    <c:forEach items="${avgValuesReportColumns}" var="col">
+                        <th>
+                            <c:out value="${col}"/>
+                        </th>
+                    </c:forEach>
+                    </tr>
+                    <c:forEach items="${avgValuesReportRows}" var="row">
+                        <tr>
+                            <c:forEach items="${row}" var="col">
+                                <td><c:out value="${col}"/></td>
+                            </c:forEach>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
+
+            <div class="col-lg-4 col-sm-12">
+                <table class="table table-bordered table-striped">
+                    <legend>Items overall time in museum report</legend>
+                    <c:forEach items="${overallItemDaysReportColumns}" var="col">
+                        <th>
+                            <c:out value="${col}"/>
+                        </th>
+                    </c:forEach>
+                    </tr>
+                    <c:forEach items="${overallItemDaysReportRows}" var="row">
+                        <tr>
+                            <c:forEach items="${row}" var="col">
+                                <td><c:out value="${col}"/></td>
+                            </c:forEach>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
+
+            <div class="col-lg-4 col-sm-12">
+                <table class="table table-bordered table-striped">
+                    <legend>Items that are currently exposed report</legend>
+                    <c:forEach items="${currentItemsOnDisplaysReportColumns}" var="col">
+                        <th>
+                            <c:out value="${col}"/>
+                        </th>
+                    </c:forEach>
+                    </tr>
+                    <c:forEach items="${currentItemsOnDisplaysReportRows}" var="row">
+                        <tr>
+                            <c:forEach items="${row}" var="col">
+                                <td><c:out value="${col}"/></td>
+                            </c:forEach>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
+        </div>
     </div>
 </main>

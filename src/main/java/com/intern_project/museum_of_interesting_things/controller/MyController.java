@@ -481,10 +481,11 @@ public class MyController implements PropertiesLoader {
         //genericDao.saveOrUpdate(employeeItem);
         //System.out.println(employee);
         //model.addAttribute("employee", employee);
-        String[] cols = new String[]{"Name", "Storage Type", "Days"};
-        List<List<String>> rowss = genericDao.generatedReportBasedOnSQLQuery(cols, "");
-        model.addAttribute("rows", rowss);
-        model.addAttribute("cols", cols);
+//        String[] cols = new String[]{"Name", "Storage Type", "Days"};
+//        List<List<String>> rowss = genericDao.generatedReportBasedOnSQLQuery(cols, "");
+//        model.addAttribute("rows", rowss);
+        String test = "test";
+        model.addAttribute(test, 12333);
 
         return "test";
     }
@@ -499,15 +500,19 @@ public class MyController implements PropertiesLoader {
         for (String rep : reports) {
             System.out.println(rep);
         }
-        System.out.println(EntityUtility.getSQLReportQuery("sad"));
+//        System.out.println(EntityUtility.getSQLReportQuery("sad"));
 
-//        if (reports.size() > 0) {
-//            if (reports.contains("avgValues")) {
-//                String[] columns = new String[]{};
-//
-////                genericDao.generatedReportBasedOnSQLQuery();
-//            }
-//        }
+        if (reports.size() > 0) {
+            for (String reportCheckbox : reports) {
+                Map<List<String>, String> columnsAndReportQuery = EntityUtility.getSQLReportQuery(reportCheckbox);
+                Map.Entry<List<String>,String> entry = columnsAndReportQuery.entrySet().iterator().next();
+                List<String> columns = entry.getKey();
+                String reportQuery = entry.getValue();
+                List<List<String>> rowsResult = genericDao.generatedReportBasedOnSQLQuery(reportQuery);
+                model.addAttribute(reportCheckbox + "Rows", rowsResult);
+                model.addAttribute(reportCheckbox + "Columns", columns);
+            }
+        }
         return "reports";
     }
 

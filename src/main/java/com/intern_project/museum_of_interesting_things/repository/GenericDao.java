@@ -20,6 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.*;
 
 /**
@@ -183,7 +186,7 @@ public class GenericDao {
         return 1;
     }
 
-    public List<List<String>> generatedReportBasedOnSQLQuery(String[] cols, String sql) {
+    public List<List<String>> generatedReportBasedOnSQLQuery(String reportQuery) {
         final Session session = sessionFactory.getCurrentSession();
         String averageValPerEachRoomSqlQuery = "SELECT storage_type,Avg(worth_value) average_Value FROM employee_item " +
                 "INNER JOIN items ON employee_item.item_id = items.id " +
@@ -215,25 +218,16 @@ public class GenericDao {
                 "where items.is_lost=1;";
 
         List<List<String>> rows = new ArrayList<>();
-        List<Object[]> rowsObjs = session.createNativeQuery(s).list();
-        StringBuilder sb = new StringBuilder();
-//        for (String col : cols) {
-//            sb.append(col).append("\t\t");
-//        }
-//        sb.append(System.lineSeparator());
+        List<Object[]> rowsObjs = session.createNativeQuery(reportQuery).list();
 
         for (Object[] rawRow: rowsObjs) {
             List<String> row = new ArrayList<>();
             for (Object col : rawRow) {
                 row.add(col.toString());
-                sb.append(col).append("\t\t\t");
             }
             rows.add(row);
-            sb.append(System.lineSeparator());
         }
-
         System.out.println(rows);
-        System.out.println(sb);
         return rows;
     }
 
