@@ -13,11 +13,12 @@
 <main id="main">
 
     <div class="container" id="content">
-        <h1>Reoprts</h1>
+        <h1>Reports</h1>
         <form:form action="${pageContext.request.contextPath}/generateReports"
                    method="get"
                    class="mb-3"
         >
+<%-- REPORTS CHECKBOX + SHORT DESC           --%>
         <div class="list-group">
             <label class="list-group-item">
                 <input class="form-check-input me-1" type="checkbox" name="reports" value="avgValuesReport">
@@ -63,8 +64,8 @@
         </form:form>
 
         <hr>
-
-        <div class="row" id="movieTableInfo">
+<%--REPORTS BLOCK--%>
+        <div class="row">
             <div class="col-lg-4 col-sm-12">
                 <table class="table table-bordered table-striped">
                     <legend>Item's average value per room</legend>
@@ -121,6 +122,34 @@
                     </c:forEach>
                 </table>
             </div>
+        </div>
+        <hr>
+<%--UPDATE DATE DAMAGED BLOCK      --%>
+        that sets the date damaged column to February 4,
+        --    2003 for all the items that were in room A14 on that date
+        <div class="row">
+            <div class="alert alert-info" role="alert">
+                <p class="text-muted"><small>Sets the date damaged to <i>entered date</i> for all the items that were in <i>specified room</i> on that date</small></p>
+            </div>
+        </div>
+        <div class="row">
+            <form:form action="${pageContext.request.contextPath}/updateDamagedItems"
+                       method="post"
+                       class="mb-3">
+                <div class="form-group row">
+                    <label for="inputDateWhenDamaged" class="col-sm-2 col-form-label">Date when damaged</label>
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" name="inputDateWhenDamaged" id="inputDateWhenDamaged" >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputRoomName" class="col-sm-2 col-form-label">Date when damaged</label>
+                <div class="col-sm-10">
+                        <input type="text" class="form-control" name="inputRoomName" id="inputRoomName" >
+                    </div>
+                </div>
+                <input type="submit" value="Update">
+            </form:form>
         </div>
     </div>
 </main>

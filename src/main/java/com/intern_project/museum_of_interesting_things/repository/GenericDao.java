@@ -2,6 +2,7 @@ package com.intern_project.museum_of_interesting_things.repository;
 
 import com.intern_project.museum_of_interesting_things.entity.Authority;
 import com.intern_project.museum_of_interesting_things.entity.User;
+import com.intern_project.museum_of_interesting_things.utils.EntityUtility;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Criteria;
@@ -20,9 +21,15 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -188,36 +195,7 @@ public class GenericDao {
 
     public List<List<String>> generatedReportBasedOnSQLQuery(String reportQuery) {
         final Session session = sessionFactory.getCurrentSession();
-        String averageValPerEachRoomSqlQuery = "SELECT storage_type,Avg(worth_value) average_Value FROM employee_item " +
-                "INNER JOIN items ON employee_item.item_id = items.id " +
-                "INNER JOIN item_location ON items.id = item_location.item_id " +
-                "LEFT JOIN locations ON item_location.location_id = locations.id " +
-                "WHERE  storage_type LIKE '%Room%' " +
-                "GROUP  BY storage_type " +
-                "ORDER  BY storage_type;";
-
-        String s = "select name, locations.storage_type, round((CURRENT_DATE - locations.date_when_put)) Days " +
-                "from items " +
-                "inner join " +
-                "(select item_id, min(location_id) location_id " +
-                "from item_location group by item_id) item_location " +
-                "on items.id=item_location.item_id " +
-                "left join locations " +
-                "on item_location.location_id=locations.id " +
-                "where items.is_lost=0 " +
-                "union select name, locations.storage_type, round((lost_items.date_lost - locations.date_when_put)) Days " +
-                "from items inner join lost_items " +
-                "on items.id=lost_items.item_id " +
-                "inner join " +
-                "(select item_id, min(location_id) location_id " +
-                "from item_location " +
-                "group by item_id) item_location " +
-                "on items.id=item_location.item_id " +
-                "left join locations " +
-                "on item_location.location_id=locations.id " +
-                "where items.is_lost=1;";
-
-        List<List<String>> rows = new ArrayList<>();
+            List<List<String>> rows = new ArrayList<>();
         List<Object[]> rowsObjs = session.createNativeQuery(reportQuery).list();
 
         for (Object[] rawRow: rowsObjs) {
@@ -232,5 +210,14 @@ public class GenericDao {
     }
 
 
+    public void updateDateDamagedForItems(String inputRoomName, Date inputDateWhenDamaged) {
+        String query = EntityUtility.getQuery("/updateDateDamagedForItems.sql");
+        String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(inputDateWhenDamaged);
 
+        query = String.format(query, formattedDate, inputRoomName, formattedDate);
+        System.out.println(query);
+        final Session session = sessionFactory.getCurrentSession();
+        int isWorking = session.createNativeQuery(query).executeUpdate();
+        System.out.println("isWorking" + isWorking);
+    }
 }

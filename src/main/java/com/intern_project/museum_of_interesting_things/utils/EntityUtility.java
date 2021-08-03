@@ -104,11 +104,15 @@ public class EntityUtility {
         Map<List<String>, String> columnsAndReportQuery = new HashMap<>();
         report = String.format("/%s.sql", report);
         System.out.println("formattedSqlFileName:" + report);
+        String sqlReport = getQuery(report);
+        columnsAndReportQuery.put(columns, sqlReport);
+        return  columnsAndReportQuery;
+    }
+
+    public static String getQuery(String report) {
         URL reportSQLQuery = EntityUtility.class.getResource("/sqlReports" + report);
         String filePathForSparqlQuery = null;
         String sqlReport = null;
-
-
 
         try {
             filePathForSparqlQuery = Paths.get(reportSQLQuery.toURI()).toFile().getAbsolutePath();
@@ -116,8 +120,7 @@ public class EntityUtility {
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
-        columnsAndReportQuery.put(columns, sqlReport);
-        return  columnsAndReportQuery;
+        return sqlReport;
     }
 
 

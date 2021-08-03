@@ -33,6 +33,10 @@ public class Item {
     @Column(name = "date_acquired")
     private Date dateAcquired;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Column(name = "date_damaged")
+    private Date dateDamaged;
+
 //    TODO: get rid of this property; seems redundant. if leave then refactor to bool
     @Column(name = "is_lost")
     private int isLost;

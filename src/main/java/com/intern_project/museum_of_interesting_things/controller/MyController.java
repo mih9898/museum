@@ -23,6 +23,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -516,6 +517,19 @@ public class MyController implements PropertiesLoader {
         return "reports";
     }
 
+
+    @RequestMapping(value = "/updateDamagedItems", method = RequestMethod.POST)
+    public String updateDamagedItems(@RequestParam(name = "inputDateWhenDamaged") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date inputDateWhenDamaged,
+                                     @RequestParam(name = "inputRoomName") String inputRoomName,
+                                     Model model) {
+        System.out.println("room: " + inputRoomName);
+        System.out.println("dateDamaged: " + inputDateWhenDamaged);
+        String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(inputDateWhenDamaged);
+        System.out.println("formattedDate: " +  formattedDate);
+        genericDao.updateDateDamagedForItems(inputRoomName, inputDateWhenDamaged);
+
+        return "reports";
+    }
     private String getCurrentUsername() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = null;
