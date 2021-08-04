@@ -14,7 +14,8 @@
 
     <div class="container" id="content">
         <h1>Add new Item</h1>
-
+        <p class="text-danger">${warning}</p>
+        <p class="text-success">${successWarning}</p>
 
         <form:form action="${pageContext.request.contextPath}/addItem" method="post" enctype="multipart/form-data">
             <div class="row mb-3">

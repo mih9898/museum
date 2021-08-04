@@ -12,7 +12,9 @@
 <main id="main">
 
     <div class="container" id="content">
-        <h1>Add new Employee</h1>
+        <h1>New employee</h1>
+        <p class="text-danger">${warning}</p>
+        <p class="text-success">${successWarning}</p>
         <aside>
                 <h3>${title}</h3>
             <c:remove var="title" scope="session"/>

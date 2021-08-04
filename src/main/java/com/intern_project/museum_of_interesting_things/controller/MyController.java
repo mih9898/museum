@@ -180,9 +180,14 @@ public class MyController implements PropertiesLoader {
             newItem.setImage(imageName);
         }
 
-        genericDao.save(newItem);
+        int isSaved = genericDao.save(newItem);
 
-        model.addAttribute("title", "New item was successfully saved");
+        if (isSaved == 0) {
+            model.addAttribute("warning", "Iteem wasn't added");
+        } else {
+            model.addAttribute("successWarning", "Item was successfully added");
+        }
+
 
         return "newItem";
     }
@@ -240,12 +245,17 @@ public class MyController implements PropertiesLoader {
         addPhoneNum(newEmployee, phoneNumber);
         newEmployee.setUser(user);
         user.setEmployee(newEmployee);
-        genericDao.save(newEmployee);
-        HttpSession session = request.getSession();
-        session.setAttribute("title", "New item was successfully saved");
+        int isSaved = genericDao.save(newEmployee);
+        if (isSaved == 0) {
+            model.addAttribute("warning", "Employee wasn't added");
+        } else {
+            model.addAttribute("successWarning", "Employee was successfully added");
+        }
+//        HttpSession session = request.getSession();
+//        session.setAttribute("title", "New item was successfully saved");
         String referer = request.getHeader("Referer");
-
-        return "redirect:" + referer;
+        return "newEmployee";
+//        return "redirect:" + referer;
     }
 
     private void addPhoneNum(Employee newEmployee, int phoneNumber) {
@@ -497,13 +507,9 @@ public class MyController implements PropertiesLoader {
         return "reports";
     }
     @RequestMapping(value = "/generateReports", method = RequestMethod.GET)
-    public String generateReports(@RequestParam(name = "reports", required = true) List<String> reports, Model model) {
-        for (String rep : reports) {
-            System.out.println(rep);
-        }
-//        System.out.println(EntityUtility.getSQLReportQuery("sad"));
+    public String generateReports(@RequestParam(name = "reports", required = false) List<String> reports, Model model) {
 
-        if (reports.size() > 0) {
+        if (reports != null && reports.size() > 0) {
             for (String reportCheckbox : reports) {
                 Map<List<String>, String> columnsAndReportQuery = EntityUtility.getSQLReportQuery(reportCheckbox);
                 Map.Entry<List<String>,String> entry = columnsAndReportQuery.entrySet().iterator().next();
@@ -513,6 +519,8 @@ public class MyController implements PropertiesLoader {
                 model.addAttribute(reportCheckbox + "Rows", rowsResult);
                 model.addAttribute(reportCheckbox + "Columns", columns);
             }
+        } else {
+            model.addAttribute("warning", "At least 1 report must be chosen!");
         }
         return "reports";
     }
@@ -522,11 +530,13 @@ public class MyController implements PropertiesLoader {
     public String updateDamagedItems(@RequestParam(name = "inputDateWhenDamaged") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date inputDateWhenDamaged,
                                      @RequestParam(name = "inputRoomName") String inputRoomName,
                                      Model model) {
-        System.out.println("room: " + inputRoomName);
-        System.out.println("dateDamaged: " + inputDateWhenDamaged);
-        String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(inputDateWhenDamaged);
-        System.out.println("formattedDate: " +  formattedDate);
-        genericDao.updateDateDamagedForItems(inputRoomName, inputDateWhenDamaged);
+
+        int isUpdated = genericDao.updateDateDamagedForItems(inputRoomName, inputDateWhenDamaged);
+        if (isUpdated == 0) {
+            model.addAttribute("warning", "Entry(ies) was not updated");
+        } else {
+            model.addAttribute("success-warning", "Entry(ies) was updated");
+        }
 
         return "reports";
     }

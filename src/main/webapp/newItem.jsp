@@ -14,7 +14,8 @@
 
     <div class="container" id="content">
         <h1>Add new Item</h1>
-
+        <p class="text-danger">${warning}</p>
+        <p class="text-success">${successWarning}</p>
 
         <form:form action="${pageContext.request.contextPath}/addItem" method="post" enctype="multipart/form-data">
             <div class="row mb-3">
@@ -81,7 +82,7 @@
 <%--            TODO: if 1 col has info then other col has to have info as well (required will not help, because loc-block is optional)
                     js -> queryPick of all locInputs -> if !oneInp.isEmpty && other.isEmp cancel subm otherwise fine
 --%>
-            <fieldset class="row ms-3 p-3">
+            <fieldset class="row ms-3 p-3 mb-2">
                 <legend>Item location info</legend>
                 <div class="row mb-3">
                     <label for="storageType" class="col-sm-2 col-form-label">Storage type:</label>
@@ -102,8 +103,12 @@
                     </div>
                 </div>
             </fieldset>
+            <div class="row center">
+                <div class="col text-center center">
+                    <button type="submit" class="btn btn-success mx-auto">Add Employee</button>
+                </div>
+            </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
         </form:form>
     </div>
 

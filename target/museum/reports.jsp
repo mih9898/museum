@@ -14,6 +14,9 @@
 
     <div class="container" id="content">
         <h1>Reports</h1>
+        <p class="text-danger">${warning}</p>
+        <p class="text-success">${success-warning}</p>
+
         <form:form action="${pageContext.request.contextPath}/generateReports"
                    method="get"
                    class="mb-3"
@@ -59,8 +62,13 @@
                     </li>
                 </ul>
             </label>
-            <input type="submit" value="Generate reports">
         </div>
+            <div class="row center">
+                <div class="col text-center center">
+                    <button type="submit" class="btn btn-success mx-auto">Generate report(s)</button>
+                </div>
+            </div>
+
         </form:form>
 
         <hr>
@@ -125,11 +133,9 @@
         </div>
         <hr>
 <%--UPDATE DATE DAMAGED BLOCK      --%>
-        that sets the date damaged column to February 4,
-        --    2003 for all the items that were in room A14 on that date
         <div class="row">
-            <div class="alert alert-info" role="alert">
-                <p class="text-muted"><small>Sets the date damaged to <i>entered date</i> for all the items that were in <i>specified room</i> on that date</small></p>
+            <div>
+                <p class="text-muted"><small>The following update sets the date damaged to <i>entered date</i> for all the items that were in <i>specified room</i> on that date</small></p>
             </div>
         </div>
         <div class="row">
@@ -148,7 +154,11 @@
                         <input type="text" class="form-control" name="inputRoomName" id="inputRoomName" >
                     </div>
                 </div>
-                <input type="submit" value="Update">
+                <div class="row center">
+                    <div class="col text-center center">
+                        <button type="submit" class="btn btn-success mx-auto">Set date damaged for items</button>
+                    </div>
+                </div>
             </form:form>
         </div>
     </div>

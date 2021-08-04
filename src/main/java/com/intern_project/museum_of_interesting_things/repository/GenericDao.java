@@ -210,14 +210,15 @@ public class GenericDao {
     }
 
 
-    public void updateDateDamagedForItems(String inputRoomName, Date inputDateWhenDamaged) {
+    public int updateDateDamagedForItems(String inputRoomName, Date inputDateWhenDamaged) {
         String query = EntityUtility.getQuery("/updateDateDamagedForItems.sql");
         String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(inputDateWhenDamaged);
 
         query = String.format(query, formattedDate, inputRoomName, formattedDate);
         System.out.println(query);
         final Session session = sessionFactory.getCurrentSession();
-        int isWorking = session.createNativeQuery(query).executeUpdate();
-        System.out.println("isWorking" + isWorking);
+        int isUpdated = session.createNativeQuery(query).executeUpdate();
+        System.out.println("isWorking" + isUpdated);
+        return isUpdated;
     }
 }
