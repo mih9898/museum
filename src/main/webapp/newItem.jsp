@@ -112,6 +112,8 @@
         </form:form>
     </div>
 
+    <% session.removeAttribute("successWarning");%>
+    <% session.removeAttribute("warning");%>
 
 </main>
 

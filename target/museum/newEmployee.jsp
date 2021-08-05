@@ -15,11 +15,7 @@
         <h1>New employee</h1>
         <p class="text-danger">${warning}</p>
         <p class="text-success">${successWarning}</p>
-        <aside>
-                <h3>${title}</h3>
-            <c:remove var="title" scope="session"/>
 
-        </aside>
         <fieldset class="row mb-1 ms-3 p-3">
 
             <form:form action="${pageContext.request.contextPath}/addEmployee" method="POST"
@@ -121,9 +117,9 @@
 
     </div>
 
-    <%
-        session.removeAttribute("title");
-    %>
+
+    <% session.removeAttribute("successWarning");%>
+    <% session.removeAttribute("warning");%>
 
 </main>
 

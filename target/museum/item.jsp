@@ -13,7 +13,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <main id="main">
-
+    <div class="container" id="content">
+        <h1>${item.name} information</h1>
     <form:form action="${pageContext.request.contextPath}/updateItem"
                method="post"
                modelAttribute="updatedItem"
@@ -21,9 +22,9 @@
                enctype="multipart/form-data"
     >
 
-        <div class="container" id="content">
-        <h1>${item.name} information</h1>
+
         <div class="row mb-2" id="movieTableInfo">
+        <p class="text-success">${successWarning}</p>
         <div class="row mb-2">
             <div class="image-upload">
                 <label for="image">
@@ -320,6 +321,7 @@
             <form:input type="hidden" path="item.id" value="${item.id}"/>
         </form:form>
     </sec:authorize>
+    <% session.removeAttribute("successWarning");%>
 
 </main>
 

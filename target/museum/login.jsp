@@ -17,3 +17,4 @@
 <%--        TODO: write form + apply spring security crud  operation(s) only for admins/user otherwise display only--%>
     </div>
 </main>
+

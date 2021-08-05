@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.http.HttpRequest;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -97,8 +98,10 @@ public class MyController implements PropertiesLoader {
 
         EntityUtility.merge(original, updatedItem);
         genericDao.saveOrUpdate(original);
-
+        HttpSession session = request.getSession();
+        session.setAttribute("successWarning", "Item's data was successfully updated");
         model.addAttribute("item", original);
+//        return "item";
         return "redirect:" + referer;
     }
 
@@ -110,6 +113,8 @@ public class MyController implements PropertiesLoader {
                              Model model,
                              @RequestParam int id
     ) {
+        HttpSession session = request.getSession();
+
         Item item = genericDao.get(Item.class, id);
         if (!storageType.isEmpty()) {
             Location location = new Location(storageType, locDescription, dateWhenPut);
@@ -117,6 +122,8 @@ public class MyController implements PropertiesLoader {
         }
         String referer = request.getHeader("Referer");
         genericDao.saveOrUpdate(item);
+        session.setAttribute("successWarning", String.format("New location was added to the %s item", item.getName()));
+
         model.addAttribute("item", item);
         return "redirect:" + referer;
     }
@@ -127,6 +134,8 @@ public class MyController implements PropertiesLoader {
                              HttpServletRequest request,
                              Model model
     ) {
+        HttpSession session = request.getSession();
+
         System.out.println("addNewAppraisal" + employeeItem);
         Employee emp = genericDao.get(Employee.class, employeeItem.getEmployee().getId());
         Item item = genericDao.get(Item.class, employeeItem.getItem().getId());
@@ -134,6 +143,7 @@ public class MyController implements PropertiesLoader {
         employeeItem.setItem(item);
         item.addEmployeeAprToItem(employeeItem);
         genericDao.saveOrUpdate(item);
+        session.setAttribute("successWarning", String.format("New %s %s's appraise value was added to the %s",emp.getFirstName(), emp.getLastName(), item.getName()));
 
         String referer = request.getHeader("Referer");
 //        Item original = genericDao.get(Item.class, id);
@@ -160,6 +170,7 @@ public class MyController implements PropertiesLoader {
                           @RequestParam(value = "itemImage", required = false) MultipartFile itemImage,
                           HttpServletRequest request,
                           final Model model) {
+        String referer = request.getHeader("Referer");
 
         int isLost = itemLostDesc.isEmpty() ? 0 : 1;
         Item newItem = new Item(itemName, itemDescription, dateAcquired, isMuseumItem);
@@ -181,15 +192,15 @@ public class MyController implements PropertiesLoader {
         }
 
         int isSaved = genericDao.save(newItem);
-
+        HttpSession session = request.getSession();
         if (isSaved == 0) {
-            model.addAttribute("warning", "Iteem wasn't added");
+            session.setAttribute("warning", "Item wasn't added");
         } else {
-            model.addAttribute("successWarning", "Item was successfully added");
+            session.setAttribute("successWarning", "Item was successfully added");
         }
 
-
-        return "newItem";
+        return "redirect:" + referer;
+//        return "newItem";
     }
 
 
@@ -205,6 +216,8 @@ public class MyController implements PropertiesLoader {
         deleteItemImage(item.getImage());
         genericDao.deleteObject(item);
         String referer = request.getHeader("Referer");
+        HttpSession session = request.getSession();
+        session.setAttribute("successWarning", "Item was successfully deleted");
         return "redirect:" + referer;
 //        return "items";
     }
@@ -246,16 +259,18 @@ public class MyController implements PropertiesLoader {
         newEmployee.setUser(user);
         user.setEmployee(newEmployee);
         int isSaved = genericDao.save(newEmployee);
+        HttpSession session = request.getSession();
+
         if (isSaved == 0) {
-            model.addAttribute("warning", "Employee wasn't added");
+            session.setAttribute("warning", "Employee wasn't saved");
         } else {
-            model.addAttribute("successWarning", "Employee was successfully added");
+            session.setAttribute("successWarning", "Employee was successfully saved");
         }
 //        HttpSession session = request.getSession();
 //        session.setAttribute("title", "New item was successfully saved");
         String referer = request.getHeader("Referer");
-        return "newEmployee";
-//        return "redirect:" + referer;
+//        return "newEmployee";
+        return "redirect:" + referer;
     }
 
     private void addPhoneNum(Employee newEmployee, int phoneNumber) {
@@ -295,10 +310,10 @@ public class MyController implements PropertiesLoader {
             }
             model.addAttribute("currentUsername", currentUser.getUsername());
         }
-
         model.addAttribute("updatedEmp", new Employee());
         model.addAttribute("newPhone", new PhoneNumber());
         model.addAttribute("employee", employee);
+//        return "redirect:" + referer;
 
         return "employee";
     }
@@ -310,6 +325,7 @@ public class MyController implements PropertiesLoader {
                              @RequestParam(value = "newImage", required = false) MultipartFile newImage,
                              @RequestParam int id
     ) {
+        HttpSession session = request.getSession();
 
         Employee original = genericDao.get(Employee.class, id);
 
@@ -324,6 +340,8 @@ public class MyController implements PropertiesLoader {
         System.out.println("updatedImgAfterMerge:" + updatedEmp.getImage());
         System.out.println("updated ImgName:" + original.getImage());
         genericDao.saveOrUpdate(original);
+        session.setAttribute("successWarning", "Employee's data was successfully updated");
+
         String referer = request.getHeader("Referer");
         return "redirect:" + referer;
     }
@@ -332,9 +350,14 @@ public class MyController implements PropertiesLoader {
     public String deleteEmployee(@RequestParam("empId") int id,
                              HttpServletRequest request
     ) {
+        HttpSession session = request.getSession();
+
         Employee emp = genericDao.get(Employee.class, id);
+        session.setAttribute("successWarning", String.format("Employee %s %s was successfully deleted", emp.getFirstName(), emp.getLastName()));
+
         deleteItemImage(emp.getImage());
         genericDao.deleteObject(emp);
+
         String referer = request.getHeader("Referer");
         return "redirect:" + referer;
     }
@@ -346,7 +369,8 @@ public class MyController implements PropertiesLoader {
         System.out.println(phoneNumber);
         System.out.println(phoneNumber.getEmployee());
         String referer = request.getHeader("Referer");
-
+        HttpSession session = request.getSession();
+        session.setAttribute("successWarning", "new phone number was successfully added to the employee");
         Employee emp = genericDao.get(Employee.class, phoneNumber.getEmployee().getId());
         emp.addPhoneNumberToEmployee(phoneNumber);
         phoneNumber.setEmployee(emp);
@@ -363,18 +387,22 @@ public class MyController implements PropertiesLoader {
                                          @RequestParam(value = "phoneNumber", required = false) int phoneNumber,
                                          HttpServletRequest request) {
         String referer = request.getHeader("Referer");
+        HttpSession session = request.getSession();
         User user = employee.getUser();
         int isSaved = genericDao.processUser(user);
         genericDao.saveObject(user);
         if (isSaved == 0) { // if no saved then such username already exists
-            model.addAttribute("warning", "Such username already in use! Try again");
+            session.setAttribute("warning", "Such username already in use! Try again");
             return "redirect:" + referer;
         }
+        session.setAttribute("warning", "Such username already in use! Try again");
+
         if (!employee.getFirstName().isEmpty() && !employee.getLastName().isEmpty()) {
             addPhoneNum(employee, phoneNumber);
             user.setEmployee(employee);
             employee.setUser(user);
             genericDao.saveObject(employee);
+
             return "redirect:/login";
         }
         genericDao.saveObject(user);
@@ -507,7 +535,9 @@ public class MyController implements PropertiesLoader {
         return "reports";
     }
     @RequestMapping(value = "/generateReports", method = RequestMethod.GET)
-    public String generateReports(@RequestParam(name = "reports", required = false) List<String> reports, Model model) {
+    public String generateReports(@RequestParam(name = "reports", required = false) List<String> reports, Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String referer = request.getHeader("Referer");
 
         if (reports != null && reports.size() > 0) {
             for (String reportCheckbox : reports) {
@@ -520,25 +550,32 @@ public class MyController implements PropertiesLoader {
                 model.addAttribute(reportCheckbox + "Columns", columns);
             }
         } else {
-            model.addAttribute("warning", "At least 1 report must be chosen!");
+            session.setAttribute("warning", "At least 1 report must be chosen!");
         }
-        return "reports";
+        return "redirect:" + referer;
+
+//        return "reports";
     }
 
 
     @RequestMapping(value = "/updateDamagedItems", method = RequestMethod.POST)
     public String updateDamagedItems(@RequestParam(name = "inputDateWhenDamaged") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date inputDateWhenDamaged,
                                      @RequestParam(name = "inputRoomName") String inputRoomName,
-                                     Model model) {
+                                     Model model,
+                                     HttpServletRequest request
+                                     ) {
+        HttpSession session = request.getSession();
+        String referer = request.getHeader("Referer");
 
         int isUpdated = genericDao.updateDateDamagedForItems(inputRoomName, inputDateWhenDamaged);
         if (isUpdated == 0) {
-            model.addAttribute("warning", "Entry(ies) was not updated");
+            session.setAttribute("warning", "Entry(ies) was not updated");
         } else {
-            model.addAttribute("success-warning", "Entry(ies) was updated");
+            session.setAttribute("successWarning", "Entry(ies) was updated");
         }
+        return "redirect:" + referer;
 
-        return "reports";
+//        return "reports";
     }
     private String getCurrentUsername() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

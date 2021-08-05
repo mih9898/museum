@@ -16,6 +16,7 @@
     <div class="container" id="content">
         <h1>Employees</h1>
         <div class="row mb-2" id="movieTableInfo">
+            <p class="text-success">${successWarning}</p>
 
             <table class="table table-bordered table-striped">
                 <thdead>
@@ -53,6 +54,7 @@
         </div>
     </div>
 
+    <% session.removeAttribute("successWarning");%>
 
 </main>
 

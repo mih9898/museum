@@ -15,7 +15,7 @@
     <div class="container" id="content">
         <h1>Reports</h1>
         <p class="text-danger">${warning}</p>
-        <p class="text-success">${success-warning}</p>
+        <p class="text-success">${successWarning}</p>
 
         <form:form action="${pageContext.request.contextPath}/generateReports"
                    method="get"
@@ -163,3 +163,6 @@
         </div>
     </div>
 </main>
+
+<% session.removeAttribute("successWarning");%>
+<% session.removeAttribute("warning");%>

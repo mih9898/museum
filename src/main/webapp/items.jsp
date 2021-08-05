@@ -18,6 +18,7 @@
         <h2>Items</h2>
             <div class="container">
                 <div class="row gx-5">
+                    <p class="text-success">${successWarning}</p>
                     <c:forEach items="${items}" var="item">
                         <div class="col-3 border p-3">
                             <img class="p-3 bg-light test-item card-img-top"
@@ -47,4 +48,6 @@
             </div>
         </div>
     </div>
+    <% session.removeAttribute("successWarning");%>
+
 </main>

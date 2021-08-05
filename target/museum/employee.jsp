@@ -27,6 +27,8 @@
 <%--    GENERAL EMP BLOCK--%>
     <div class="container" id="content">
         <h1>${item.name} information</h1>
+        <p class="text-success">${successWarning}</p>
+
         <div class="row mb-2">
             <div class="col-lg-6 col-sm-12">
                 <div class="row mb-2">
@@ -263,6 +265,9 @@
                 <input:hidden path="employee.id" value="${employee.id}"/>
             </form:form>
             </c:if>
+
+                <% session.removeAttribute("successWarning");%>
+
 </main>
 
 

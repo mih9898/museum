@@ -144,6 +144,7 @@
         </form:form>
     </fieldset>
 
+    <% session.removeAttribute("warning");%>
 
 </div>
 

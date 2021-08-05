@@ -116,6 +116,8 @@ public class GenericDao {
         sessionFactory.getCurrentSession().saveOrUpdate(o);
     }
 
+
+
     /**
      * Gets all.
      *
