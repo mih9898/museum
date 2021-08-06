@@ -120,6 +120,45 @@ Tasks Completed:
      now images are stored outside of webapp; therefore, app can read them immediately after upload
 
 
+7/21/2021 - 7/25/21
+Tasks Completed:
+* images upload/storing process is updated. previously, images were uploaded inside web-app that caused to redeploy app to see actual changes  
+  now images are stored outside of webapp; therefore, app can read them immediately after upload
+
+
+7/28/2021 
+Tasks Completed:
+* adding functionality: app can generate report(text) on an average items value per each room. dao only
+
+7/29/2021
+Tasks Completed:
+* adding functionality: app can generate report(text) on an current items on display(s)
+* adding functionality: app can generate report(text) on total days item(s) have been in museum
+
+
+8/2/2021
+Tasks Completed:
+* setup for generating reports on view/reads sqlQuery(ies) from resources method added
+* output data displayed in tables on view
+
+8/3/2021
+Tasks Completed:
+* final report piece added: setting dateDamaged for item(s) that were in specified input room in specified input date 
+
+8/4/2021
+Tasks Completed:
+* output messages for addEmployee/addItem/generating reports
+
+8/4/2021 -8/5/2021
+Tasks Completed:
+* output messages when crud operation launched
+
+8/6/2021
+Tasks Completed:
+* controller + dao refactored. most business logic went to GeneralService or EntityUtils
+
+
+
 
 
 

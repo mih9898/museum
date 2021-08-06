@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -20,6 +19,9 @@ import java.util.stream.Collectors;
 public class GeneralService implements PropertiesLoader {
 
     private GenericDao genericDao;
+    private final Logger logger = LogManager.getLogger(this.getClass());
+    private final Properties properties;
+    private final String UPLOAD_LOCATION;
 
     @Autowired
     public GeneralService(GenericDao genericDao) {
@@ -27,10 +29,6 @@ public class GeneralService implements PropertiesLoader {
         properties = loadProperties("/paths.properties");
         UPLOAD_LOCATION = properties.getProperty("upload.location");
     }
-
-    private final Logger logger = LogManager.getLogger(this.getClass());
-    private final Properties properties;
-    private final String UPLOAD_LOCATION;
 
 
     /************************************

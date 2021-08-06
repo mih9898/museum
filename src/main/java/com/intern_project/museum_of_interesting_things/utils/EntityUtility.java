@@ -1,6 +1,8 @@
 package com.intern_project.museum_of_interesting_things.utils;
 
-import com.intern_project.museum_of_interesting_things.entity.*;
+import com.intern_project.museum_of_interesting_things.entity.Authority;
+import com.intern_project.museum_of_interesting_things.entity.Item;
+import com.intern_project.museum_of_interesting_things.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,11 +22,10 @@ import java.nio.file.Paths;
 import java.util.*;
 
 
-//TODO: put all logic from here to service package + add needed dao stuff from controller
 @Component
 public class EntityUtility implements PropertiesLoader {
-     final Properties properties;
-     static String UPLOAD_LOCATION;
+    final Properties properties;
+    static String UPLOAD_LOCATION;
 
     @Autowired
     public EntityUtility() {
@@ -136,7 +137,7 @@ public class EntityUtility implements PropertiesLoader {
         System.out.println("formattedSqlFileName:" + report);
         String sqlReport = getQuery(report);
         columnsAndReportQuery.put(columns, sqlReport);
-        return  columnsAndReportQuery;
+        return columnsAndReportQuery;
     }
 
     public static String getQuery(String report) {
@@ -154,6 +155,9 @@ public class EntityUtility implements PropertiesLoader {
     }
 
 
+    /**
+     * rough testing
+     */
     public static void main(String[] args) {
         Item original = new Item();
         Item updated = new Item();
