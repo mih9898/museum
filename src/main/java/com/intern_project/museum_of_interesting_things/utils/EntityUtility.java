@@ -1,10 +1,17 @@
 package com.intern_project.museum_of_interesting_things.utils;
 
 import com.intern_project.museum_of_interesting_things.entity.*;
-import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -14,7 +21,72 @@ import java.util.*;
 
 
 //TODO: put all logic from here to service package + add needed dao stuff from controller
-public class EntityUtility {
+@Component
+public class EntityUtility implements PropertiesLoader {
+     final Properties properties;
+     static String UPLOAD_LOCATION;
+
+    @Autowired
+    public EntityUtility() {
+        properties = loadProperties("/paths.properties");
+        UPLOAD_LOCATION = properties.getProperty("upload.location");
+    }
+
+    public static String getCurrentUsername() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = null;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        }
+        return username;
+    }
+
+    public static String saveImage(MultipartFile file) {
+
+
+        String fileName = file.getOriginalFilename();
+
+        //create the actual file
+        File pathFile = new File(UPLOAD_LOCATION + fileName);
+        //checks whether file with such name already exist
+        if (pathFile.exists() && fileName != null) {
+            int counter = 0;
+            while (true) {
+                fileName = fileName.replaceAll("(\\d+)?\\.", counter + ".");
+                pathFile = new File(UPLOAD_LOCATION + fileName);
+                System.out.println("pathFile.exists():/" + fileName + pathFile.exists());
+                if (!pathFile.exists()) {
+                    break;
+                }
+                System.out.println("saveImage:pathFile:" + pathFile);
+                counter++;
+            }
+        }
+        try {
+            file.transferTo(pathFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fileName;
+    }
+
+
+    public static int processUser(User user, User existedUserWithTheSameUsername) {
+        if (existedUserWithTheSameUsername != null) {
+            return 0;
+        }
+        user.setEnabled(1);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        String encodedPassword = encoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        Authority authority = new Authority();
+        authority.setUsername(user.getUsername());
+        authority.setAuthority("ROLE_USER");
+
+        user.addAuthorityToUser(authority);
+        return 1;
+    }
 
     //working fine if fields are primitive. if collections or objects then can be lost (e.g dates)
     public static void mergeObjectsSimple(Object obj, Object update) {
@@ -40,48 +112,6 @@ public class EntityUtility {
         }
     }
 
-    //TODO: displace employeeItems, lostItem by adding form:hidden on general form
-    public static void merge(Item orig, Item updated) {
-        List<Location> copy = new ArrayList<>(orig.getLocations());
-        LostItem lostCopy = orig.getLostItem();
-        System.out.println(lostCopy == null);
-        List<EmployeeItem> employeeItemsCopy = new ArrayList<>(orig.getEmployeeItems());
-        mergeObjectsSimple(orig, updated);
-        // bruteforce bug fix(dates are lost when item is updated) + employeeItem set is lost as well
-        for (int i = 0; i < orig.getLocations().size(); i++) {
-            Location uLoc = copy.get(i);
-            Location oLoc = orig.getLocations().get(i);
-            if (oLoc.getDateWhenPut() == null) {
-                oLoc.setDateWhenPut(uLoc.getDateWhenPut());
-            }
-        }
-        if (lostCopy != null && lostCopy.getDateLost() != null
-                && updated.getLostItem().getDateLost() == null) {
-            orig.getLostItem().setDateLost(lostCopy.getDateLost());
-        }
-
-        if (!employeeItemsCopy.isEmpty() && orig.getEmployeeItems().isEmpty()) {
-            orig.setEmployeeItems(employeeItemsCopy);
-        }
-
-    }
-
-
-    public static void mergeEmployees(Employee orig, Employee updated) {
-        List<PhoneNumber> phoneNumbersCopy = new ArrayList<>(orig.getPhoneNumbers());
-        Set<EmployeeItem>employeeItemsCopy = orig.getEmployeeItems();
-
-        mergeObjectsSimple(orig, updated);
-        if (!phoneNumbersCopy.isEmpty() && orig.getPhoneNumbers().isEmpty()) {
-            orig.setPhoneNumbers(phoneNumbersCopy);
-        }
-        for (PhoneNumber p : orig.getPhoneNumbers()) {
-            p.setEmployee(orig);
-        }
-        if (!employeeItemsCopy.isEmpty() && orig.getEmployeeItems().isEmpty()) {
-            orig.setEmployeeItems(employeeItemsCopy);
-        }
-    }
 
     public static Map<List<String>, String> getSQLReportQuery(String report) {
 

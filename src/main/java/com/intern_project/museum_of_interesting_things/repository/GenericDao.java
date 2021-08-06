@@ -21,14 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -173,31 +166,9 @@ public class GenericDao {
 
 
 
-    //service
-    public int processUser(User user) {
-        User existedUserWithTheSameUsername = getFirstEntryBasedOnAnotherTableColumnProperty(
-                "username", user.getUsername(), User.class);
-        if (existedUserWithTheSameUsername != null) {
-            return 0;
-        }
-        user.setEnabled(1);
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        String encodedPassword = encoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        Authority authority = new Authority();
-        authority.setUsername(user.getUsername());
-        authority.setAuthority("ROLE_USER");
-
-        user.addAuthorityToUser(authority);
-//        saveObject(user);
-//        saveOrUpdate(user);
-        return 1;
-    }
-
     public List<List<String>> generatedReportBasedOnSQLQuery(String reportQuery) {
         final Session session = sessionFactory.getCurrentSession();
-            List<List<String>> rows = new ArrayList<>();
+        List<List<String>> rows = new ArrayList<>();
         List<Object[]> rowsObjs = session.createNativeQuery(reportQuery).list();
 
         for (Object[] rawRow: rowsObjs) {

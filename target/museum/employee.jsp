@@ -211,7 +211,7 @@
 
                                 <td>
                                     <span class="active">${phone.phoneNumber}</span>
-                                    <form:input type="number" class="inactive"
+                                    <form:input type="number" maxlength="10" class="inactive"
                                                 path="phoneNumbers[${ph.index}].phoneNumber"
                                                 value="${phone.phoneNumber}"/>
                                 </td>
@@ -252,7 +252,7 @@
             <div class="row mb-3">
                 <form:label path="phoneNumber" class="col-sm-2 col-form-label">Phone number:</form:label>
                 <div class="col-sm-10">
-                    <form:input type="number" path="phoneNumber" class="form-control"/>
+                    <form:input type="number" path="phoneNumber" maxlength="10" class="form-control"/>
                 </div>
             </div>
 
