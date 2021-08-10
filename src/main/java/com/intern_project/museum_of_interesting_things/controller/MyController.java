@@ -390,13 +390,15 @@ public class MyController implements PropertiesLoader {
                 List<String> columns = entry.getKey();
                 String reportQuery = entry.getValue();
                 List<List<String>> rowsResult = genericDao.generatedReportBasedOnSQLQuery(reportQuery);
+                System.out.println("reportCheckbox:" + reportCheckbox);
                 model.addAttribute(reportCheckbox + "Rows", rowsResult);
                 model.addAttribute(reportCheckbox + "Columns", columns);
             }
         } else {
             session.setAttribute("warning", "At least 1 report must be chosen!");
         }
-        return "redirect:" + referer;
+        return "reports";
+//        return "redirect:" + referer;
     }
 
 

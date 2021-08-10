@@ -74,6 +74,7 @@
         <hr>
 <%--REPORTS BLOCK--%>
         <div class="row">
+            <c:if test="${avgValuesReportRows != null}">
             <div class="col-lg-4 col-sm-12">
                 <table class="table table-bordered table-striped">
                     <legend>Item's average value per room</legend>
@@ -92,8 +93,10 @@
                     </c:forEach>
                 </table>
             </div>
+            </c:if>
 
-            <div class="col-lg-4 col-sm-12">
+<c:if test="${overallItemDaysReportRows != null}">
+<div class="col-lg-4 col-sm-12">
                 <table class="table table-bordered table-striped">
                     <legend>Items overall time in museum report</legend>
                     <c:forEach items="${overallItemDaysReportColumns}" var="col">
@@ -111,8 +114,10 @@
                     </c:forEach>
                 </table>
             </div>
+</c:if>
 
-            <div class="col-lg-4 col-sm-12">
+<c:if test="${currentItemsOnDisplaysReportRows != null}">
+<div class="col-lg-4 col-sm-12">
                 <table class="table table-bordered table-striped">
                     <legend>Items that are currently exposed report</legend>
                     <c:forEach items="${currentItemsOnDisplaysReportColumns}" var="col">
@@ -130,8 +135,10 @@
                     </c:forEach>
                 </table>
             </div>
+</c:if>
         </div>
         <hr>
+
 <%--UPDATE DATE DAMAGED BLOCK      --%>
         <div class="row">
             <div>
@@ -145,13 +152,13 @@
                 <div class="form-group row">
                     <label for="inputDateWhenDamaged" class="col-sm-2 col-form-label">Date when damaged</label>
                     <div class="col-sm-10">
-                        <input type="date" class="form-control" name="inputDateWhenDamaged" id="inputDateWhenDamaged" >
+                        <input type="date" class="form-control" required name="inputDateWhenDamaged" id="inputDateWhenDamaged" >
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="inputRoomName" class="col-sm-2 col-form-label">Date when damaged</label>
                 <div class="col-sm-10">
-                        <input type="text" class="form-control" name="inputRoomName" id="inputRoomName" >
+                        <input type="text" class="form-control" required name="inputRoomName" id="inputRoomName" >
                     </div>
                 </div>
                 <div class="row center">

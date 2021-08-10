@@ -36,7 +36,7 @@
                         <label for="image">
                             <img src="${pageContext.request.contextPath}/images/${employee.image}" alt="${employee.image}"/>
                         </label>
-                        <input id="image" name="newImage" type="file" />
+                        <input id="image" name="newImage" type="file" onclick="showMainUpdateBtn()" />
                     </div>
                 </div>
                 <table class="table table-bordered table-striped">
