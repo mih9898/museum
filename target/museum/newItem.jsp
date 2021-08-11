@@ -13,12 +13,12 @@
 <main id="main">
 
     <div class="container" id="content">
-        <h1>Add new Item</h1>
+        <h2>Add new Item</h2>
         <p class="text-danger">${warning}</p>
         <p class="text-success">${successWarning}</p>
 
         <form:form action="${pageContext.request.contextPath}/addItem" method="post" enctype="multipart/form-data">
-            <fieldset class="row ms-3 p-3 mb-2>
+            <fieldset class="row ms-3 p-3 mb-2">
 
             <div class="row mb-3">
                 <label for="itemName" class="col-sm-2 col-form-label">Name</label>
@@ -70,7 +70,6 @@
                     </div>
                 </div>
                 </fieldset>
-
 
             </div>
 

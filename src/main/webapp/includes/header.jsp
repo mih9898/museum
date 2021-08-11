@@ -42,10 +42,10 @@
                         </li>
                     </sec:authorize>
 
-                    <li class="nav-item">
-                        <a class="nav-link active lead" aria-current="page"
-                           href="${pageContext.request.contextPath}/test">Test</a>
-                    </li>
+<%--                    <li class="nav-item">--%>
+<%--                        <a class="nav-link active lead" aria-current="page"--%>
+<%--                           href="${pageContext.request.contextPath}/test">Test</a>--%>
+<%--                    </li>--%>
 
 
                     <sec:authorize access="!isAuthenticated()">
@@ -69,10 +69,13 @@
         </div>
     </nav>
     <div class="jumbotron text-center">
-        <h1>Welcome to Museum of Interesting Things</h1>
-        <a href="${pageContext.request.contextPath}/items">
-            <p>Contribute or discover our collection!</p>
-        </a>
+        <div class="headerText">
+            <h1>Welcome to Museum of Interesting Things</h1>
+            <a href="${pageContext.request.contextPath}/items">
+                <p>Contribute or discover our collection!</p>
+            </a>
+        </div>
+
     </div>
 <%--    <div class="jumbotron jumbotron-fluid">--%>
 <%--        <div class="container">--%>

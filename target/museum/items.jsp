@@ -14,11 +14,12 @@
 <main id="main">
 
     <div class="container" id="content">
-        <h1>Home</h1>
         <h2>Items</h2>
             <div class="container">
                 <div class="row gx-5">
                     <p class="text-success">${successWarning}</p>
+
+                    <c:if test="${not empty items}" >
                     <c:forEach items="${items}" var="item">
                         <div class="col-3 border p-3">
                             <img class="p-3 bg-light test-item card-img-top"
@@ -44,6 +45,16 @@
                             </div>
                         </div>
                     </c:forEach>
+                    </c:if>
+                    <c:if test="${empty items}">
+                        <div class="card border-info mb-3 text-center noEntities" >
+                            <div class="card-header">Note</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Items display</h5>
+                                <p class="card-text">No items so far</p>
+                            </div>
+                        </div>
+                    </c:if>
                 </div>
             </div>
         </div>

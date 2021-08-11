@@ -14,35 +14,23 @@
     <div class="container" id="content">
         <h2>There are plenty of very nice garden spots available.</h2>
         <div class="test">
-            <a href="images/food.jpg"><img id="museumImg" alt="full bucket of fresh vegetables" src="https://i.etsystatic.com/15568096/r/il/e1ced4/2010945485/il_794xN.2010945485_a6x4.jpg"></a>
-            <p class="gardenDescript"><span class="fancyLetter">B</span>eautiful gardens are at the heart of any community. Willow Gardens'
-                provide an entry point for individuals and households to get involved in the whole project.
-                Community gardeners use the land to grow their own food, which has a positive impact on their household food security.
-                We provide recreational outdoor activity as well as a fun and friendly environment for people of all ages, incomes, and cultures
-                to work the land together and share their gardening knowledge and ideas.
-                Gardeners assist in site maintenance and management through volunteer commitments.
+            <img id="museumImg" alt="fgrzegorz brzeczyszczykiewicz" src="https://penobscotmarinemuseum.org/welcome/wp-content/uploads/2018/03/6-28.jpg">
+            <p class="museumDesc"> A beautiful place where you will discover something new -- the Museum of Interesting Things. This place was opened almost one hundred years
+                ago and is run by family Brzeczyszczykiewicz. In 1919, a founder Grzegorz wanted to create a place where people would fall into childhood,
+                a place where any man would be flamed by finding new fascinating items that he never has seen. That's how he founded the Museum where all
+                kinds of strange curiosities and rarities would be displayed for curious spectators. And Grzegorz Brzeszczykiewwicz's idea and dream are
+                working to this day. The museum reveals and extends man's imagination. The museum offers different thematic rooms where each one would find the
+                new fascinating discoveries.
             </p>
         </div>
         <hr>
 
         <div id="gardeningTipsComplementary">
-            <h3>Already has a plot?</h3>
-            <p id="asideGardenTips">Want to start digging but don't know where to begin? <a href="gardeningTips.html"> Use this beginner's guide</a>
-                to gardening for the answers to your gardening questions. Keep reading for all of the basic gardening tips and tricks you'll need to get started.
+            <h3>Has curious odd item and want to contribute to museum?</h3>
+            <p id="asideGardenTips"> Bring it to us! You can extend the variety of our displays/items by bringing unusual items.
+                Even if you don't know what is item for, still bring it. We can appraise it and if it is something unusual then we can even buy it!
             </p>
         </div>
-        <hr>
-        <p>What do you receive if you buy a plot?</p>
-        <ul>
-            <li>The county provides the land to rent, liability insurance, and water, which is made available throughout the summer.</li>
-            <li>Upgraded water lines are maintained.</li>
-            <li>Grass borders are mowed to prevent rodent habitat.</li>
-            <li>A Port-a-Potty is provided for your convenience.</li>
-            <li>Free garden seeds, teaching materials, and advice is provided from mentors in our newsletters.</li>
-            <li>The garden is tilled in the fall and early spring as soil conditions allow.</li>
-            <li>The plots get measured, marked, and monitored.</li>
-        </ul>
-        <a href="buyPlot.html">Click here to buy a plot!</a>
 
     </div>
 </main>

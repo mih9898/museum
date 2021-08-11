@@ -8,12 +8,13 @@ body {
 main#main {
     width: 77%;
     margin: 0 auto;
-    padding: 0 4em 4em 4em;
+    padding: 2em 4em 4em 4em;
     font-size: 20px;
     color: #212529;
     font-family: Lora, 'Times New Roman', serif;
     background-color: #fff;
     min-height: 400px;
+    border: solid #7f6736;
 }
 
 
@@ -112,5 +113,35 @@ footer {
     bottom: 0;
     width: 100%;
     text-align: center;
+}
+
+.jumbotron {
+    background-image: url("http://localhost:8080/museum_war_exploded/resources/images/jumboImage1.jpg");
+    height: 126px;
+    background-size: contain;
+    width: 77%;
+    margin: 0 auto;
+}
+
+div.headerText h1 {
+    color: #eee;
+    padding-top:3%;
+}
+
+div.headerText p {
+    color: #bbbaba;
+}
+
+nav.navbar {
+    width: 77%;
+    margin: 0 auto;
+}
+
+nav li:hover {
+    background-color:#8a6161;
+}
+
+.noEntities:before {
+    padding:7em;
 }
 

@@ -17,6 +17,7 @@
         <h2>Employees</h2>
         <div class="row mb-2" id="movieTableInfo">
             <p class="text-success">${successWarning}</p>
+            <c:if test="${not empty employees}" >
 
             <table class="table table-bordered table-striped">
                 <thdead>
@@ -30,6 +31,7 @@
                     </tr>
                 </thdead>
                 <tbody>
+
 <c:forEach items="${employees}" var="emp">
 
     <tr class="employeeRow" onclick="window.location.href = '${pageContext.request.contextPath}/employee?id=${emp.id}'">
@@ -51,9 +53,19 @@
 </c:forEach>
                 </tbody>
             </table>
+            </c:if>
+
         </div>
     </div>
-
+    <c:if test="${empty employees}">
+        <div class="card border-info mb-3 text-center">
+            <div class="card-header">Note</div>
+            <div class="card-body">
+                <h5 class="card-title">employees display</h5>
+                <p class="card-text">No employees so far</p>
+            </div>
+        </div>
+    </c:if>
     <% session.removeAttribute("successWarning");%>
 
 </main>
