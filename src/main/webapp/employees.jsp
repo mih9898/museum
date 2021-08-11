@@ -14,7 +14,7 @@
 
 <main id="main">
     <div class="container" id="content">
-        <h1>Employees</h1>
+        <h2>Employees</h2>
         <div class="row mb-2" id="movieTableInfo">
             <p class="text-success">${successWarning}</p>
 
@@ -32,7 +32,7 @@
                 <tbody>
 <c:forEach items="${employees}" var="emp">
 
-    <tr onclick="window.location.href = '${pageContext.request.contextPath}/employee?id=${emp.id}'">
+    <tr class="employeeRow" onclick="window.location.href = '${pageContext.request.contextPath}/employee?id=${emp.id}'">
         <td>${emp.firstName} ${emp.lastName}</td>
         <td>${emp.position}</td>
         <td>${emp.salary}</td>
@@ -58,5 +58,6 @@
 
 </main>
 
+<c:import url="includes/footer.jsp"/>
 
 

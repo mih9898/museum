@@ -26,7 +26,7 @@
 
 <%--    GENERAL EMP BLOCK--%>
     <div class="container" id="content">
-        <h1>${item.name} information</h1>
+        <p2>${employee.firstName} ${employee.lastName}'s information</p2>
         <p class="text-success">${successWarning}</p>
 
         <div class="row mb-2">
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <table class="table table-bordered table-striped">
-                    <legend>${employee.firstName} ${employee.lastName}'s information</legend>
+<%--                    <legend>${employee.firstName} ${employee.lastName}'s information</legend>--%>
                     <tr>
                         <th>First name</th>
                         <td>
@@ -270,6 +270,7 @@
 
 </main>
 
+<c:import url="includes/footer.jsp"/>
 
 <script>
 

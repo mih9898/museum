@@ -324,6 +324,7 @@
     <% session.removeAttribute("successWarning");%>
 
 </main>
+<c:import url="includes/footer.jsp"/>
 
 
 <script>

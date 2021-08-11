@@ -1,3 +1,22 @@
+
+body {
+    background-color:#eee;
+    position: relative;
+    min-height: 100%;
+}
+
+main#main {
+    width: 77%;
+    margin: 0 auto;
+    padding: 0 4em 4em 4em;
+    font-size: 20px;
+    color: #212529;
+    font-family: Lora, 'Times New Roman', serif;
+    background-color: #fff;
+    min-height: 400px;
+}
+
+
 fieldset {
     border: solid #eee;
 }
@@ -53,3 +72,45 @@ fieldset legend {
     max-width: 300px;
     max-height: 400px;
 }
+
+.employeeRow {
+    cursor:pointer;
+}
+
+tr.employeeRow {
+    cursor:pointer;
+}
+
+tr.employeeRow:hover {
+    background-color: #eee;
+}
+
+div.image-upload img {
+    width:200px;
+}
+
+#museumImg {
+    float: left;
+    padding-right: 1em;
+    width: 45%;
+    max-width: 400px;
+    border-radius: 5px;
+}
+
+a {
+    color: #337ab7;
+    text-decoration: none;
+}
+
+div.itemBtnsRow button.btn-outline-primary {
+    min-height: 70px;
+}
+
+footer {
+    height: 44px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+

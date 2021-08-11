@@ -122,6 +122,7 @@
     <% session.removeAttribute("warning");%>
 
 </main>
+<c:import url="includes/footer.jsp"/>
 
 <script>
     // const showHideFormPartForLostItem = () => {

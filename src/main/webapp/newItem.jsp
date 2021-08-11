@@ -13,11 +13,13 @@
 <main id="main">
 
     <div class="container" id="content">
-        <h1>Add new Item</h1>
+        <h2>Add new Item</h2>
         <p class="text-danger">${warning}</p>
         <p class="text-success">${successWarning}</p>
 
         <form:form action="${pageContext.request.contextPath}/addItem" method="post" enctype="multipart/form-data">
+            <fieldset class="row ms-3 p-3 mb-2">
+
             <div class="row mb-3">
                 <label for="itemName" class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
@@ -69,7 +71,6 @@
                 </div>
                 </fieldset>
 
-
             </div>
 
             <div class="row mb-3">
@@ -105,9 +106,10 @@
             </fieldset>
             <div class="row center">
                 <div class="col text-center center">
-                    <button type="submit" class="btn btn-success mx-auto">Add Employee</button>
+                    <button type="submit" class="btn btn-success mx-auto">Add Item</button>
                 </div>
             </div>
+            </fieldset>
 
         </form:form>
     </div>
@@ -116,6 +118,7 @@
     <% session.removeAttribute("warning");%>
 
 </main>
+<c:import url="includes/footer.jsp"/>
 
 <script>
     const showHideFormPartForLostItem = () => {

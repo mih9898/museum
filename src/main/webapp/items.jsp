@@ -14,7 +14,6 @@
 <main id="main">
 
     <div class="container" id="content">
-        <h1>Home</h1>
         <h2>Items</h2>
             <div class="container">
                 <div class="row gx-5">
@@ -25,7 +24,7 @@
                                  src="${pageContext.request.contextPath}/images/${item.image}" alt="${item.image}">
 
                             <h5 class="bold">${item.name}</h5>
-                            <div class="row">
+                            <div class="row itemBtnsRow text-center">
                                 <div class="col">
                                     <a href="${pageContext.request.contextPath}/item?id=${item.id}">
                                         <button type="button" class="btn btn-outline-primary">More Info</button>
@@ -51,3 +50,5 @@
     <% session.removeAttribute("successWarning");%>
 
 </main>
+
+<c:import url="includes/footer.jsp"/>

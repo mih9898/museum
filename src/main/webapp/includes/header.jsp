@@ -1,7 +1,11 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="20">
+
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<%--    <nav class="navbar navbar-default navbar-fixed-top" id="myNavbar">--%>
+
+        <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                     aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,27 +64,20 @@
                             <a class="nav-link lead" href="${pageContext.request.contextPath}/logout">Logout</a>
                         </li>
                     </sec:authorize>
-
-
-
-                <%--                    <sec:authorize access="!isAuthenticated()">--%>
-<%--                        <li class="nav-item">--%>
-<%--                            <a class="nav-link lead" href="${pageContext.request.contextPath}/registrationProcessing">Register</a>--%>
-<%--                        </li>--%>
-<%--                        <li class="nav-item">--%>
-<%--                            <a class="nav-link lead" href="${pageContext.request.contextPath}/login">Login</a>--%>
-<%--                        </li>--%>
-<%--                    </sec:authorize>--%>
-<%--                    <sec:authorize access="isAuthenticated()">--%>
-<%--                        <li class="nav-item">--%>
-<%--                            <a class="nav-link lead" href="${pageContext.request.contextPath}/logout">Logout</a>--%>
-<%--                        </li>--%>
-<%--                        <li class="nav-item">--%>
-<%--                            <a class="nav-link lead" href="${pageContext.request.contextPath}/myMovies?movieSourceBase=">My movies</a>--%>
-<%--                        </li>--%>
-<%--                    </sec:authorize>--%>
                 </ul>
             </div>
         </div>
     </nav>
+    <div class="jumbotron text-center">
+        <h1>Welcome to Museum of Interesting Things</h1>
+        <a href="${pageContext.request.contextPath}/items">
+            <p>Contribute or discover our collection!</p>
+        </a>
+    </div>
+<%--    <div class="jumbotron jumbotron-fluid">--%>
+<%--        <div class="container">--%>
+<%--            <h1 class="display-4">Fluid jumbotron</h1>--%>
+<%--            <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 </header>

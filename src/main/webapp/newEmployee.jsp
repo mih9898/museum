@@ -12,7 +12,7 @@
 <main id="main">
 
     <div class="container" id="content">
-        <h1>New employee</h1>
+        <h2>New employee</h2>
         <p class="text-danger">${warning}</p>
         <p class="text-success">${successWarning}</p>
 
@@ -122,6 +122,7 @@
     <% session.removeAttribute("warning");%>
 
 </main>
+<c:import url="includes/footer.jsp"/>
 
 <script>
     // const showHideFormPartForLostItem = () => {
