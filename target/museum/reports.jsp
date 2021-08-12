@@ -156,7 +156,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="inputRoomName" class="col-sm-2 col-form-label">Date when damaged</label>
+                    <label for="inputRoomName" class="col-sm-2 col-form-label">Room damaged</label>
                 <div class="col-sm-10">
                         <input type="text" class="form-control" required name="inputRoomName" id="inputRoomName" >
                     </div>
